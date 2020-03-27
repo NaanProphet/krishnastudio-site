@@ -1,0 +1,9 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+.ext-link:after {
+	font-family: 'FontAwesome';
+	content: " \f08e";
+}

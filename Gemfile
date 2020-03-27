@@ -22,6 +22,8 @@ group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.10"
   gem 'jekyll-algolia', "~> 1.0"
   gem "jekyll-assets", "~> 3.0.11"
+  gem 'jekyll-target-blank', "~> 1.0"
+  gem 'jekyll-font-awesome-sass', "~> 0.1"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

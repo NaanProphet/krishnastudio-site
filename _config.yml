@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Mixing Apprentice | Krishna Bhamidipati 
+title: Mixing Apprentice 🎧 Krishna Bhamidipati
 email: 
 description: >- # this means to ignore newlines until "baseurl:"
   Personal journal of learing how to record, mix and master music. 
@@ -31,3 +31,5 @@ algolia:
   application_id: JOFZZNAMVA
   index_name:     krishnastudio
   search_only_api_key: 0f824a967919eae8798349b6a34013f4
+target-blank:
+  add_css_classes: ext-link
