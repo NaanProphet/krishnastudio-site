@@ -26,3 +26,8 @@ github_username:  NaanProphet
 markdown: kramdown
 theme: minima
 
+# Plugin settings
+algolia:
+  application_id: JOFZZNAMVA
+  index_name:     krishnastudio
+  search_only_api_key: 0f824a967919eae8798349b6a34013f4
