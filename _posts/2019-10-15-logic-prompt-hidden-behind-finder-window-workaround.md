@@ -5,8 +5,6 @@ date:   2019-10-15 12:45:02
 categories: [logic]
 ---
 
-Extension of [Replacing/Relinking Audio Files in Logic]({% post_url 2019-09-16-replace-audio-in-logic %})
-
 #### Problem
 
 Sometimes, if I replace/relink an audio file during launch, the project seems to hang without loading.
@@ -26,3 +24,7 @@ Move the Finder dialog *off to the side* selecting a file with `Open`. That way,
 If you have multiple files that need relinking, be careful to move the dialogs away in a consistent manner—otherwise it may look like this!
 
 ![]({% asset relinking-files-logic-hidden-prompt-4.png @path %})
+
+#### Notes
+
+This post was an extension of [Replacing/Relinking Audio Files in Logic]({% post_url 2019-09-16-replace-audio-in-logic %}).

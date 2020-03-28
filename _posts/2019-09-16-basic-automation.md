@@ -7,7 +7,7 @@ categories: [logic]
 
 #### What It Is
 
-**Automation** in audio editing is like **keyframes** in video editing. It allows for parametrization of any effect you can think of — volume, panning, etc.
+Automation in audio editing is like keyframes in video editing. It allows for parametrization of any effect you can think of — volume, panning, etc.
 
 #### Open Automation
 
