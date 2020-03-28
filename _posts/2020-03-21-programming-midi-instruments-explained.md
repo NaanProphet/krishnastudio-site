@@ -11,9 +11,9 @@ categories: [logic midi scripting cinematic samples]
 
 #### TL;DR
 
-Programming refers to managing dynamics and articulation on software instruments to make passages sound more authentic. Professional libraries like [Cinematic Studio](https://cinematicstudioseries.com) or [Spitfire](https://www.spitfireaudio.com/shop/a-z/bbc-symphony-orchestra/) have incredibly vast degrees of freedom for adjusting nuance and articulation than starter libraries do. 
+Programming refers to managing dynamics and articulation on software instruments to make passages sound more authentic. Often these settings are scripted based on phrasing into JavaScript or Python scripts, hence the term.
 
-Often these settings are scripted based on phrasing into JavaScript or Python scripts, hence the term. The [Thanos Script](https://vi-control.net/community/threads/free-permanent-fix-for-css-legato.71972/) is popular for adjusting articulation and delays for Cinematic Strings Logic X.
+Professional libraries like [Cinematic Studio](https://cinematicstudioseries.com) or [Spitfire](https://www.spitfireaudio.com/shop/a-z/bbc-symphony-orchestra/) have incredibly vast degrees of freedom for adjusting nuance and articulation than starter libraries do. The [Thanos Script](https://vi-control.net/community/threads/free-permanent-fix-for-css-legato.71972/) is popular for adjusting articulation and delays for Cinematic Strings Logic X.
 
 *Shout out to [my mentors](/about#my-mentors) Sanchit Malhotra and Samarth Srinivasan for dropping knowledge. 🎤*
 
