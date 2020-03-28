@@ -2,7 +2,7 @@
 layout: post
 title:  "Cannot Find Battery Libraries Over and Over"
 date:   2019-09-17 09:26:49
-categories: [logic,plugins]
+categories: [logic, plugins]
 ---
 
 

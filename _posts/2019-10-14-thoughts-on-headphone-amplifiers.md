@@ -2,7 +2,8 @@
 layout: post
 title:  "Thoughts on Headphone Amplifiers - Should I Get One?"
 date:   2019-10-14 19:12:48
-categories: [gear, theory]
+categories: [gear]
+tags: [theory]
 ---
 
 #### TL;DR

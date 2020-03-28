@@ -2,7 +2,8 @@
 layout: post
 title:  "Programming MIDI Instruments Explained"
 date:   2020-03-28 08:20:00
-categories: [logic midi scripting cinematic samples]
+categories: [logic, midi]
+tags: [samples, scripting, cinematic]
 ---
 
 * TOC
