@@ -13,10 +13,14 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Mixing Apprentice 🎧 Krishna Bhamidipati
+title: Mixing Apprentice
+author: Krishna Bhamidipati
+favicon: 🎧
 email: 
 description: >- # this means to ignore newlines until "baseurl:"
-  Personal journal of learning how to record, mix and master music. 
+  Learning how to record, mix and master music
+description_long: >
+  Personal journey of learning how to record, mix and master music.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://krishna.studio" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: 
