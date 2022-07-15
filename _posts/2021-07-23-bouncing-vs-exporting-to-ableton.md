@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Bouncing vs. Exporting From Logic to Ableton"
-date:   2020-03-28 09:34:00
+date:   2021-07-23 09:34:00
 categories: [logic]
 ---
 
