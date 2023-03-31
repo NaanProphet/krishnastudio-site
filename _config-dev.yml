@@ -1,0 +1,4 @@
+# dev overrides
+
+algolia:
+  index_name:     dev_krishnastudio
