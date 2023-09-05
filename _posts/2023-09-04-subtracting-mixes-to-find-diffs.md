@@ -7,6 +7,8 @@ categories: [logic]
 
 #### TL;DR
 
+Thanks to Stack Exchange[^1]:
+
 ```
 ffmpeg -i input0.wav -i input1.wav \
   -filter_complex \
@@ -19,11 +21,11 @@ ffmpeg -i input0.wav -i input1.wav \
 
 Sometimes when working on mixes I forget what has changed between versions. I keep notes, but they can be subtle or hard to verify.
 
-The above FFmpeg command  outputs the differences between two files. It works on both WAV and AIF files. I haven't tried too many variations, but it's working for stero 16-bit 44.1k and 48k files just fine.
+The above FFmpeg command  outputs the differences between two files. It works on both WAV and AIF input files. I haven't tried too many variations[^2], but it's working for stero 16-bit 44.1k and 48k files just fine.
 
 Note the command outputs the differences in BOTH input files to the output. For example if something was nudged over by 1 beat, you'll the original start and the new one start 1 beat later over each other. It's still helpful in drawing attention to what has changed though. 
 
 #### References
 
-[^1]: https://video.stackexchange.com/questions/36396/can-ffmpeg-perform-audio-phase-subtraction/36398#36398?newreg=4755d58e081b4fd28871c887fd04a4c8
-[^2]: https://trac.ffmpeg.org/wiki/audio%20types
+[^1]: Upvote the OP if you can! <https://video.stackexchange.com/questions/36396/can-ffmpeg-perform-audio-phase-subtraction/36398#36398?newreg=4755d58e081b4fd28871c887fd04a4c8>
+[^2]: More output formats can be specified from this list <https://trac.ffmpeg.org/wiki/audio%20types>
