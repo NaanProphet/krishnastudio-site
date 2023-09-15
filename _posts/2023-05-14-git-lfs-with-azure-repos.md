@@ -7,7 +7,7 @@ categories: [logic]
 
 #### TL;DR
 
-If you see `error: failed to push some refs to 'https://dev.azure.com/...' use the following workaround and try again.
+If you see `error: failed to push some refs to 'https://dev.azure.com/...'` use the following workaround and try again.
 
 `git config http.version HTTP/1.1`
 
@@ -17,7 +17,7 @@ Last tested with git version 2.32.0 and git-lfs version 2.13.3 on Mac OS X 10.14
 
 Azure Dev Repos is a wonderful place to version control Logic projects, because it has unlimited storage and support LFS.[^1]
 
-A particularly large project (20 GB, largest file 225 MB) was failing to push to the server. I've seen two variations of this error: either an HTTP 413 or an HTTP 503 error while pushing a project. To all salt to the wound, it was happening in the final 1%.
+A particularly large project (20 GB, largest file 225 MB) was failing to push to the server. I've seen two variations of this error: either an HTTP 413 or an HTTP 503 error while pushing a project. To add salt to the wound, it was happening in the final 1%.
 
 ```
 $ git push --set-upstream origin master
@@ -48,7 +48,7 @@ Branch 'master' set up to track remote branch 'master' from 'origin'.
 $ 
 ```
 
-I would recommend issuing the command without the `-g` flag, so that the `http.version` override is logic to the git project only. If needed, revert changes using `git config --unset http.version`.
+I would recommend issuing the command without the `-g` flag, so that the `http.version` override is local to the git project only. If needed, revert changes using `git config --unset http.version`.
 
 #### References
 
