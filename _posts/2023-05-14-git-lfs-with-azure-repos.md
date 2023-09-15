@@ -53,4 +53,4 @@ I would recommend issuing the command without the `-g` flag, so that the `http.v
 #### References
 
 [^1]: That's why I made this: <https://github.com/NaanProphet/git-logic-init>
-[^2]: https://developercommunity.visualstudio.com/t/git-lfs-push-got-413-error/867488
+[^2]: Apparently a lot of Azure devs live with this workaround <https://developercommunity.visualstudio.com/t/git-lfs-push-got-413-error/867488>
