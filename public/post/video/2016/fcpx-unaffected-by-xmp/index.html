@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Goodbye fear of broken media links!">
+<title>FCP X 10.2.2 Unaffected by XMP Metadata Changes</title>
+
+<link rel='canonical' href='http://localhost:1313/post/video/2016/fcpx-unaffected-by-xmp/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="FCP X 10.2.2 Unaffected by XMP Metadata Changes">
+<meta property='og:description' content="Goodbye fear of broken media links!">
+<meta property='og:url' content='http://localhost:1313/post/video/2016/fcpx-unaffected-by-xmp/'>
+<meta property='og:site_name' content='Krishna Bhamidipati'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='metadata' /><meta property='article:published_time' content='2016-01-09T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2016-01-09T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="FCP X 10.2.2 Unaffected by XMP Metadata Changes">
+<meta name="twitter:description" content="Goodbye fear of broken media links!">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu13739649187745961479.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">👀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Krishna Bhamidipati</a></h1>
+            <h2 class="site-description">Keep Asking How</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/gear/' >
+                
+                
+                
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-laptop"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 19l18 0" /><path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" /></svg>
+                
+                <span>Gear</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-lego"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9.5 11l.01 0" /><path d="M14.5 11l.01 0" /><path d="M9.5 15a3.5 3.5 0 0 0 5 0" /><path d="M7 5h1v-2h8v2h1a3 3 0 0 1 3 3v9a3 3 0 0 1 -3 3v1h-10v-1a3 3 0 0 1 -3 -3v-9a3 3 0 0 1 3 -3" /></svg>
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#procedure">Procedure</a></li>
+    <li><a href="#a-whole-new-world">A Whole New World</a></li>
+    <li><a href="#history">History</a></li>
+    <li><a href="#footnotes">Footnotes</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/video/" >
+                Video
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/video/2016/fcpx-unaffected-by-xmp/">FCP X 10.2.2 Unaffected by XMP Metadata Changes</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Goodbye fear of broken media links!
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 09, 2016</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    8 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="introduction">Introduction
+</h2><p>There is quite a bit of literature<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup> <sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> <sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup> on the net how Adobe applications can embed XMP metadata and modify original footage on import—wreaking havoc for other NLEs like FCP. Posts range as far back as 2011, the year FCP X was released, to even one in mid 2014. However, for those that roundtrip between FCP X and Adobe with XMP metadata, turns out things have changed—for the better!</p>
+<p>The takeaway of all them, rightly so, was to uncheck the nasty <strong>Write XMP ID to Files in Import</strong> setting in Adobe Premiere, After Effects, etc. which is on by default! <sup id="fnref:6"><a href="#fn:6" class="footnote-ref" role="doc-noteref">6</a></sup></p>
+<blockquote>
+<p>The Write XMP ID To Files On Import option tells Premiere Pro to add a single piece of XMP metadata to the source file itself. This is basically a unique identifying number that can then be used by the various applications that understand XMP metadata [namely, the Adobe Suite] to tell which files is being used where. So, yes, it does modify the source file. If you don&rsquo;t want that to happen, then make sure that checkbox is unchecked.</p>
+</blockquote>
+<p>By unchecking this option, the checksums and file sizes of the raw assets do not change, and projects in other NLEs like FCP X will not force re-linking because of an incompatible media file.</p>
+<h2 id="setup">Setup
+</h2><p>The following experiment was conducted using the following:</p>
+<ul>
+<li>15&quot; Mid 2012 MBP 9,1</li>
+<li>OS X 10.11.1 El Capitan, released 2015-09-30<sup id="fnref:7"><a href="#fn:7" class="footnote-ref" role="doc-noteref">7</a></sup></li>
+<li>FCP X 10.2.2, released 2015-09-04<sup id="fnref:8"><a href="#fn:8" class="footnote-ref" role="doc-noteref">8</a></sup></li>
+<li>Adobe Premiere Pro CC 2015 9.1.0(174) Build &ldquo;Original Gravity&rdquo;<sup id="fnref:9"><a href="#fn:9" class="footnote-ref" role="doc-noteref">9</a></sup></li>
+<li>XAVC-S 720p MOV file from a Sony AX100</li>
+</ul>
+<h2 id="procedure">Procedure
+</h2><ol>
+<li>Import video (as a linked file) into FCP X.</li>
+</ol>
+<p><img src="/post/video/2016/fcpx-unaffected-by-xmp/fcp-xmp-initial-import.png"
+	width="1476"
+	height="801"
+	
+	loading="lazy"
+	
+		alt="Sony XAVC-S MOV file imported into FCP X"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="184"
+		data-flex-basis="442px"
+	
+></p>
+<ol start="2">
+<li>Use <a class="link" href="http://www.sno.phy.queensu.ca/~phil/exiftool/"  target="_blank" rel="noopener"
+    >ExifTool</a> and save linked file metadata. Note the System File Date/Time values at the top.</li>
+</ol>
+<pre tabindex="0"><code>   $ exiftool -api largefilesupport=1 -G1 XAVCS-sample.mov
+   ​	[ExifTool]      ExifTool Version Number         : 10.08
+   ​	[System]        File Name                       : XAVCS-sample.mov
+   ​	[System]        Directory                       : /Volumes/Scratch/est
+   ​	[System]        File Size                       : 3156 MB
+   ​	[System]        File Modification Date/Time     : 2014:05:22 03:25:30-04:00
+   ​	[System]        File Access Date/Time           : 2016:01:09 20:28:35-05:00
+   ​	[System]        File Inode Change Date/Time     : 2016:01:09 19:47:23-05:00
+   ​	[System]        File Permissions                : rwxrwxrwx
+   ​	[File]          File Type                       : MOV
+   ​	[File]          File Type Extension             : mov
+   ​	[File]          MIME Type                       : video/quicktime
+   ​	[QuickTime]     Major Brand                     : Apple QuickTime (.MOV/QT)
+   ​	[QuickTime]     Minor Version                   : 2005.3.0
+   ​	[QuickTime]     Compatible Brands               : qt
+   ​	[QuickTime]     Movie Data Size                 : 3307975773
+   ​	[QuickTime]     Movie Data Offset               : 48
+   ​	[QuickTime]     Movie Header Version            : 0
+   ​	[QuickTime]     Create Date                     : 2014:05:11 04:50:09
+   ​	[QuickTime]     Modify Date                     : 2014:05:11 05:31:53
+   ​	[QuickTime]     Time Scale                      : 600
+   ​	[QuickTime]     Duration                        : 0:41:43
+   ​	[QuickTime]     Preferred Rate                  : 1
+   ​	[QuickTime]     Preferred Volume                : 100.00%
+   ​	[QuickTime]     Preview Time                    : 0 s
+   ​	[QuickTime]     Preview Duration                : 0 s
+   ​	[QuickTime]     Poster Time                     : 0 s
+   ​	[QuickTime]     Selection Time                  : 0 s
+   ​	[QuickTime]     Selection Duration              : 0 s
+   ​	[QuickTime]     Current Time                    : 0 s
+   ​	[QuickTime]     Next Track ID                   : 3
+   ​	[Track1]        Track Header Version            : 0
+   ​	[Track1]        Track Create Date               : 2014:05:11 04:50:09
+   ​	[Track1]        Track Modify Date               : 2014:05:11 05:31:53
+   ​	[Track1]        Track ID                        : 1
+   ​	[Track1]        Track Duration                  : 0:41:43
+   ​	[Track1]        Track Layer                     : 0
+   ​	[Track1]        Track Volume                    : 100.00%
+   ​	[Track1]        Image Width                     : 1280
+   ​	[Track1]        Image Height                    : 720
+   ​	[Track1]        Graphics Mode                   : ditherCopy
+   ​	[Track1]        Op Color                        : 32768 32768 32768
+   ​	[Track1]        Compressor ID                   : avc1
+   ​	[Track1]        Vendor ID                       : Apple
+   ​	[Track1]        Source Image Width              : 1280
+   ​	[Track1]        Source Image Height             : 720
+   ​	[Track1]        X Resolution                    : 72
+   ​	[Track1]        Y Resolution                    : 72
+   ​	[Track1]        Compressor Name                 : H.264
+   ​	[Track1]        Bit Depth                       : 24
+   ​	[Track1]        Video Frame Rate                : 29.87
+   ​	[Track2]        Matrix Structure                : 1 0 0 0 1 0 0 0 1
+   ​	[Track2]        Media Header Version            : 0
+   ​	[Track2]        Media Create Date               : 2014:05:11 04:50:09
+   ​	[Track2]        Media Modify Date               : 2014:05:11 05:31:53
+   ​	[Track2]        Media Time Scale                : 44100
+   ​	[Track2]        Media Duration                  : 0:41:43
+   ​	[Track2]        Balance                         : 0
+   ​	[Track2]        Handler Class                   : Data Handler
+   ​	[Track2]        Handler Type                    : Alias Data
+   ​	[Track2]        Handler Vendor ID               : Apple
+   ​	[Track2]        Handler Description             : Apple Alias Data Handler
+   ​	[Track2]        Audio Format                    : mp4a
+   ​	[Track2]        Audio Channels                  : 2
+   ​	[Track2]        Audio Bits Per Sample           : 16
+   ​	[Track2]        Audio Sample Rate               : 44100
+   ​	[Track2]        Purchase File Format            : mp4a
+   ​	[Composite]     Avg Bitrate                     : 10.6 Mbps
+   ​	[Composite]     Image Size                      : 1280x720
+   ​	[Composite]     Megapixels                      : 0.922
+   ​	[Composite]     Rotation                        : 0
+   ​	$
+</code></pre><ol start="3">
+<li>Launch Premiere Pro. Enable the setting in Preferences to <strong>Write XMP ID to Files in Import</strong> which is now <em>off by default!!</em></li>
+</ol>
+<p><img src="/post/video/2016/fcpx-unaffected-by-xmp/fcp-xmp-premiere-settings.png"
+	width="879"
+	height="819"
+	
+	loading="lazy"
+	
+		alt="Enable Write XMP ID to Files on Import Setting in Premiere Pro"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="107"
+		data-flex-basis="257px"
+	
+></p>
+<ol start="4">
+<li>Import the same clip into Premiere Pro.</li>
+</ol>
+<p><img src="/post/video/2016/fcpx-unaffected-by-xmp/fcp-xmp-premiere-import.png"
+	width="1162"
+	height="860"
+	
+	loading="lazy"
+	
+		alt="Sony XAVC-S MOV file imported into Premiere Pro"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="135"
+		data-flex-basis="324px"
+	
+></p>
+<ol start="5">
+<li>Run <a class="link" href="http://www.sno.phy.queensu.ca/~phil/exiftool/"  target="_blank" rel="noopener"
+    >ExifTool</a> again to confirm the file has been modified. Note how the System File Date/Time values are updated and the new XMP info at the bottom!</li>
+</ol>
+<pre tabindex="0"><code>   $ exiftool -api largefilesupport=1 -G1 XAVCS-sample.mov
+   ​	[ExifTool]      ExifTool Version Number         : 10.08
+   ​	[System]        File Name                       : XAVCS-sample.mov
+   ​	[System]        Directory                       : /Volumes/Scratch/est
+   ​	[System]        File Size                       : 3156 MB
+   ​	[System]        File Modification Date/Time     : 2016:01:09 20:30:04-05:00
+   ​	[System]        File Access Date/Time           : 2016:01:09 20:30:22-05:00
+   ​	[System]        File Inode Change Date/Time     : 2016:01:09 20:30:04-05:00
+   ​	[System]        File Permissions                : rwxrwxrwx
+   ​	[File]          File Type                       : MOV
+   ​	[File]          File Type Extension             : mov
+   ​	[File]          MIME Type                       : video/quicktime
+   ​	[QuickTime]     Major Brand                     : Apple QuickTime (.MOV/QT)
+   ​	[QuickTime]     Minor Version                   : 2005.3.0
+   ​	[QuickTime]     Compatible Brands               : qt
+   ​	[QuickTime]     Movie Data Size                 : 3307975773
+   ​	[QuickTime]     Movie Data Offset               : 48
+   ​	[QuickTime]     Movie Header Version            : 0
+   ​	[QuickTime]     Time Scale                      : 600
+   ​	[QuickTime]     Duration                        : 0:41:43
+   ​	[QuickTime]     Preferred Rate                  : 1
+   ​	[QuickTime]     Preferred Volume                : 100.00%
+   ​	[QuickTime]     Preview Time                    : 0 s
+   ​	[QuickTime]     Preview Duration                : 0 s
+   ​	[QuickTime]     Poster Time                     : 0 s
+   ​	[QuickTime]     Selection Time                  : 0 s
+   ​	[QuickTime]     Selection Duration              : 0 s
+   ​	[QuickTime]     Current Time                    : 0 s
+   ​	[QuickTime]     Next Track ID                   : 3
+   ​	[Track1]        Track Header Version            : 0
+   ​	[Track1]        Track Create Date               : 2014:05:11 04:50:09
+   ​	[Track1]        Track Modify Date               : 2014:05:11 05:31:53
+   ​	[Track1]        Track ID                        : 1
+   ​	[Track1]        Track Duration                  : 0:41:43
+   ​	[Track1]        Track Layer                     : 0
+   ​	[Track1]        Track Volume                    : 100.00%
+   ​	[Track1]        Image Width                     : 1280
+   ​	[Track1]        Image Height                    : 720
+   ​	[Track1]        Graphics Mode                   : ditherCopy
+   ​	[Track1]        Op Color                        : 32768 32768 32768
+   ​	[Track1]        Compressor ID                   : avc1
+   ​	[Track1]        Vendor ID                       : Apple
+   ​	[Track1]        Source Image Width              : 1280
+   ​	[Track1]        Source Image Height             : 720
+   ​	[Track1]        X Resolution                    : 72
+   ​	[Track1]        Y Resolution                    : 72
+   ​	[Track1]        Compressor Name                 : H.264
+   ​	[Track1]        Bit Depth                       : 24
+   ​	[Track2]        Matrix Structure                : 1 0 0 0 1 0 0 0 1
+   ​	[Track2]        Media Header Version            : 0
+   ​	[Track2]        Media Create Date               : 2014:05:11 04:50:09
+   ​	[Track2]        Media Modify Date               : 2014:05:11 05:31:53
+   ​	[Track2]        Media Time Scale                : 44100
+   ​	[Track2]        Media Duration                  : 0:41:43
+   ​	[Track2]        Balance                         : 0
+   ​	[Track2]        Handler Class                   : Data Handler
+   ​	[Track2]        Handler Type                    : Alias Data
+   ​	[Track2]        Handler Vendor ID               : Apple
+   ​	[Track2]        Handler Description             : Apple Alias Data Handler
+   ​	[Track2]        Audio Format                    : mp4a
+   ​	[Track2]        Audio Channels                  : 2
+   ​	[Track2]        Audio Bits Per Sample           : 16
+   ​	[Track2]        Purchase File Format            : mp4a
+   ​	[XMP-x]         XMP Toolkit                     : Adobe XMP Core 5.6-c111 79.158325, 2015/09/10-01:10:20
+   ​	[XMP-xmp]       Create Date                     : 2014:05:11 04:50:09Z
+   ​	[XMP-xmp]       Modify Date                     : 2016:01:09 20:30:03-05:00
+   ​	[XMP-xmp]       Metadata Date                   : 2016:01:09 20:30:04-05:00
+   ​	[XMP-xmpDM]     Video Alpha Mode                : None
+   ​	[XMP-xmpDM]     Audio Sample Rate               : 44100
+   ​	[XMP-xmpDM]     Audio Sample Type               : Compressed
+   ​	[XMP-xmpDM]     Audio Channel Type              : Stereo
+   ​	[XMP-xmpDM]     Video Frame Rate                : 29.970030
+   ​	[XMP-xmpDM]     Duration Value                  : 1502300
+   ​	[XMP-xmpDM]     Duration Scale                  : 0.00166666666666667
+   ​	[XMP-xmpDM]     Video Frame Size W              : 1280
+   ​	[XMP-xmpDM]     Video Frame Size H              : 720
+   ​	[XMP-xmpDM]     Video Frame Size Unit           : pixel
+   ​	[XMP-xmpMM]     Instance ID                     : xmp.iid:f876396c-36cd-46bb-8e10-198ec05bf13c
+   ​	[XMP-xmpMM]     Document ID                     : xmp.did:0b184efa-54f1-404a-91a9-e1a5be69375d
+   ​	[XMP-xmpMM]     Original Document ID            : xmp.did:0b184efa-54f1-404a-91a9-e1a5be69375d
+   ​	[XMP-xmpMM]     History Action                  : saved, saved
+   ​	[XMP-xmpMM]     History Instance ID             : xmp.iid:4b09e22c-62ee-4df5-b4c0-c6ae3db78df7, xmp.iid:f876396c-36cd-46bb-8e10-198ec05bf13c
+   ​	[XMP-xmpMM]     History When                    : 2016:01:09 20:30:03-05:00, 2016:01:09 20:30:04-05:00
+   ​	[XMP-xmpMM]     History Software Agent          : Adobe Premiere Pro CC (Macintosh), Adobe Premiere Pro CC (Macintosh)
+   ​	[XMP-xmpMM]     History Changed                 : /, /metadata
+   ​	[Composite]     Avg Bitrate                     : 10.6 Mbps
+   ​	[Composite]     Image Size                      : 1280x720
+   ​	[Composite]     Megapixels                      : 0.922
+   ​	[Composite]     Rotation                        : 0
+   ​	$
+</code></pre><ol start="6">
+<li>Switch back to FCP X. No red media missing icon! Perhaps FCP X is working off the audio and video track lengths themselves, which did not change (as the ExifTool printouts showed).</li>
+</ol>
+<p><img src="/post/video/2016/fcpx-unaffected-by-xmp/fcp-xmp-great-success.png"
+	width="1476"
+	height="801"
+	
+	loading="lazy"
+	
+		alt="Modified file still linked and scrubs in FCP X"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="184"
+		data-flex-basis="442px"
+	
+></p>
+<h2 id="a-whole-new-world">A Whole New World
+</h2><p>While it&rsquo;d be nice to know which version of FCP X finally became immune to embedded XMP metadata changes, the fact is 10.2.2 now is. Doing so opens a fresh range of possibilities for those organizing footage and roundtripping the Adobe and Apple ecosystems.</p>
+<p>Some people wait a lifetime for a moment like this.</p>
+<p>Indescribable feelings.</p>
+<p>Hit the road, Jack!</p>
+<h2 id="history">History
+</h2><p><em>[Updated September 28, 2018 wording changes for clarity.]</em></p>
+<h2 id="footnotes">Footnotes
+</h2><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p><a class="link" href="https://forums.creativecow.net/thread/335/13900"  target="_blank" rel="noopener"
+    >2011-08-15 Opening clips in Premiere Pro makes them go offline in FCX</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><a class="link" href="https://forums.creativecow.net/thread/344/13891"  target="_blank" rel="noopener"
+    >2012-07-17 Relinking this!</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p><a class="link" href="https://forums.creativecow.net/thread/344/19594"  target="_blank" rel="noopener"
+    >2012-04-19 https://forums.creativecow.net/thread/344/19594</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p><a class="link" href="http://wolfcrow.com/blog/how-to-transfer-a-project-from-final-cut-pro-to-after-effects/"  target="_blank" rel="noopener"
+    >2013-06-21 How to Transfer a Project from Final Cut Pro to After Effects</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p><a class="link" href="https://larryjordan.com/articles/fcpx-relinking/#comment-24001"  target="_blank" rel="noopener"
+    >2014-06-25 FCP X: Relinking Media [u] (see comment by SadMac)</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:6">
+<p>Understanding &ldquo;Write XMP ID to Files on Import&rdquo; <a class="link" href="https://forums.adobe.com/thread/682174"  target="_blank" rel="noopener"
+    >https://forums.adobe.com/thread/682174</a>&#160;<a href="#fnref:6" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:7">
+<p><a class="link" href="https://en.wikipedia.org/wiki/OS_X_El_Capitan#Releases"  target="_blank" rel="noopener"
+    >https://en.wikipedia.org/wiki/OS_X_El_Capitan#Releases</a>&#160;<a href="#fnref:7" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:8">
+<p><a class="link" href="https://en.wikipedia.org/wiki/Final_Cut_Pro_X#Evolution"  target="_blank" rel="noopener"
+    >https://en.wikipedia.org/wiki/Final_Cut_Pro_X#Evolution</a>&#160;<a href="#fnref:8" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:9">
+<p><a class="link" href="https://en.wikipedia.org/wiki/Adobe_Premiere_Pro#Release_history"  target="_blank" rel="noopener"
+    >https://en.wikipedia.org/wiki/Adobe_Premiere_Pro#Release_history</a>&#160;<a href="#fnref:9" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/metadata/">Metadata</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 Krishna Bhamidipati
+    </section>
+    
+    <section class="powerby">
+        
+            Krishna Bhamidipati <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

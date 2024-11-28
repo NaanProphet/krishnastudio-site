@@ -1,0 +1,1327 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Audio on Krishna Bhamidipati</title>
+        <link>http://localhost:1313/categories/audio/</link>
+        <description>Recent content in Audio on Krishna Bhamidipati</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Fri, 15 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/audio/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Mixing vs. Mastering: The Music Production Lifecycle</title>
+        <link>http://localhost:1313/post/audio/2023/mixing-vs-mastering/</link>
+        <pubDate>Fri, 15 Sep 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2023/mixing-vs-mastering/</guid>
+        <description>&lt;h2 id=&#34;epiphany&#34;&gt;Epiphany
+&lt;/h2&gt;&lt;p&gt;Most revelations seem trivial or obvious after the fact. This is one of those moments.&lt;/p&gt;
+&lt;p&gt;For a long time, mixing and mastering seemed like the same thing, or rather, too similar to be truly different things. It first hit me when I realized what automation (&lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/post/audio/2019/basic-daw-automation/&#34; &gt;see previous post here&lt;/a&gt;) actually automates—the movement of someone&amp;rsquo;s hands as they used a mixer!&lt;/p&gt;
+&lt;h2 id=&#34;mixing&#34;&gt;Mixing
+&lt;/h2&gt;&lt;p&gt;In the older days, mixing was done in realtime. Talk about pressure! Literally someone moved their fingers adjusting settings on a soundboard while playing back all the tracks. Similar to live sound in a way. This process reduces N tracks into 2 track stereo (typically).&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Sure, there may be channel EQ and compression settings during the mixing phase (like in live sound), but for the most part, the focus during mixing is on the relative volume of the tracks to each other.&lt;/p&gt;
+&lt;h2 id=&#34;mastering&#34;&gt;Mastering
+&lt;/h2&gt;&lt;p&gt;Mastering, then, applies final EQ and compression to the stereo mix so that it provides an overall style/color and conforms to broadcast standards.&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; There are so many different directions one can go in after the mix is done which is why mastering is its own phase.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;I learned this from talking with an older recording engineer who recorded abroad. He brough his own mics but recorded and mixed tracks using other peoples&amp;rsquo; equipment on-site. He dubbed the stereo mix output to his portable recorder and took it back with him to master.&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;Slate&amp;rsquo;s new Virtu mastering engine has good documentation on common mastering styles. &lt;a class=&#34;link&#34; href=&#34;https://support.slatedigital.com/hc/en-us/articles/17554883409171-Audio-Settings&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://support.slatedigital.com/hc/en-us/articles/17554883409171-Audio-Settings&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Subtracting Audio Files with FFmpeg</title>
+        <link>http://localhost:1313/post/audio/2023/subtracting-mixes-to-find-diffs/</link>
+        <pubDate>Mon, 04 Sep 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2023/subtracting-mixes-to-find-diffs/</guid>
+        <description>&lt;h2 id=&#34;tldr&#34;&gt;TL;DR
+&lt;/h2&gt;&lt;p&gt;Command line magic to the rescue!&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ffmpeg -i input0.wav -i input1.wav \
+  -filter_complex \
+  &amp;#34;[1]    aeval  = -val(0) | -val(1)                     [a]; \
+   [0][a] amerge = inputs=2,pan=stereo|c0&amp;lt;c0+c2|c1&amp;lt;c1+c3 [b]&amp;#34; \
+  -map &amp;#34;[b]&amp;#34; -c:a pcm_s16le output.wav
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;explanation&#34;&gt;Explanation
+&lt;/h2&gt;&lt;p&gt;Sometimes when working on mixes I forget what has changed between versions. I keep notes, but they can be subtle or hard to verify.&lt;/p&gt;
+&lt;p&gt;The above FFmpeg command&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; outputs the differences between two files. It works on both WAV and AIF input files. I haven&amp;rsquo;t tried too many variations&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;, but it&amp;rsquo;s working for stereo 16-bit 44.1k and 48k files just fine.&lt;/p&gt;
+&lt;p&gt;Note the command outputs the differences in BOTH input files to the output. For example if something was nudged over by 1 beat, you&amp;rsquo;ll hear the original start and the new one start 1 beat later over each other. It&amp;rsquo;s still helpful in drawing attention to what has changed though.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;Thanks to Stack Exchange, upvote the OP if you can! &lt;a class=&#34;link&#34; href=&#34;https://video.stackexchange.com/questions/36396/can-ffmpeg-perform-audio-phase-subtraction/36398#36398?newreg=4755d58e081b4fd28871c887fd04a4c8&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://video.stackexchange.com/questions/36396/can-ffmpeg-perform-audio-phase-subtraction/36398#36398?newreg=4755d58e081b4fd28871c887fd04a4c8&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;More output formats can be specified from this list &lt;a class=&#34;link&#34; href=&#34;https://trac.ffmpeg.org/wiki/audio%20types&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://trac.ffmpeg.org/wiki/audio%20types&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Azure Git LFS failed to push refs Fix</title>
+        <link>http://localhost:1313/post/audio/2023/git-lfs-with-azure-repos/</link>
+        <pubDate>Sun, 14 May 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2023/git-lfs-with-azure-repos/</guid>
+        <description>&lt;h2 id=&#34;tldr&#34;&gt;TL;DR
+&lt;/h2&gt;&lt;p&gt;If you see &lt;code&gt;error: failed to push some refs to &#39;https://dev.azure.com/...&#39;&lt;/code&gt; use the following workaround and try again.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;git config http.version HTTP/1.1&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Last tested with git version 2.32.0 and git-lfs version 2.13.3 on Mac OS X 10.14.6 Mojave.&lt;/p&gt;
+&lt;h2 id=&#34;explanation&#34;&gt;Explanation
+&lt;/h2&gt;&lt;p&gt;Azure Dev Repos is a wonderful place to version control Logic projects, because it has unlimited storage and support LFS.&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;A particularly large project (20 GB, largest file 225 MB) was failing to push to the server. I&amp;rsquo;ve seen two variations of this error: either an HTTP 413 or an HTTP 503 error while pushing a project. To add salt to the wound, it was happening in the final 1%.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ git push --set-upstream origin master
+Uploading LFS objects:  99% (678/686), 18 GB | 2.0 MB/s, done.
+Fatal error: Server error: https://username@dev.azure.com/my-logic-project/info/lfs/objects/1181a8d96cf25bb980a9d59130420a12d50a9b08905135217d7ac77fda10a14f from HTTP 503
+Fatal error: Server error: https://username@dev.azure.com/my-logic-project/info/lfs/objects/73bcb141b8ec7287ede335c42cc1e4a668220aa55bd878c7e5a2c1d9f57fba42 from HTTP 503
+LFS: Client error: https://username@dev.azure.com/my-logic-project/info/lfs/objects/a36859394739a5c5e076d21169373d2d5719a903e75630678697beb669a58a2d from HTTP 413
+error: failed to push some refs to &amp;#39;https://dev.azure.com/my-logic-project&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Apparently this is a known problem, specific to Azure Dev Repos only.&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; The workaround is to downgrade the HTTP protocol used by Git so that the large files go through.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ git push --set-upstream origin master
+Uploading LFS objects: 100% (686/686), 20 GB | 2.6 MB/s, done.                  
+Enumerating objects: 805, done.
+Counting objects: 100% (805/805), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (794/794), done.
+Writing objects: 100% (803/803), 5.74 MiB | 1.82 MiB/s, done.
+Total 803 (delta 31), reused 0 (delta 0), pack-reused 0
+remote: Analyzing objects... (803/803) (2601 ms)
+remote: Storing packfile... done (182 ms)
+remote: Storing index... done (40 ms)
+To https://dev.azure.com/my-logic-project
+   5d884b1..3b9e73d  master -&amp;gt; master
+Branch &amp;#39;master&amp;#39; set up to track remote branch &amp;#39;master&amp;#39; from &amp;#39;origin&amp;#39;.
+$ 
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I would recommend issuing the command without the &lt;code&gt;-g&lt;/code&gt; flag, so that the &lt;code&gt;http.version&lt;/code&gt; override is local to the git project only. If needed, revert changes using &lt;code&gt;git config --unset http.version&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;That&amp;rsquo;s why I made this: &lt;a class=&#34;link&#34; href=&#34;https://github.com/NaanProphet/git-logic-init&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/NaanProphet/git-logic-init&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;Apparently a lot of Azure devs live with this workaround &lt;a class=&#34;link&#34; href=&#34;https://developercommunity.visualstudio.com/t/git-lfs-push-got-413-error/867488&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://developercommunity.visualstudio.com/t/git-lfs-push-got-413-error/867488&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Bouncing vs. Exporting From Logic to Ableton</title>
+        <link>http://localhost:1313/post/audio/2021/bouncing-vs-exporting-to-ableton/</link>
+        <pubDate>Fri, 23 Jul 2021 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2021/bouncing-vs-exporting-to-ableton/</guid>
+        <description>&lt;h2 id=&#34;tldr&#34;&gt;TL;DR
+&lt;/h2&gt;&lt;p&gt;Use Export for stems. If &lt;code&gt;Bypass Effect Plug-ins&lt;/code&gt; is unchecked, it will use effects.&lt;/p&gt;
+&lt;h2 id=&#34;explanation&#34;&gt;Explanation
+&lt;/h2&gt;&lt;p&gt;There are tons of articles on this already, but I forgot the difference.&lt;/p&gt;
+&lt;p&gt;The use case is a Logic Pro X project with a bunch of tracks, and I want to export stems/submixes to Ableton so that we can perform them live.&lt;/p&gt;
+&lt;p&gt;Here is the cheatsheet:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use &lt;code&gt;Export &amp;gt; Tracks as Audio Files... ⌘E&lt;/code&gt; for an individual file/track&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;Export &amp;gt; All Tracks as Audio Files... ⇧⌘E&lt;/code&gt; for a single file for a whole group of tracks&lt;/li&gt;
+&lt;li&gt;Double check if any Volume Automation &amp;ldquo;mixing&amp;rdquo; is present in the track (press &lt;code&gt;A&lt;/code&gt; to toggle the Automation view). Select &lt;code&gt;Include Volume/Pan Automation&lt;/code&gt; if desired&lt;/li&gt;
+&lt;li&gt;Double check the &lt;code&gt;Range&lt;/code&gt; settings and use &lt;code&gt;Export Cycle Range Only&lt;/code&gt; if desired&lt;/li&gt;
+&lt;li&gt;Specify a custom prefix for stem filenames for good housekeeping&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>EQ Cheat Sheet</title>
+        <link>http://localhost:1313/post/audio/2020/eq-cheat-sheet/</link>
+        <pubDate>Sat, 21 Mar 2020 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2020/eq-cheat-sheet/</guid>
+        <description>&lt;p&gt;There are a lot of guides out there, but I found this one especially helpful: &lt;a class=&#34;link&#34; href=&#34;https://productionadvice.co.uk/using-eq/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://productionadvice.co.uk/using-eq/&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Excerpted below for convenience. Lot more helpful info at the link.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;50-60 Hz&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Thump in a kick drum&lt;/li&gt;
+&lt;li&gt;Boom in a bassline&lt;/li&gt;
+&lt;li&gt;Too much and you’ll have flapping speakers and a flabby mix&lt;/li&gt;
+&lt;li&gt;Too little, and the mix will never have enough weight or depth&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;100-200 Hz&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This EQ band adds punch in a snare&lt;/li&gt;
+&lt;li&gt;Gives richness or “bloom” to almost anything&lt;/li&gt;
+&lt;li&gt;Too much makes things boomy or woolly&lt;/li&gt;
+&lt;li&gt;Too little sounds thin and cold&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;200-500 Hz&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Crucial for warmth and weight in guitars, piano and vocals&lt;/li&gt;
+&lt;li&gt;Too much makes things sound muddy or congested&lt;/li&gt;
+&lt;li&gt;Too little makes them thin and weak&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;500-1000 Hz&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;One of the trickiest areas&lt;/li&gt;
+&lt;li&gt;Gives body and tone to many instruments&lt;/li&gt;
+&lt;li&gt;Too much sounds hollow, nasal or honky&lt;/li&gt;
+&lt;li&gt;Too little sounds thin and harsh&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;2 kHz&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Gives edge and bite to guitars and vocals&lt;/li&gt;
+&lt;li&gt;Adds aggression and clarity&lt;/li&gt;
+&lt;li&gt;Too much is painful!&lt;/li&gt;
+&lt;li&gt;Too little will sound soft or muted&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;5-10 kHz&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Adds clarity, open-ness and life&lt;/li&gt;
+&lt;li&gt;Important for the top end of drums, especially snare&lt;/li&gt;
+&lt;li&gt;Too much sounds gritty or scratchy&lt;/li&gt;
+&lt;li&gt;Too little will lack presence and energy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;16 kHz&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Can add air, space or sparkle&lt;/li&gt;
+&lt;li&gt;Almost too high to hear&lt;/li&gt;
+&lt;li&gt;Too much will sound artificial, hyped or fizzy&lt;/li&gt;
+&lt;li&gt;Too little will sound dull and stifled&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+</description>
+        </item>
+        <item>
+        <title>Pinch Zoom in Logic Like a Pro</title>
+        <link>http://localhost:1313/post/audio/2020/pinch-zoom-in-logic/</link>
+        <pubDate>Sat, 21 Mar 2020 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2020/pinch-zoom-in-logic/</guid>
+        <description>&lt;p&gt;Not sure how I didn&amp;rsquo;t know this before. Adjust track height with ⌥ (option) + up/down and timeline width with ⌥ + left/right.&lt;/p&gt;
+&lt;p&gt;Lot more helpful navigation shortcuts here: &lt;a class=&#34;link&#34; href=&#34;https://masteringinlogic.com/10-shortcuts-to-working-faster-in-logic-pro-x/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://masteringinlogic.com/10-shortcuts-to-working-faster-in-logic-pro-x/&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Programming MIDI Instruments Explained</title>
+        <link>http://localhost:1313/post/audio/2020/programming-midi-instruments-explained/</link>
+        <pubDate>Sat, 21 Mar 2020 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2020/programming-midi-instruments-explained/</guid>
+        <description>&lt;h2 id=&#34;tldr&#34;&gt;TL;DR
+&lt;/h2&gt;&lt;p&gt;Programming refers to managing dynamics and articulation on software instruments to make passages sound more authentic. Often these settings are scripted based on phrasing into JavaScript or Python scripts, hence the term.&lt;/p&gt;
+&lt;p&gt;Professional libraries like &lt;a class=&#34;link&#34; href=&#34;https://cinematicstudioseries.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Cinematic Studio&lt;/a&gt; or &lt;a class=&#34;link&#34; href=&#34;https://www.spitfireaudio.com/shop/a-z/bbc-symphony-orchestra/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Spitfire&lt;/a&gt; have incredibly vast degrees of freedom for adjusting nuance and articulation than starter libraries do. The &lt;a class=&#34;link&#34; href=&#34;https://vi-control.net/community/threads/free-permanent-fix-for-css-legato.71972/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Thanos Script&lt;/a&gt; is popular for adjusting articulation and delays for Cinematic Strings Logic X.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Shout out to &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/about#my-mentors&#34; &gt;my mentors&lt;/a&gt; Sanchit Malhotra and Samarth Srinivasan for dropping knowledge. 🎤&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;crash-course-on-programming-with-cinematic-studio&#34;&gt;Crash Course on Programming (with Cinematic Studio)
+&lt;/h2&gt;&lt;p&gt;Programming isn&amp;rsquo;t just about switching sample libraries. The big thing is fine tuning expression and dynamics with MIDI Control Change (CC) messages so that the passages actually sound better. Swapping libraries is like changing orchestras; programming a library is like rehearsing.&lt;/p&gt;
+&lt;h2 id=&#34;tradeoffs-of-sample-libraries&#34;&gt;Tradeoffs of Sample Libraries
+&lt;/h2&gt;&lt;p&gt;Entry level libraries (like &lt;a class=&#34;link&#34; href=&#34;https://support.apple.com/en-us/HT208461&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Logic X MIDI Strings&lt;/a&gt; or &lt;a class=&#34;link&#34; href=&#34;https://www.native-instruments.com/en/products/komplete/cinematic/session-strings-pro/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Native Instruments Session Strings Pro&lt;/a&gt;) don&amp;rsquo;t offer the same level of expressiveness. The samples recorded are not detailed enough to capture fine nuances of attack transients, color nonlinearites, etc.&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; However, starter libraries do have an advantage when arranging/prototyping: they are smaller, take less RAM, and sometimes easier to work with punch out ideas.&lt;/p&gt;
+&lt;p&gt;Have a listen of these two embedded factory demos to hear the difference yourself.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Native Instruments Session Strings Pro&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.native-instruments.com/fileadmin/ni_media/producer/kontaktsoundpack/SESSION_STRINGS_PRO/audio/02_City_Of_Lights.mp3&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.native-instruments.com/fileadmin/ni_media/producer/kontaktsoundpack/SESSION_STRINGS_PRO/audio/02_City_Of_Lights.mp3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Cinematic Studio Strings&lt;/strong&gt; &lt;em&gt;New Dawn&lt;/em&gt;, by Alex Walbank&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://cinematicstudioseries.com/wp-content/uploads/2020/01/alex-wallbank-new-dawn.mp3&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://cinematicstudioseries.com/wp-content/uploads/2020/01/alex-wallbank-new-dawn.mp3&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;The same of course applies for other instruments as well!&lt;/p&gt;
+&lt;h2 id=&#34;programming-as-orchestrating&#34;&gt;Programming as Orchestrating
+&lt;/h2&gt;&lt;p&gt;Programming can also involve orchestration—splitting a general &amp;ldquo;legato strings&amp;rdquo; into a different tracks for first chair, first violins, second violins, etc. The process is similar to taking a piano score and setting it for orchestra!&lt;/p&gt;
+&lt;h2 id=&#34;refining-sound-via-midi&#34;&gt;Refining Sound via MIDI
+&lt;/h2&gt;&lt;p&gt;Most libraries respect certain CC values to mean certain things by convention.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Long/legato patches
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;CC1&lt;/code&gt; = dynamics or dynamic layer. Also known as &lt;code&gt;modulation&lt;/code&gt; or &lt;code&gt;mod&lt;/code&gt;. The value of CC1 will choose the appropriate sample (and/or crossfade samples, depending on how many samples it has) for the dynamic level you want. Think sfzorando vs. piano vs. pizzacatto.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;CC11&lt;/code&gt; = expression. Technically speaking, CC11 is a volume control that shapes the sample already chosen by the dynamic layer. It&amp;rsquo;s like a second-order dynamics shaper within the CC1 sample chosen. Also called phrase shaping.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Short patches/articulations
+&lt;ul&gt;
+&lt;li&gt;Controlled by MIDI &lt;code&gt;velocity&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Typically you would broadly define the shape of a legato phrase with &lt;code&gt;CC1&lt;/code&gt; and micro changes with &lt;code&gt;CC11&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For example if you&amp;rsquo;re at &lt;code&gt;CC1&lt;/code&gt; = 70 which is mezzoforte, &lt;code&gt;CC11&lt;/code&gt; values 0-127 will go from no volume up to mezzo forte. &lt;code&gt;CC11&lt;/code&gt; can be used for breaths between notes or rounding off each note, depends how detailed you want to get.&lt;/p&gt;
+&lt;h2 id=&#34;logic-x-midi-programming-techniques&#34;&gt;Logic X MIDI Programming Techniques
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;CC11&lt;/code&gt; isn&amp;rsquo;t super necessary for CSS&lt;/li&gt;
+&lt;li&gt;Split legato and staccatto passages on different tracks&lt;/li&gt;
+&lt;li&gt;Match the &lt;code&gt;velocity&lt;/code&gt; of stacatto to the &lt;code&gt;CC1&lt;/code&gt; modulation levels of legato if playing at the same time&lt;/li&gt;
+&lt;li&gt;Copy &lt;code&gt;CC1&lt;/code&gt; levels to other tracks by copying the region and then deleting the notes after&lt;/li&gt;
+&lt;li&gt;Merge &lt;code&gt;modulation&lt;/code&gt; across tracks by selection regions and pressing &lt;code&gt;J&lt;/code&gt;. Only works if there isn&amp;rsquo;t mod data in the other regions though.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;scripting-changes-with-the-thanos-plugin&#34;&gt;Scripting Changes with the Thanos Plugin
+&lt;/h2&gt;&lt;p&gt;Adjusting notes manually in Logic X via the Piano Roll looks something like this. Convenient for a passage here or there, but imagine this x15 and say hello to mental fatigue and carpal tunnel syndrome.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2020/programming-midi-instruments-explained/logic-midi-programming-manual.gif&#34;
+	width=&#34;1860&#34;
+	height=&#34;1063&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Adjusting MIDI Automation in Logic X using the Piano Roll&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;174&#34;
+		data-flex-basis=&#34;419px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;On the other hand, scripting changes looks like this. Obama says it all.&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=CBwcuBjVK4U&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.youtube.com/watch?v=CBwcuBjVK4U&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;More on the Thanos plugin for Cinematic Studio Strings on the official forum page &lt;a class=&#34;link&#34; href=&#34;https://vi-control.net/community/threads/free-permanent-fix-for-css-legato.71972/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;negative-delays-for-attack-transients&#34;&gt;Negative Delays for Attack Transients
+&lt;/h2&gt;&lt;p&gt;As mentioned in the video, the Thanos script also adjusts the delay of the notes so that they speak on the beat they were quantized on. This was something I didn&amp;rsquo;t realize at first, until certain formerly snappy Session Strings passages started dragging (hence the &lt;a class=&#34;link&#34; href=&#34;#tradeoffs-of-sample-libraries&#34; &gt;discussion on tradeoffs above&lt;/a&gt; on how simpler libraries are easier to prototype with)!&lt;/p&gt;
+&lt;p&gt;Reading the CSS Manual:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When a musician transitions from one note to another, there is a subtle timbral and dynamic shift as the players prepare for the new note. This effect can be heard while listening to a solo bassoon or a group of violins, and is a crucial factor in creating a realistic sounding performance with samples. CSS has been programmed to include these subtle swells before each new triggered legato note, and the end result is a smooth, expressive sound. In practical terms, this means there is a delay whenever you trigger a new legato note in any CSS instrument. The amount of delay is determined by the velocity at which you play each new legato note. There are three velocity zones: 0-64, 65-100, and 101-127, which correspond to three legato speeds respectively: slow, medium and fast, as pictured below.&lt;/p&gt;
+&lt;p&gt;Slow has the most delay, approximately 1/3 of a second (333ms), medium is about 1/4s (250ms), and fast has a small delay - approximately 100ms. &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;And for fast notes:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Please note that there is a short delay of 60ms from the beginning of the short note samples to their “rhythmic peak.” We left this in the samples intentionally as we believe this adds a significant degree of realism, and most importantly, it ensures that the timing across all short note types is consistent. So make sure you account for this when quantising short note tracks, either by applying a negative 60ms delay to the whole track, or moving the the notes back manually. &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;references&#34;&gt;References
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;For a good read see this NY Times article &lt;a class=&#34;link&#34; href=&#34;https://www.nytimes.com/2019/01/17/arts/music/stradivarius-sound-bank-recording-cremona.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;To Save the Sound of a Stradivarius, a Whole City Must Keep Quiet&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Logic Prompt Hidden Behind Finder Window Workaround</title>
+        <link>http://localhost:1313/post/audio/2019/logic-prompt-hidden-behind-finder-window-workaround/</link>
+        <pubDate>Tue, 15 Oct 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/logic-prompt-hidden-behind-finder-window-workaround/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;Sometimes, if I replace/relink an audio file during launch, the project seems to hang without loading.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/logic-prompt-hidden-behind-finder-window-workaround/relinking-files-logic-hidden-prompt-1.png&#34;
+	width=&#34;763&#34;
+	height=&#34;400&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;190&#34;
+		data-flex-basis=&#34;457px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/logic-prompt-hidden-behind-finder-window-workaround/relinking-files-logic-hidden-prompt-2.png&#34;
+	width=&#34;1161&#34;
+	height=&#34;545&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;213&#34;
+		data-flex-basis=&#34;511px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;What is actually happening is there is another dialog prompt (for another missing file) but it is hidden behind the Finder prompt!&lt;/p&gt;
+&lt;h2 id=&#34;workaround-ratchet&#34;&gt;Workaround (Ratchet)
+&lt;/h2&gt;&lt;p&gt;Move the Finder dialog &lt;em&gt;off to the side&lt;/em&gt; selecting a file with &lt;code&gt;Open&lt;/code&gt;. That way, the dialog will appear in the usual place and you can still see it. Press &lt;code&gt;Use&lt;/code&gt; to continue.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/logic-prompt-hidden-behind-finder-window-workaround/relinking-files-logic-hidden-prompt-3.png&#34;
+	width=&#34;1584&#34;
+	height=&#34;1440&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;110&#34;
+		data-flex-basis=&#34;264px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;If you have multiple files that need relinking, be careful to move the dialogs away in a consistent manner—otherwise it may look like this!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/logic-prompt-hidden-behind-finder-window-workaround/relinking-files-logic-hidden-prompt-4.png&#34;
+	width=&#34;2482&#34;
+	height=&#34;1440&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;172&#34;
+		data-flex-basis=&#34;413px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;notes&#34;&gt;Notes
+&lt;/h2&gt;&lt;p&gt;This post was an extension of &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/post/audio/2019/replace-audio-in-logic/&#34; &gt;Replacing/Relinking Audio Files in Logic&lt;/a&gt;.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Individually Calibrated HD 650s</title>
+        <link>http://localhost:1313/post/audio/2019/sonarworks-headphones-calibration-audition/</link>
+        <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/sonarworks-headphones-calibration-audition/</guid>
+        <description>&lt;h2 id=&#34;tldr&#34;&gt;TL;DR
+&lt;/h2&gt;&lt;p&gt;Do individually calibrated headphones from Sonarworks make a difference? Yea!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Stereo imaging is clearer&lt;/li&gt;
+&lt;li&gt;Vocals are not over-pronounced&lt;/li&gt;
+&lt;li&gt;Bass (especially in &amp;lt;= 200Hz range) is clearer/louder&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Is it worth the $149? IMO yes, especially because of how it cleans up the sound. (It is worth noting that not all headphones normalize with EQ calibration well, but the HD 650s do.)&lt;/p&gt;
+&lt;h2 id=&#34;calibration-curves&#34;&gt;Calibration Curves
+&lt;/h2&gt;&lt;p&gt;Below is a comparison of the average calibration curve to the individually tailored one.&lt;/p&gt;
+&lt;p&gt;The corrections in the 10kHz range are particularly interesting!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Sonarworks&amp;rsquo; Average of all HD650s Calibrated&lt;/strong&gt;
+&lt;a class=&#34;link&#34; href=&#34;sonarworks-hd650-average.png&#34; &gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/sonarworks-headphones-calibration-audition/sonarworks-hd650-average.png&#34;
+	width=&#34;1340&#34;
+	height=&#34;730&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;183&#34;
+		data-flex-basis=&#34;440px&#34;
+	
+&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Individually Calibrated L/R&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;sonarworks-hd650-custom-1.png&#34; &gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/sonarworks-headphones-calibration-audition/sonarworks-hd650-custom-1.png&#34;
+	width=&#34;1340&#34;
+	height=&#34;730&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;183&#34;
+		data-flex-basis=&#34;440px&#34;
+	
+&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Individually Calibrated L Only&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;sonarworks-hd650-custom-2.png&#34; &gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/sonarworks-headphones-calibration-audition/sonarworks-hd650-custom-2.png&#34;
+	width=&#34;1340&#34;
+	height=&#34;730&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;183&#34;
+		data-flex-basis=&#34;440px&#34;
+	
+&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Individually Calibrated R Only&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;sonarworks-hd650-custom-3.png&#34; &gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/sonarworks-headphones-calibration-audition/sonarworks-hd650-custom-3.png&#34;
+	width=&#34;1340&#34;
+	height=&#34;730&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;183&#34;
+		data-flex-basis=&#34;440px&#34;
+	
+&gt;&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Thoughts on Headphone Amplifiers - Should I Get One?</title>
+        <link>http://localhost:1313/post/audio/2019/thoughts-on-headphone-amplifiers/</link>
+        <pubDate>Mon, 14 Oct 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/thoughts-on-headphone-amplifiers/</guid>
+        <description>&lt;h2 id=&#34;tldr&#34;&gt;TL;DR
+&lt;/h2&gt;&lt;p&gt;Should I get one? Probably not for 300 Ohm headphones.&lt;/p&gt;
+&lt;h2 id=&#34;an-analysis-of-impedance&#34;&gt;An Analysis of Impedance
+&lt;/h2&gt;&lt;p&gt;Below is a conversation I had with a friend who asked me if I used a DAC for my HD 650 mixing headphones.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;I do have a DAC (Apogee One) and was experimenting between using it and my MacBook/iMac&amp;rsquo;s output. Kinda can&amp;rsquo;t hear a differece yet in audio quality.&lt;/p&gt;
+&lt;p&gt;The output impedance (of the computer/audio jack) must always be lower than the consumer&amp;rsquo;s (headphone&amp;rsquo;s) impedance. This priciple also true in live sound: when plugging a mic into a mixer, the mic&amp;rsquo;s impedance must be lower than the mixer&amp;rsquo;s receiving impedance—otherwise you use a DI box.&lt;/p&gt;
+&lt;p&gt;The rule of thumb for this ratio is a factor of 8. Most consumer headphones have an impedance of 16-32 ohms, so the output impedance of the MBP&amp;rsquo;s/iMac&amp;rsquo;s jack is probably 2-4 ohms.&lt;/p&gt;
+&lt;p&gt;If the ratio is not safe—suppose the MBP jack had an output impedance of 10 ohms—then &lt;em&gt;the frequency response will be altered&lt;/em&gt; in the headphones. This could lead to a different spatial response/altered EQ/etc. and depends on the actual headphone design.&lt;/p&gt;
+&lt;p&gt;In comparison, the HD 650 has a nominal impedance of 300 Ohms — so it&amp;rsquo;s ratio is 100x! Quite safe from distortion there.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;What you/I will notice is that for the same volume setting on the laptop, the volume will be sofer on the HD650s — because of the nearly 100x impedance ratio. It requires more power to drive it. But as long as it&amp;rsquo;s loud enough, I think you will be fine.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Hi end mixing headphones have high impedances for the same reason high quality guitar mics have high impedances — they have more coils in the wire, allowing for a better high frequency response. Having the high impedance also makes them conistent—no matter what they&amp;rsquo;re plugged into, they easily meet the rule of thumb of 8x, so the sound will be identical with no distortion.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Headphone amps work the other way: they basically create a near zero output impedance so that no matter what headphones you use, there will be no distortion.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;additional-reading&#34;&gt;Additional Reading
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://nwavguy.blogspot.com/2011/02/headphone-amp-impedance.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://nwavguy.blogspot.com/2011/02/headphone-amp-impedance.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://nwavguy.blogspot.com/2011/02/gain-and-headphone-ampsdacs.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://nwavguy.blogspot.com/2011/02/gain-and-headphone-ampsdacs.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>How to Install Individual Plugins from a of Waves Bundle</title>
+        <link>http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/</link>
+        <pubDate>Mon, 30 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;Purchased a Waves bundle. Only want to install three plugins.&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Don&amp;rsquo;t choose Easy Install&lt;/li&gt;
+&lt;li&gt;Select &lt;code&gt;Install Products&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;code&gt;All Waves Products&lt;/code&gt; and choose the plugins you want&lt;/li&gt;
+&lt;li&gt;Navigate to &lt;code&gt;Manage Licenses&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Activate your bundle&amp;rsquo;s license&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;screenshots&#34;&gt;Screenshots
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/waves-plugins-install-1.png&#34;
+	width=&#34;1132&#34;
+	height=&#34;864&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;131&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/waves-plugins-install-2.png&#34;
+	width=&#34;1132&#34;
+	height=&#34;864&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;131&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/waves-plugins-install-3.png&#34;
+	width=&#34;1132&#34;
+	height=&#34;864&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;131&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/waves-plugins-install-4.png&#34;
+	width=&#34;1132&#34;
+	height=&#34;864&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;131&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Plugin not Visible in Logic Project</title>
+        <link>http://localhost:1313/post/audio/2019/plugin-loaded-but-not-visible/</link>
+        <pubDate>Mon, 30 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/plugin-loaded-but-not-visible/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;I know this project is using a plugin, because it requires it when the project loads (&lt;code&gt;Kontakt 5&lt;/code&gt;). However in the mixer I can&amp;rsquo;t find any Kontakt instruments!&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;The track using the plugin is probably hidden. Toggle &lt;code&gt;All&lt;/code&gt; in the mixer console to see hidden tracks.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/plugin-loaded-but-not-visible/plugin-on-hidden-tracks-1.png&#34;
+	width=&#34;239&#34;
+	height=&#34;228&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;104&#34;
+		data-flex-basis=&#34;251px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Alternatively, unhide the tracks by pressing &lt;code&gt;H&lt;/code&gt; or clicking the &lt;code&gt;H&lt;/code&gt; button in the Main Window.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/plugin-loaded-but-not-visible/plugin-on-hidden-tracks-2.png&#34;
+	width=&#34;210&#34;
+	height=&#34;205&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;102&#34;
+		data-flex-basis=&#34;245px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Unable to Find Slate FG-224 and FG-224XL Plugins</title>
+        <link>http://localhost:1313/post/audio/2019/missing-slate-plugins/</link>
+        <pubDate>Mon, 30 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/missing-slate-plugins/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;Installed VerbSuite via a Slate Digital All-Access plan. Two errors show up when Logic scans the plugin in.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/missing-slate-plugins/verb-suite-error-1.png&#34;
+	width=&#34;432&#34;
+	height=&#34;152&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;284&#34;
+		data-flex-basis=&#34;682px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/missing-slate-plugins/verb-suite-error-2.png&#34;
+	width=&#34;430&#34;
+	height=&#34;152&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;282&#34;
+		data-flex-basis=&#34;678px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;I don&amp;rsquo;t have a Gobbler account, so I couldn&amp;rsquo;t follow the guide on Slate&amp;rsquo;s FAQ page &lt;a class=&#34;link&#34; href=&#34;https://slatedigital.zendesk.com/hc/en-us/articles/115005085188-How-To-Access-the-VerbSuite-FG-224-Expansion-Installers&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;How To Access the VerbSuite FG-224 Expansion Installers&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;Contacted Slate support and they provided me with direct links for the VerbSuite Expansion installers in one business day.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Unhelpful Missing Kontakt Instrument Message Explained</title>
+        <link>http://localhost:1313/post/audio/2019/missing-kontakt-instrument-name-explained/</link>
+        <pubDate>Mon, 30 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/missing-kontakt-instrument-name-explained/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;Sometimes Logic is very helpful when a missing Kontakt instrument is missing.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/missing-kontakt-instrument-name-explained/kontakt-library-missing-1.png&#34;
+	width=&#34;532&#34;
+	height=&#34;293&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;181&#34;
+		data-flex-basis=&#34;435px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Other times, it is not!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/missing-kontakt-instrument-name-explained/kontakt-library-missing-2.png&#34;
+	width=&#34;532&#34;
+	height=&#34;265&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;200&#34;
+		data-flex-basis=&#34;481px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;How to determine which instrument is missing?&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;Unfortunately, this seems to be because of third party instruments. You might have some luck with the approach described in &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/&#34; &gt;How to Decode Shortened Plugin Names in Logic&lt;/a&gt; but otherwise ask the person whose project you&amp;rsquo;re opening.&lt;/p&gt;
+&lt;p&gt;In this case, it turned out to be instruments from the &lt;strong&gt;Cinematic Studio&lt;/strong&gt; series.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>How to Decode Shortened Plugin Names in Logic</title>
+        <link>http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/</link>
+        <pubDate>Wed, 25 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;Loading a project from a friend. Logic says it can&amp;rsquo;t find a plugin, but the plugin name is abbreviated! How to find out what it is?&lt;/p&gt;
+&lt;p&gt;For example is &lt;code&gt;Supercharge&lt;/code&gt; Supercharger or Supercharger GT? Which version is &lt;code&gt;Guitar Rig &lt;/code&gt; (note the space at the end)?&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/shortened-plugin-names-1.png&#34;
+	width=&#34;912&#34;
+	height=&#34;855&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;106&#34;
+		data-flex-basis=&#34;256px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;Open the bundled &lt;code&gt;ProjectData&lt;/code&gt; file in a text editor and perform a case sensitive search. The file is technically an encrypted SQLite database, so it needs to be interpreted as ASCII. Many of the columns appear to be unencrypted making search possible.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Right click the Logic project&lt;/li&gt;
+&lt;li&gt;Select &lt;code&gt;Show Package Contents&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Go into the &lt;code&gt;Alternatives&lt;/code&gt; folder and find the corresponding version folder (&lt;code&gt;000&lt;/code&gt;, &lt;code&gt;001&lt;/code&gt;, etc.)&lt;/li&gt;
+&lt;li&gt;Copy the &lt;code&gt;ProjectData&lt;/code&gt; file to your Desktop (to be safe)&lt;/li&gt;
+&lt;li&gt;Open &lt;code&gt;ProjectData&lt;/code&gt; from your Desktop in your favorite code editor (Atom, VSCode, etc.)
+&lt;ul&gt;
+&lt;li&gt;TextEdit will work but may be slow&lt;/li&gt;
+&lt;li&gt;I perfer a text editor over a hex editor because of the syntax highlighting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note: since this a hack, YMMV. For example &lt;code&gt;iZotope Ozo&lt;/code&gt; turned out to be iZotope Ozone 7 Advanced, and I only determined that through manual trial and error by installing various trial versions.&lt;/p&gt;
+&lt;h2 id=&#34;screenshots&#34;&gt;Screenshots
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/shortened-plugin-names-2.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;989&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;252px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/shortened-plugin-names-3.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;989&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;252px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/shortened-plugin-names-4.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;989&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;252px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/shortened-plugin-names-5.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;989&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;252px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.logicprohelp.com/forum/viewtopic.php?t=126933&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.logicprohelp.com/forum/viewtopic.php?t=126933&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Don&#39;t Melodyne Vocals with Polyphonic</title>
+        <link>http://localhost:1313/post/audio/2019/dont-melodyne-vocal-with-polyphonic/</link>
+        <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/dont-melodyne-vocal-with-polyphonic/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;The Melodyne 4 Trial defaults to the &lt;code&gt;Polyphonic&lt;/code&gt; algorithm when loading a new file. Only noticed the artifacts after making a bunch of edits.&lt;/p&gt;
+&lt;p&gt;Notice how it almost sounds like a chord (i.e. polyphony) at the end of each phrase.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;Don&amp;rsquo;t use the &lt;code&gt;Polyphonic&lt;/code&gt; algorithm for vocal editing. Use &lt;code&gt;Melodic&lt;/code&gt; instead.&lt;/p&gt;
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;p&gt;Note: there is a setting in the menu bar so set the default algorithm, but it doesn&amp;rsquo;t seem to persist after quitting the application.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/dont-melodyne-vocal-with-polyphonic/melodyne-algorithm-vocal.png&#34;
+	width=&#34;595&#34;
+	height=&#34;297&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;200&#34;
+		data-flex-basis=&#34;480px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Melodyne Comparison Chart</title>
+        <link>http://localhost:1313/post/audio/2019/melodyne-comparison-chart/</link>
+        <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/melodyne-comparison-chart/</guid>
+        <description>&lt;p&gt;Not sure why something like this isn&amp;rsquo;t on Celemony&amp;rsquo;s site, but PluginFox has a nice comparison chart.&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://pluginfox.co/pages/compare-melodyne-versions&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://pluginfox.co/pages/compare-melodyne-versions&lt;/a&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Try Melodyne Pitch First with Speakers</title>
+        <link>http://localhost:1313/post/audio/2019/melodyne-with-speakers/</link>
+        <pubDate>Tue, 24 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/melodyne-with-speakers/</guid>
+        <description>&lt;h2 id=&#34;observation&#34;&gt;Observation
+&lt;/h2&gt;&lt;p&gt;This may sound really weird, but I find the built-in iMac speakers are nicer for adjusting pitch than mixing headphones. Some headphones smooth things out and make it harder to identify intonation issues.&lt;/p&gt;
+&lt;p&gt;Using speakers also helps prevent ear fatigue too—which is really important to me.&lt;/p&gt;
+&lt;p&gt;Mixing headphones are a must though for clinically reviewing the edits after. I only caught the issues documented in &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/post/audio/2019/dont-melodyne-vocal-with-polyphonic/&#34; &gt;Don&amp;rsquo;t Melodyne Vocals with Polyphonic&lt;/a&gt; because of good mixing headphones (HD 650)!&lt;/p&gt;
+&lt;h2 id=&#34;workflow&#34;&gt;Workflow
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Use speakers to Melodyne intonation
+&lt;ul&gt;
+&lt;li&gt;Use a shruti box/tanpura app in the background for raaga-based music&lt;/li&gt;
+&lt;li&gt;Optionally use a tone generator for reference.&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; The tone generator&amp;rsquo;s sound is very similar to the Melodyne note preview (click and hold)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Verify&lt;/em&gt; the exports afterwards using mixing headphones&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;A customized 22 shruti Peterson Sweetener for Indian raagas 
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://player.vimeo.com/video/319689989&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;vimeo video&#34; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Cannot Find Battery Libraries Over and Over</title>
+        <link>http://localhost:1313/post/audio/2019/cannot-find-battery-libraries-over-and-over/</link>
+        <pubDate>Tue, 17 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/cannot-find-battery-libraries-over-and-over/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;This message keeps coming, even though the Battery 4 plugin and library is installed and I point it to the folder.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/cannot-find-battery-libraries-over-and-over/battery-loading-1.png&#34;
+	width=&#34;802&#34;
+	height=&#34;522&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;battery loading prompt in logic&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;153&#34;
+		data-flex-basis=&#34;368px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;Turns out the dialog will appear for each plugin &lt;em&gt;instance&lt;/em&gt; in the project.&lt;/p&gt;
+&lt;p&gt;First make sure the libraries can be loaded.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open the standalone &lt;strong&gt;Battery 4&lt;/strong&gt; app (in &lt;code&gt;/Applications&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Have it scan your library files (e.g. &lt;code&gt;/Users/Shared/Battery 4 Factory Library&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;There&amp;rsquo;s now a bunch of kits visible. Close the application.
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/cannot-find-battery-libraries-over-and-over/battery-loading-2.png&#34;
+	width=&#34;1288&#34;
+	height=&#34;784&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;kits loaded in battery standalone application&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;164&#34;
+		data-flex-basis=&#34;394px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Then select &lt;code&gt;Apply to other Battery Instances&lt;/code&gt; &lt;strong&gt;first&lt;/strong&gt; and use &lt;code&gt;Point to Folder&lt;/code&gt;. It will automatically apply the same settings.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/cannot-find-battery-libraries-over-and-over/battery-loading-3.gif&#34;
+	width=&#34;1703&#34;
+	height=&#34;861&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;battery recursive settings&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;197&#34;
+		data-flex-basis=&#34;474px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Once the project is saved, the settings will persist.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Include Mixer Changes to the Undo History</title>
+        <link>http://localhost:1313/post/audio/2019/include-mixer-to-undo-history/</link>
+        <pubDate>Mon, 16 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/include-mixer-to-undo-history/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;⌘Z doesn&amp;rsquo;t undo Mixer changes!&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;It&amp;rsquo;s disabled by default, although Logic is still recording everything in the background.&lt;/p&gt;
+&lt;p&gt;Click &amp;ldquo;Include Mixer Undo Steps in Project Undo History” under the Mixer&amp;rsquo;s Edit menu.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/include-mixer-to-undo-history/enable-mixer-undo.png&#34;
+	width=&#34;861&#34;
+	height=&#34;538&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;enabling mixer undo history&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://support.apple.com/en-us/HT208438&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://support.apple.com/en-us/HT208438&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Replacing/Relinking Audio Files in Logic</title>
+        <link>http://localhost:1313/post/audio/2019/replace-audio-in-logic/</link>
+        <pubDate>Mon, 16 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/replace-audio-in-logic/</guid>
+        <description>&lt;h2 id=&#34;use-cases&#34;&gt;Use Cases
+&lt;/h2&gt;&lt;p&gt;Round tripping audio edits between workstations. Renaming the file helps with version control.&lt;/p&gt;
+&lt;h2 id=&#34;method&#34;&gt;Method
+&lt;/h2&gt;&lt;p&gt;This is like &amp;ldquo;Relinking Files&amp;rdquo; in video editing.&lt;/p&gt;
+&lt;ol start=&#34;5&#34;&gt;
+&lt;li&gt;Find the original file in the &lt;code&gt;Audio Files&lt;/code&gt; folder&lt;/li&gt;
+&lt;li&gt;Zip it up&lt;/li&gt;
+&lt;li&gt;Delete it&lt;/li&gt;
+&lt;li&gt;Close the Project (because the file is already loaded in RAM)&lt;/li&gt;
+&lt;li&gt;Reopen the Project&lt;/li&gt;
+&lt;li&gt;A warning will appear saying the file is missing &lt;img src=&#34;http://localhost:1313/post/audio/2019/replace-audio-in-logic/relinking-files-logic-1.png&#34;
+	width=&#34;763&#34;
+	height=&#34;400&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;190&#34;
+		data-flex-basis=&#34;457px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;strong&gt;Locate&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Choose the new file &lt;img src=&#34;http://localhost:1313/post/audio/2019/replace-audio-in-logic/relinking-files-logic-2.png&#34;
+	width=&#34;824&#34;
+	height=&#34;560&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;147&#34;
+		data-flex-basis=&#34;353px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;li&gt;A confirmation window will appear saying the file is changed &lt;img src=&#34;http://localhost:1313/post/audio/2019/replace-audio-in-logic/relinking-files-logic-3.png&#34;
+	width=&#34;532&#34;
+	height=&#34;285&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;186&#34;
+		data-flex-basis=&#34;448px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.logicprohelp.com/forum/viewtopic.php?t=71041&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.logicprohelp.com/forum/viewtopic.php?t=71041&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>System Overload Tips for Mixing</title>
+        <link>http://localhost:1313/post/audio/2019/system-overload-tips/</link>
+        <pubDate>Mon, 16 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/system-overload-tips/</guid>
+        <description>&lt;h2 id=&#34;shortlist&#34;&gt;Shortlist
+&lt;/h2&gt;&lt;p&gt;Again this is for mixing only—not recording.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Increase &lt;strong&gt;Buffer Size&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Increase &lt;strong&gt;Process Buffer Range&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Remove Inputs&lt;/strong&gt; to Audio Tracks (not from buses/submixes)&lt;/li&gt;
+&lt;li&gt;Ensure a &lt;strong&gt;non Software-Instrument Track&lt;/strong&gt; is selected&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Freeze&lt;/strong&gt; Tracks (aka defeat). Move project to an SSD for max disk performance&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://whylogicprorules.com/system-overloads/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://whylogicprorules.com/system-overloads/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Using Basic Automation in Logic X</title>
+        <link>http://localhost:1313/post/audio/2019/basic-daw-automation/</link>
+        <pubDate>Mon, 16 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/basic-daw-automation/</guid>
+        <description>&lt;h2 id=&#34;what-it-is&#34;&gt;What It Is
+&lt;/h2&gt;&lt;p&gt;Automation in audio editing is like keyframes in video editing. It allows for parametrization of any effect you can think of — volume, panning, etc.&lt;/p&gt;
+&lt;h2 id=&#34;open-automation&#34;&gt;Open Automation
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Press &lt;code&gt;a&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Expand the track if you don&amp;rsquo;t see the automation curve/data&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;modes&#34;&gt;Modes
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;By hand - using the &lt;strong&gt;Pencil Tool&lt;/strong&gt; to draw in your automation (works in any mode)&lt;/li&gt;
+&lt;li&gt;By feel - &lt;strong&gt;Touch mode&lt;/strong&gt; (falls back to existing curve once released)&lt;/li&gt;
+&lt;li&gt;By feel - &lt;strong&gt;Latch mode&lt;/strong&gt; (overwrites everything to the right once released)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://support.apple.com/kb/PH13171&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://support.apple.com/kb/PH13171&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://support.apple.com/kb/PH13172&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://support.apple.com/kb/PH13172&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>iLok Cloud Basics</title>
+        <link>http://localhost:1313/post/audio/2019/ilok-cloud-basics/</link>
+        <pubDate>Sun, 15 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/ilok-cloud-basics/</guid>
+        <description>&lt;h2 id=&#34;tldr&#34;&gt;TL;DR
+&lt;/h2&gt;&lt;p&gt;When you log into iLok Cloud on one machine, it automatically logs you out of the other machine.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open iLok License Manager and Sign In&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Open Cloud Session&lt;/code&gt; (⌘⇧C)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;about-ilok-cloud&#34;&gt;About iLok Cloud
+&lt;/h2&gt;&lt;p&gt;iLok Cloud is only supported by some plugins. For example Slate&amp;rsquo;s plugins do, but Anteres Auto Tune does not (yet).&lt;/p&gt;
+&lt;p&gt;With a Cloud session the iLok USB dongle is not necessary, but the machine needs to be continously connected to the internet, because it keeps polling every few minutes.&lt;/p&gt;
+&lt;p&gt;You can opt to use the USB dongle instead by selecting &lt;code&gt;Close Cloud Session&lt;/code&gt; and then activating it to a physical iLok device instead.&lt;/p&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://slatedigital.zendesk.com/hc/en-us/articles/360009910054-Activate-and-Use-my-Plugins-with-iLok-Cloud&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://slatedigital.zendesk.com/hc/en-us/articles/360009910054-Activate-and-Use-my-Plugins-with-iLok-Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Soundtoys Remove Unneeded Formats</title>
+        <link>http://localhost:1313/post/audio/2019/soundtoys-au-only-install/</link>
+        <pubDate>Sun, 15 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/soundtoys-au-only-install/</guid>
+        <description>&lt;p&gt;Soundtoys 5 installs all plugin formats to the following locations. It has no customize option.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;AAX:	/Library/Application Support/Avid/Audio/Plug-Ins/Soundtoys/
+AU:	/Library/Audio/Plug-Ins/Components/
+VST:	/Library/Audio/Plug-Ins/VST/Soundtoys/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Manually delete the AAX and VST versions using Finder after the install if you only need AU.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Unable to Turn Plugin On/Off in Logic ❄️</title>
+        <link>http://localhost:1313/post/audio/2019/unable-to-edit-plugin-track/</link>
+        <pubDate>Sun, 15 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/unable-to-edit-plugin-track/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;Can&amp;rsquo;t turn on/off a plugin (another person&amp;rsquo;s project). The edit window also doesn&amp;rsquo;t appear.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/unable-to-edit-plugin-track/plugin-freeze-1.gif&#34;
+	width=&#34;528&#34;
+	height=&#34;356&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Cannot turn off a plugin&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;The track is freezed. Unfreeze the track.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/unable-to-edit-plugin-track/plugin-freeze-2.gif&#34;
+	width=&#34;966&#34;
+	height=&#34;782&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Unfreeze a track&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;123&#34;
+		data-flex-basis=&#34;296px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://youtu.be/VP0A2g_hTx8?t=40&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://youtu.be/VP0A2g_hTx8?t=40&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Which Plugin Format for Logic X</title>
+        <link>http://localhost:1313/post/audio/2019/which-plugin-type-for-logic/</link>
+        <pubDate>Sat, 14 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/which-plugin-type-for-logic/</guid>
+        <description>&lt;h2 id=&#34;tldr&#34;&gt;TL;DR
+&lt;/h2&gt;&lt;p&gt;When installing plugins for LogicPro X, only Audio Unit (AU) is needed.&lt;/p&gt;
+&lt;h2 id=&#34;breakdown&#34;&gt;Breakdown
+&lt;/h2&gt;&lt;p&gt;Slate&amp;rsquo;s installer actually has awesome descriptions of various formats!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/which-plugin-type-for-logic/plugin-formats.png&#34;
+	width=&#34;732&#34;
+	height=&#34;550&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;slate_plugin_formats_description&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AAX Pro Tools plugin format, Pro Tools 10 (32 bit) and later (64 bit)
+&lt;ul&gt;
+&lt;li&gt;RTAS is for older Pro Tools&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;AudioUnit is Apple&amp;rsquo;s plugin format, used in Logic, Studio One, Ableton Live and many more.
+&lt;ul&gt;
+&lt;li&gt;This is what Audio Hijack uses as well.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;VST [aka VST2] is Steinberg&amp;rsquo;s plugin format, used in Cubase, Studio One, Ableton Live, Reaper and many more.
+&lt;ul&gt;
+&lt;li&gt;The original GOAT. Can be 32 or 64 bit, depending on the plugin.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;VST3 is Steinberg&amp;rsquo;s new plugin format, used in Cubase, Studio One and Wavelab.
+&lt;ul&gt;
+&lt;li&gt;Supported in Ableton Live 10 onwards.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.musicradar.com/tuition/tech/the-quick-guide-to-plugin-formats-and-compatibility-620406&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.musicradar.com/tuition/tech/the-quick-guide-to-plugin-formats-and-compatibility-620406&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Mixing Headphones Audition</title>
+        <link>http://localhost:1313/post/audio/2019/mixing-headphones-audition/</link>
+        <pubDate>Fri, 13 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/mixing-headphones-audition/</guid>
+        <description>&lt;p&gt;&lt;em&gt;Updated Oct 14, 2019 with HD 650s.&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;k701-vs-q701&#34;&gt;K701 vs Q701
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;K701 feels muddier than the Q701. Less clarity in low bass&lt;/li&gt;
+&lt;li&gt;Q701 made the mix sound less boomy than I think it actually is&lt;/li&gt;
+&lt;li&gt;Q701 pulls the vocals out, brighter than K701&lt;/li&gt;
+&lt;li&gt;Q701 appears to have slightly higher impedance (sounds softer for same volume setting)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Kind of feel like I can&amp;rsquo;t trust either yet. Need to try another model.&lt;/p&gt;
+&lt;h2 id=&#34;dt-990-pro-250-ohms&#34;&gt;DT 990 PRO (250 Ohms)
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Bass not muddy! Definitely more powerful though, similar to what I remember in the car&lt;/li&gt;
+&lt;li&gt;Easier to identify areas that need to be balanced&lt;/li&gt;
+&lt;li&gt;This wins over both K701 and Q701&lt;/li&gt;
+&lt;li&gt;I kind of feel like these fatigue my ears slightly faster than the AKGs. The Q701s were easiest to listen to&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;hd-600s&#34;&gt;HD 600s
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Easier than the DT 990 PRO to identify where levels and EQ are not balanced!!
+&lt;ul&gt;
+&lt;li&gt;Endrum Mix_v2 - Transition at 2:46&lt;/li&gt;
+&lt;li&gt;In contrast, the DT 990 PRO smooths this out!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Want to keep this one 💙&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;hd-650s&#34;&gt;HD 650s
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;Not a HUGE jump between this and the 600s&lt;/li&gt;
+&lt;li&gt;Feels nicer on my head than the 600s though&lt;/li&gt;
+&lt;li&gt;Doesn&amp;rsquo;t tire my ears as fast as the 600s — important for long mixing sessions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;My friend described his HD 650 unboxing as:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;When I first put them on, I was actually somewhat unimpressed. I thought to myself, &amp;ldquo;Wow is this it?&amp;rdquo; But then I compared it to my HD 280s (noticed a little difference), put the 650s back on, and the difference was immediately apparent. It was a huge relief actually. Everything just sounds so natural and how it’s supposed to sound. I think that’s why I was initially unimpressed. Everything just sounds like it’s supposed to sound. No extra coloration or anything.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;It&amp;rsquo;s worth noting that &lt;a class=&#34;link&#34; href=&#34;https://www.sonarworks.com/blog/reviews/sennheiser-hd650-review/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Sonarworks has an HD 650 review&lt;/a&gt; and uses the 650s themselves but an HD 600 review isn&amp;rsquo;t present.&lt;/p&gt;
+&lt;p&gt;HD 650 definitely feels like the gold standard. 💙++&lt;/p&gt;
+&lt;h2 id=&#34;eq-curves&#34;&gt;EQ Curves
+&lt;/h2&gt;&lt;p&gt;Soundworks calibration curves for further insight.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/mixing-headphones-audition/curve-k701.gif&#34;
+	width=&#34;900&#34;
+	height=&#34;618&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;k701 calibration curve&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;145&#34;
+		data-flex-basis=&#34;349px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/mixing-headphones-audition/curve-q701.gif&#34;
+	width=&#34;900&#34;
+	height=&#34;618&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;q701 calibration curve&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;145&#34;
+		data-flex-basis=&#34;349px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/mixing-headphones-audition/curve-dt990pro.gif&#34;
+	width=&#34;900&#34;
+	height=&#34;618&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;dt990pro calibration curve&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;145&#34;
+		data-flex-basis=&#34;349px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/mixing-headphones-audition/curve-hd600.gif&#34;
+	width=&#34;900&#34;
+	height=&#34;618&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;hd 600 calibration curve&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;145&#34;
+		data-flex-basis=&#34;349px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>An additional option is required. Enable Surround?</title>
+        <link>http://localhost:1313/post/audio/2019/enabling-surround-for-effects/</link>
+        <pubDate>Thu, 12 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/enabling-surround-for-effects/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;I was surprised by this warning when I was opened a stereo project.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/enabling-surround-for-effects/additional-option-surround.png&#34;
+	width=&#34;532&#34;
+	height=&#34;279&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;190&#34;
+		data-flex-basis=&#34;457px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Turns out an effect was using binaural panning. This means when using headphones, the listener will hear a simulated surround sound (after all you only have two ears for real surround sound too).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/enabling-surround-for-effects/binaural-pan.png&#34;
+	width=&#34;436&#34;
+	height=&#34;547&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;79&#34;
+		data-flex-basis=&#34;191px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Interestingly even with the setting disabled in Preferences, I can still hear the effect with headphones as I drag around the puck&amp;hellip;&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;I&amp;rsquo;m leaving it disabled since I don&amp;rsquo;t need all the actual surround features listed in &lt;a class=&#34;link&#34; href=&#34;https://support.apple.com/kb/PH24627?viewlocale=en_US&amp;amp;locale=en_US&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Logic Pro X: Surround features overview&lt;/a&gt;. Hopefully that&amp;rsquo;ll also make Logic run faster.&lt;/p&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.logicprohelp.com/forum/viewtopic.php?t=123448&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.logicprohelp.com/forum/viewtopic.php?t=123448&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://youtu.be/Xi332sZ4VCc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://youtu.be/Xi332sZ4VCc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

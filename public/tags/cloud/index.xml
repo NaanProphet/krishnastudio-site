@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Cloud on Krishna Bhamidipati</title>
+        <link>http://localhost:1313/tags/cloud/</link>
+        <description>Recent content in Cloud on Krishna Bhamidipati</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Wed, 18 Mar 2020 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/cloud/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Rclone Cloud Archival Pro Tips</title>
+        <link>http://localhost:1313/post/video/2020/rclone-b2-pro-tips/</link>
+        <pubDate>Wed, 18 Mar 2020 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/video/2020/rclone-b2-pro-tips/</guid>
+        <description>&lt;h2 id=&#34;recap&#34;&gt;Recap
+&lt;/h2&gt;&lt;p&gt;The &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/post/video/2020/missing-checksums-with-synology-b2-cloud-sync/&#34; &gt;previous post&lt;/a&gt; detailed how &lt;a class=&#34;link&#34; href=&#34;https://rclone.org&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Rclone&lt;/a&gt; can reliably upload large files with their checksums to Backblaze unlike other programs. This post will outline the workflow and some gotchas to keep in mind when doing massive data loads over the internet.&lt;/p&gt;
+&lt;p&gt;With trial and error, I was able to archive 8 TB of footage from my Synology NAS to Backblaze B2 in about a month.&lt;/p&gt;
+&lt;h2 id=&#34;to-keep-in-mind&#34;&gt;To Keep in Mind
+&lt;/h2&gt;&lt;p&gt;First, the overall workflow.&lt;/p&gt;
+&lt;h3 id=&#34;remote-to-remote-is-possible&#34;&gt;Remote to Remote is Possible
+&lt;/h3&gt;&lt;p&gt;Keep in mind Rsync supports copying between two remotes directly. The computer running Rclone will stream data in RAM as it shuttles data between the two.&lt;/p&gt;
+&lt;p&gt;In fact that&amp;rsquo;s what I mainly did: transferred assets from a personal B2 bucket to the organization&amp;rsquo;s new B2 bucket. Pretty neat!&lt;/p&gt;
+&lt;h3 id=&#34;list-folders-syntax-lsd&#34;&gt;List Folders Syntax: &lt;code&gt;lsd&lt;/code&gt;
+&lt;/h3&gt;&lt;p&gt;After setting up your remote with &lt;code&gt;rclone config&lt;/code&gt;, use the list directory command &lt;code&gt;lsd&lt;/code&gt; to double check your source/target folders.&lt;/p&gt;
+&lt;p&gt;For example, if the B2 remote name is called &lt;code&gt;b2-remote1&lt;/code&gt; then the command to list the root is:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rclone lsd b2-remote1:
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Note the &lt;code&gt;:&lt;/code&gt; at the end.&lt;/p&gt;
+&lt;p&gt;If a folder contains spaces, you use double quotes like this rather than backticks &lt;code&gt;\&lt;/code&gt;.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rclone lsd b2-remote1:Videos/&amp;#34;Subfolder With Spaces/&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Also use trailing forward slashes &lt;code&gt;/&lt;/code&gt; instead of asterisks &lt;code&gt;*&lt;/code&gt; to indicate the files inside.&lt;/p&gt;
+&lt;h3 id=&#34;consider-copy-instead-of-sync&#34;&gt;Consider &lt;code&gt;copy&lt;/code&gt; instead of &lt;code&gt;sync&lt;/code&gt;
+&lt;/h3&gt;&lt;p&gt;From the docs&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rclone copy&lt;/code&gt; - Copy files from source to dest, skipping already copied.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;rclone sync&lt;/code&gt; - Make source and dest identical, modifying destination only.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Depending on your intention, &lt;code&gt;copy&lt;/code&gt; may be better.&lt;/p&gt;
+&lt;h3 id=&#34;expect-errors-and-verify&#34;&gt;Expect Errors and Verify
+&lt;/h3&gt;&lt;p&gt;Although Rclone automatically retries upload errors (by default up to 10 times) there are few reasons why files never get uploaded. See the appendix for various scenarios.&lt;/p&gt;
+&lt;p&gt;Therfore, in a nutshell, always verify your transfer after (&lt;a class=&#34;link&#34; href=&#34;#the-check-command&#34; &gt;see below&lt;/a&gt;).&lt;/p&gt;
+&lt;h3 id=&#34;beware-quota-restrictions&#34;&gt;Beware Quota Restrictions
+&lt;/h3&gt;&lt;p&gt;Unexpected EOF (end of file) errors can occur when streaming from a remote because of Backblaze quota restrictions.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;2018/08/09 16:53:44 DEBUG : CAM A/private/M4ROOT/CLIP/C0001.MP4: Cancelling large file upload due to error: unexpected EOF
+2018/08/09 16:53:45 DEBUG : CAM A/private/M4ROOT/CLIP/C0001.MP4: Received error: unexpected EOF - low level retry 1/10
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;double-check-the-source-supports-and-has-checksums&#34;&gt;Double Check the Source Supports (and has) Checksums
+&lt;/h3&gt;&lt;p&gt;Since Backblaze only supports SHA-1 checksums, the Rclone docs indicate the source must also support SHA-1 checksums.&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;For a large file to be uploaded with an SHA1 checksum, the source needs to support SHA1 checksums. The local disk supports SHA1 checksums so large file transfers from local disk will have an SHA1. See &lt;a class=&#34;link&#34; href=&#34;https://rclone.org/overview/#features&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;the overview&lt;/a&gt; for exactly which remotes support SHA1.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So B2 to B2 syncs should always populate checksums, right? Wrong. It will only &lt;em&gt;if&lt;/em&gt; the source B2 bucket had checksums.&lt;/p&gt;
+&lt;p&gt;As detailed in the &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/post/video/2020/missing-checksums-with-synology-b2-cloud-sync/&#34; &gt;previous post&lt;/a&gt;, that means if the large files were copied with Rclone would they have checksums.&lt;/p&gt;
+&lt;h3 id=&#34;rclone-browser-is-great-but-deprecated-for-local---remote&#34;&gt;Rclone Browser is Great (but Deprecated) for Local &amp;lt;-&amp;gt; Remote
+&lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/mmozeiko/RcloneBrowser&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Rclone Browser&lt;/a&gt; is a wrapper that the same config as the CLI. Rclone Browser does not support direct remote to remote syncs, but it is good for normal use. Unfortunately the program deprecated in favor of the &lt;a class=&#34;link&#34; href=&#34;https://rclone.org/gui/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;WebGUI&lt;/a&gt;, but the latter doesn&amp;rsquo;t let you yet upload things. 🤷🏾‍♂️&lt;/p&gt;
+&lt;p&gt;On Mac, Rclone Browser can be installed with Homebrew via &lt;code&gt;brew cask install rclone-browser&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;-reliability-by--chunk-size-using--ram&#34;&gt;⬆︎ Reliability by ⬆︎ Chunk Size (using ⬆︎ RAM)
+&lt;/h3&gt;&lt;p&gt;The default settings seem to be optimized for small files, like webpages.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Single part upload cutoff of 200 MB&lt;/li&gt;
+&lt;li&gt;Chunk size of 96 MB&lt;/li&gt;
+&lt;li&gt;Four concurrent transfers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For whatever reason, the error rate with these defaults was higher than I expected (&lt;a class=&#34;link&#34; href=&#34;#performance-logs&#34; &gt;see below&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;Instead, I found better stability for large video files with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cutoff of 1G&lt;/li&gt;
+&lt;li&gt;1G &amp;lt;= chunk size &amp;lt;=4G&lt;/li&gt;
+&lt;li&gt;Two concurrent transfers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note that all concurrent chunks are buffered into memory, so there is significantly more RAM usage with larger chunk sizes. Hence the downgrade to two transfers.&lt;/p&gt;
+&lt;p&gt;More specifics in the sync section &lt;a class=&#34;link&#34; href=&#34;#the-sync-command&#34; &gt;below&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;measure-twice-cut-once-dryrun&#34;&gt;Measure Twice, Cut Once: &lt;code&gt;dryrun&lt;/code&gt;
+&lt;/h3&gt;&lt;p&gt;Before discussing the &lt;code&gt;sync&lt;/code&gt; command, it&amp;rsquo;s imperative mention the &lt;code&gt;--dryrun&lt;/code&gt; flag for the following reasons.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Backblaze bills by usage/throughput&lt;/li&gt;
+&lt;li&gt;B2 doesn&amp;rsquo;t support renaming files after they are uploaded&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Therefore, when running &lt;code&gt;rclone sync&lt;/code&gt; always use the &lt;code&gt;--dryrun&lt;/code&gt; option first.&lt;/p&gt;
+&lt;h2 id=&#34;the-sync-command&#34;&gt;The &lt;code&gt;sync&lt;/code&gt; command
+&lt;/h2&gt;&lt;p&gt;My goto &lt;code&gt;sync&lt;/code&gt; (or&lt;code&gt;copy&lt;/code&gt;) command is:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;rclone sync &amp;lt;source&amp;gt; &amp;lt;dest&amp;gt; --exclude .DS_Store -vv --b2-upload-cutoff 1G --b2-chunk-size 1G --transfers 2&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;explanation-of-flags&#34;&gt;Explanation of Flags
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--exclude .DS_Store&lt;/code&gt; to excluding Mac specific files&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-vv&lt;/code&gt; to enable DEBUG logging for visibility into chunk retries, etc.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--b2-upload-cutoff&lt;/code&gt; files above this size will switch to a multipart chunked transfer&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--b2-chunk-size&lt;/code&gt; the size of the chunks, buffered in memory&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--transfers&lt;/code&gt; number of simulatenous transfers. &lt;code&gt;b2-chunk-size&lt;/code&gt; x &lt;code&gt;transfers&lt;/code&gt; must fit in RAM&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;phased-approach-with---max-size&#34;&gt;Phased Approach with &lt;code&gt;--max-size&lt;/code&gt;
+&lt;/h3&gt;&lt;p&gt;Sometimes I found it helpful to transfer all files under a certain size limit first, say 1 GB, and then re-run the command for larger files.&lt;/p&gt;
+&lt;p&gt;To do so, add &lt;code&gt;--max-size 1G&lt;/code&gt; to the &lt;code&gt;rclone sync&lt;/code&gt; command.&lt;/p&gt;
+&lt;h2 id=&#34;the-check-command&#34;&gt;The &lt;code&gt;check&lt;/code&gt; command
+&lt;/h2&gt;&lt;p&gt;Always verify after a sync. Even if you think you don&amp;rsquo;t need to. The command is straightforward:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;rclone check &amp;lt;source&amp;gt; &amp;lt;dest&amp;gt; --exclude .DS_Store&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;If there are discrepancies the output will look like:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;2018/09/05 07:45:04 ERROR : CAM 2/AVF_INFO/AVIN0001.BNP: File not in Local file system at /Volumes/Scratch/ToB2
+2018/09/05 07:45:04 ERROR : CAM 2/AVF_INFO/AVIN0001.INP: File not in Local file system at /Volumes/Scratch/ToB2
+2018/09/05 07:45:04 ERROR : CAM 2/AVF_INFO/AVIN0001.INT: File not in Local file system at /Volumes/Scratch/ToB2
+2018/09/05 07:45:04 ERROR : CAM 2/AVF_INFO/PRV00001.BIN: File not in Local file system at /Volumes/Scratch/ToB2
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;use-error-output-to-create-diff-file&#34;&gt;Use error output to create diff file
+&lt;/h3&gt;&lt;p&gt;By massaging the &lt;code&gt;rclone check&lt;/code&gt; standard output into a new file with just the file names, it is possible to re-sync just these files. This saves us Backblaze read transactions on the files already copied.&lt;/p&gt;
+&lt;p&gt;Assuming a file &lt;code&gt;mydiff.txt&lt;/code&gt;:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;CAM 2/AVF_INFO/AVIN0001.BNP
+CAM 2/AVF_INFO/AVIN0001.INP
+CAM 2/AVF_INFO/AVIN0001.INT
+CAM 2/AVF_INFO/PRV00001.BIN
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;the sync command is:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rclone sync &amp;lt;source&amp;gt; &amp;lt;dest&amp;gt; --files-from mydiff.txt &amp;lt;other flags&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Then, run &lt;code&gt;rclone check&lt;/code&gt; again on all the files.&lt;/p&gt;
+&lt;h2 id=&#34;the-cleanup-command&#34;&gt;The &lt;code&gt;cleanup&lt;/code&gt; command
+&lt;/h2&gt;&lt;p&gt;If your buckets are created with default settings, the file lifecyle is set to &lt;code&gt;Keep all versions&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;To purge deleted files, use a similar syntax to the &lt;code&gt;lsd&lt;/code&gt; command.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rclone lsd b2-remote1:Videos/&amp;#34;Subfolder With Spaces/&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Also note that&lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note that &lt;code&gt;cleanup&lt;/code&gt; will remove partially uploaded files from the bucket if they are more than a day old.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;appendix&#34;&gt;Appendix
+&lt;/h2&gt;&lt;h3 id=&#34;performance-logs&#34;&gt;Performance Logs
+&lt;/h3&gt;&lt;p&gt;The exact command I used at first was&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rclone sync b2-krish:Footage/&amp;#34;SD Card Archives/&amp;#34; b2-org:RawFiles/&amp;#34;Offloaded Video&amp;#34; -vv --exclude .DS_Store
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;and it completed, roughly 3 days later with a 5% error rate.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;2018/08/12 19:46:55 INFO  : 
+Transferred:   1.674 TBytes (6.491 MBytes/s)
+Errors:                63
+Checks:              2173
+Transferred:         1123
+Elapsed time:   75h6m1.4s
+Transferring:
+ *   CAM 1/PRIVATE/XDROOT/Clip/Clip0026.MXF: 99% /53.023G, 4.727M/s, 42s
+...
+2018/08/12 19:47:23 ERROR : Attempt 3/3 failed with 63 errors and: unexpected EOF
+2018/08/12 19:47:23 Failed to sync: unexpected EOF
+$
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Instead, by using a chunk size 1G and two max transfers (total 2G in RAM at a time) transfers were noticeably more stable.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;2018/09/01 22:40:13 INFO  : 
+Transferred:   52.430 GBytes (5.752 MBytes/s)
+Errors:                 0
+Checks:               232
+Transferred:          776
+Elapsed time:  2h35m33.8s
+
+2018/09/01 22:40:13 DEBUG : 14 go routines active
+2018/09/01 22:40:13 DEBUG : rclone: Version &amp;#34;v1.42&amp;#34; finishing with parameters [&amp;#34;rclone&amp;#34; &amp;#34;copy&amp;#34; &amp;#34;b2-org:RawFiles/Offloaded Video/&amp;#34; &amp;#34;b2-org:RawFiles/SD Cards/&amp;#34; &amp;#34;--exclude&amp;#34; &amp;#34;.DS_Store&amp;#34; &amp;#34;-vv&amp;#34; &amp;#34;--transfers&amp;#34; &amp;#34;2&amp;#34; &amp;#34;--b2-chunk-size&amp;#34; &amp;#34;1G&amp;#34; &amp;#34;--b2-upload-cutoff&amp;#34; &amp;#34;1G&amp;#34; &amp;#34;--max-size&amp;#34; &amp;#34;1G&amp;#34;]
+$
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;upload-cutoffs-of-5g&#34;&gt;Upload cutoffs of &amp;ldquo;5G&amp;rdquo;
+&lt;/h3&gt;&lt;p&gt;During my experiments, I once tried a 5G single-part cutoff: &lt;code&gt;--b2-chunk-size 2G --b2-upload-cutoff 5G --max-size 5G&lt;/code&gt;. The docs state &lt;code&gt;This value should be set no larger than 4.657GiB (== 5GB)&lt;/code&gt; however it threw this error.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;2018/09/03 13:56:01 Failed to copy: File size too big: 5022908174 (400 bad_request)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;So apparently &lt;code&gt;5G&lt;/code&gt; is too high. &lt;code&gt;4G&lt;/code&gt; worked fine though.&lt;/p&gt;
+&lt;h3 id=&#34;500-internal-server-error&#34;&gt;500 Internal Server Error
+&lt;/h3&gt;&lt;p&gt;Something is wrong with Backblaze, usually a transient problem. Rclone will retry, by default up to 10 times with built-in rate limiting (pacer) as shown with the incident &lt;code&gt;a7691a3d7f71-e47fc872d7ba&lt;/code&gt; below.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;2018/08/09 16:53:12 DEBUG : CAM A/private/M4ROOT/CLIP/C0002.MP4: Error sending chunk 2 (retry=true): incident id a7691a3d7f71-e47fc872d7ba (500 internal_error): &amp;amp;api.Error{Status:500, Code:&amp;#34;internal_error&amp;#34;, Message:&amp;#34;incident id a7691a3d7f71-e47fc872d7ba&amp;#34;}
+2018/08/09 16:53:12 DEBUG : CAM A/private/M4ROOT/CLIP/C0002.MP4: Clearing part upload URL because of error: incident id a7691a3d7f71-e47fc872d7ba (500 internal_error)
+2018/08/09 16:53:12 DEBUG : pacer: Rate limited, increasing sleep to 20ms
+2018/08/09 16:53:12 DEBUG : pacer: low level retry 1/10 (error incident id a7691a3d7f71-e47fc872d7ba (500 internal_error))
+2018/08/09 16:53:12 DEBUG : CAM A/private/M4ROOT/CLIP/C0002.MP4: Sending chunk 2 length 100663296
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;references&#34;&gt;References
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://rclone.org/docs/#subcommands&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://rclone.org/docs/#subcommands&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://rclone.org/b2/#sha1-checksums&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://rclone.org/b2/#sha1-checksums&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://rclone.org/b2/#versions&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://rclone.org/b2/#versions&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Missing Checksums in NAS Cloud Archives</title>
+        <link>http://localhost:1313/post/video/2020/missing-checksums-with-synology-b2-cloud-sync/</link>
+        <pubDate>Sun, 15 Mar 2020 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/video/2020/missing-checksums-with-synology-b2-cloud-sync/</guid>
+        <description>&lt;h2 id=&#34;the-task&#34;&gt;The Task
+&lt;/h2&gt;&lt;p&gt;Backblaze B2 is an incredibly cost-effective cloud-based archival platform. I had a few TBs of large file video footage stored on a Synology NAS that I wanted to archive to B2, in case anything happened to my local array.&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;h2 id=&#34;synology-cloud-sync&#34;&gt;Synology Cloud Sync
+&lt;/h2&gt;&lt;p&gt;Synology offers a built-in tool that syncs to many cloud providers, called Cloud Sync. In fact, it worked great and I created a bunch of jobs to archive nearly 8 TBs.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2020/missing-checksums-with-synology-b2-cloud-sync/synology-cloudsync-b2-1.png&#34;
+	width=&#34;898&#34;
+	height=&#34;525&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;171&#34;
+		data-flex-basis=&#34;410px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Cloud Sync even offers an &lt;code&gt;Advanced consistency check&lt;/code&gt; option to compare checksums! All good right?&lt;/p&gt;
+&lt;h2 id=&#34;hash-me-not&#34;&gt;Hash me Not
+&lt;/h2&gt;&lt;p&gt;Although I had selected the checksum option I was surprised to realize not all files uploaded had their checksums written in B2. Only the small ones did.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2020/missing-checksums-with-synology-b2-cloud-sync/synology-cloudsync-b2-2.png&#34;
+	width=&#34;697&#34;
+	height=&#34;379&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;183&#34;
+		data-flex-basis=&#34;441px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2020/missing-checksums-with-synology-b2-cloud-sync/synology-cloudsync-b2-4.png&#34;
+	width=&#34;951&#34;
+	height=&#34;679&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;140&#34;
+		data-flex-basis=&#34;336px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2020/missing-checksums-with-synology-b2-cloud-sync/synology-cloudsync-b2-5.png&#34;
+	width=&#34;931&#34;
+	height=&#34;682&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;136&#34;
+		data-flex-basis=&#34;327px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;That meant all the actual video files didn&amp;rsquo;t have checksums sent to B2. Yikes.&lt;/p&gt;
+&lt;h2 id=&#34;design-feature&#34;&gt;Design &amp;ldquo;Feature&amp;rdquo;
+&lt;/h2&gt;&lt;p&gt;Not knowing this limitation was my mistake, as I did not understand the Cloud Sync documentation&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; thoroughly beforehand.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;With &lt;strong&gt;Enable advanced consistency check&lt;/strong&gt; ticked, Cloud Sync compares the hash (in addition to file size and last modified time) of each file between the public cloud and the NAS to enhance the integrity check of the sync results. This will require more time and system resources, and depends on the public clouds&amp;rsquo; support for advanced attributes. Please refer to the bottom of the page for more information.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;And what the bottom of the page say?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Hash values are not available for files uploaded to Backblaze B2 via b2_upload_part upload.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2020/missing-checksums-with-synology-b2-cloud-sync/synology-cloudsync-b2-3.png&#34;
+	width=&#34;897&#34;
+	height=&#34;521&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;172&#34;
+		data-flex-basis=&#34;413px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;b2_upload_part&lt;/code&gt; upload&amp;hellip; After consulting the B2 API documentation&lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;, that command is used for uploading large files in segments. As you can see I had it set to 512 MB; the maximum is 4 GB.&lt;/p&gt;
+&lt;h2 id=&#34;whose-limitation-is-it-anyway&#34;&gt;Whose Limitation is it Anyway?
+&lt;/h2&gt;&lt;p&gt;To be clear, the checksum limitation is on the Synology end. Cloud Sync is simply not sending SHA-1 checksums to Backblaze. B2 in fact supports and encourages&lt;sup id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; sending checksums for large files— and they can even be sent at the end!&lt;/p&gt;
+&lt;p&gt;So what can upload to B2 with checksums for large files?&lt;/p&gt;
+&lt;h2 id=&#34;rclone-ftw&#34;&gt;Rclone FTW
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://rclone.org&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Rclone&lt;/a&gt; is a command line workhorse for syncing files with cloud storage. It&amp;rsquo;s actively maintained, and writes and verifies checksums with B2 perfectly&lt;sup id=&#34;fnref:5&#34;&gt;&lt;a href=&#34;#fn:5&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;. However, it&amp;rsquo;s only for folks not afraid of the terminal.&lt;/p&gt;
+&lt;p&gt;Installing &lt;code&gt;rclone&lt;/code&gt; is super simple on the Synology.&lt;sup id=&#34;fnref:6&#34;&gt;&lt;a href=&#34;#fn:6&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;6&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Login via SSH as an admin&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;curl https://rclone.org/install.sh | sudo bash&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Verify it is installed with &lt;code&gt;rclone -V&lt;/code&gt; and &lt;code&gt;rclone -h&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;rclone config&lt;/code&gt; , enter cloud credentials, etc.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;How to use the &lt;code&gt;rclone sync&lt;/code&gt; and &lt;code&gt;rclone verify&lt;/code&gt; commands are deatiled in &lt;a class=&#34;link&#34; href=&#34;https://rclone.org/b2/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Rclone B2 docs&lt;/a&gt;. Best practices of using &lt;code&gt;rclone&lt;/code&gt; with using B2 coming soon.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion
+&lt;/h2&gt;&lt;p&gt;If you care about checksums for files over 4 GB, don&amp;rsquo;t use Synology Cloud Sync. Instead roll up your sleeves are get cracking with &lt;code&gt;rclone&lt;/code&gt; on the Synology.&lt;/p&gt;
+&lt;h2 id=&#34;history&#34;&gt;History
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;[This article was originally drafted in September 2018. At long last&amp;hellip;]&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;footnotes&#34;&gt;Footnotes
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.backblaze.com/blog/the-3-2-1-backup-strategy/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.backblaze.com/blog/the-3-2-1-backup-strategy/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.synology.com/en-us/knowledgebase/DSM/help/CloudSync/cloudsync&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.synology.com/en-us/knowledgebase/DSM/help/CloudSync/cloudsync&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.backblaze.com/b2/docs/b2_upload_part.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.backblaze.com/b2/docs/b2_upload_part.html&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://help.backblaze.com/hc/en-us/articles/218020298-Does-B2-require-a-SHA-1-hash-to-be-provided-with-an-upload-&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://help.backblaze.com/hc/en-us/articles/218020298-Does-B2-require-a-SHA-1-hash-to-be-provided-with-an-upload-&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:4&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:5&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://rclone.org/overview/#features&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://rclone.org/overview/#features&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:5&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:6&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://bitbucket.org/fusebit/plex-and-google-drive/wiki/Install%20rclone%20on%20Synology%20NAS&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://bitbucket.org/fusebit/plex-and-google-drive/wiki/Install%20rclone%20on%20Synology%20NAS&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:6&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Persisting Finder Labels in Cloud Storage</title>
+        <link>http://localhost:1313/post/video/2018/cloud-storage-and-finder-folder-icons/</link>
+        <pubDate>Fri, 25 May 2018 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/video/2018/cloud-storage-and-finder-folder-icons/</guid>
+        <description>&lt;h2 id=&#34;finder-folder-icons-vs-bucket-storage&#34;&gt;Finder Folder Icons vs. Bucket Storage
+&lt;/h2&gt;&lt;p&gt;I often use Finder labels colors to manage media, specifically colors. These can easily indicate statuses: green for complete, blue for &amp;ldquo;cold storage&amp;rdquo; projects, red for abandoned projects, etc. These labels however are not supported on many popular bucket storage, e.g. Amazon S3 and Backblaze B2.&lt;/p&gt;
+&lt;p&gt;What this means is one day, when I decide to restore a project, all the Finder folder colors will be gone. Instead, I&amp;rsquo;d drain a lot of time trying to remember where the project was. It&amp;rsquo;s almost like losing a document that&amp;rsquo;s never saved! Ya, that kind of feeling.&lt;/p&gt;
+&lt;p&gt;What about if we wrote our own script to do that instead?&lt;/p&gt;
+&lt;p&gt;Check it out on &lt;a class=&#34;link&#34; href=&#34;https://github.com/NaanProphet/finder-folder-icons&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub&lt;/a&gt;!&lt;/p&gt;
+&lt;h2 id=&#34;lets-go-automator&#34;&gt;Let&amp;rsquo;s Go, Automator
+&lt;/h2&gt;&lt;p&gt;Automator Services are awesome. This little guy can be triggered in any application from a single folder. Here&amp;rsquo;s the overview:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Copy the workflow into &lt;code&gt;~/Library/Services/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Tag folders with Finder colors (green, orange, etc.)&lt;/li&gt;
+&lt;li&gt;Invoke the &lt;code&gt;Convert Finder Labels to Icons&lt;/code&gt; service (e.g. from Finder&amp;rsquo;s context menu)&lt;/li&gt;
+&lt;li&gt;A little gear will spin the menu bar as the workflow executes&lt;/li&gt;
+&lt;li&gt;The script writes a file &lt;code&gt;green.icon.png&lt;/code&gt;, &lt;code&gt;orange.icon.png&lt;/code&gt; etc. into all folders with labels, and sets the icon of the folder to that new icon (to indicate it did work)&lt;/li&gt;
+&lt;li&gt;Folders are archived in bucket storage. The icon and label are lost, but the &lt;code&gt;png&lt;/code&gt; file remains!&lt;/li&gt;
+&lt;li&gt;After restoring from bucket storage, run the program on the parent folder again.&lt;/li&gt;
+&lt;li&gt;The script sets the icon of the folder based on the &lt;code&gt;png&lt;/code&gt; file and also sets the Finder label again!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2018/cloud-storage-and-finder-folder-icons/finder-folder-icons-2.png&#34;
+	width=&#34;997&#34;
+	height=&#34;916&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;108&#34;
+		data-flex-basis=&#34;261px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;This approach is rock solid! Automator only provides the folder list, which means the shell script can be invoked on a single folder for testing.&lt;/p&gt;
+&lt;p&gt;Furthermore, since the &lt;code&gt;png&lt;/code&gt; file is named with the same color, the status of projects is easily understood browsing around the storage bucket, without needed to download and run the script.&lt;/p&gt;
+&lt;p&gt;The only tradeoffs are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;It is not an automatic process.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;In order to completely remove a color, the icon, label, and &lt;code&gt;png&lt;/code&gt; file must be manually deleted. (Changing a label to another color is supported automatically.)&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;appendix-but-what-about&#34;&gt;Appendix: But what about&amp;hellip;
+&lt;/h2&gt;&lt;p&gt;Automator wasn&amp;rsquo;t the first idea! Here are some others that didn&amp;rsquo;t work out.&lt;/p&gt;
+&lt;h3 id=&#34;folder-actions&#34;&gt;Folder Actions
+&lt;/h3&gt;&lt;p&gt;OS X comes built-in with Folder Actions that can trigger scripts when something changes inside a folder. However, Folder Actions cannot recursively monitor a folder, so any solution would require adding an action for each subfolder. Too cumbersome.&lt;/p&gt;
+&lt;h3 id=&#34;hazel&#34;&gt;Hazel
+&lt;/h3&gt;&lt;p&gt;Hazel is an amazing piece of software that scans folders and can perform tasks automatically. Using Hazel, it&amp;rsquo;s possible to script up a trigger to convert our Finder tag/color to an icon file, and restore that icon file automatically.&lt;/p&gt;
+&lt;p&gt;The workflow would look something like this, either triggering a shell script, Automator action, etc.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2018/cloud-storage-and-finder-folder-icons/finder-folder-icons-1.png&#34;
+	width=&#34;795&#34;
+	height=&#34;622&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;127&#34;
+		data-flex-basis=&#34;306px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;However, after numerous attempts, Hazel seems a bit buggy for this particular effort. It doesn&amp;rsquo;t always detect when a folder&amp;rsquo;s color label has changed, and even when the log says it does the rules don&amp;rsquo;t fire. The same script run manually however does work!&lt;/p&gt;
+&lt;p&gt;Several support pages on Hazel&amp;rsquo;s forum also indicate bugs:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.noodlesoft.com/forums/viewtopic.php?f=4&amp;amp;t=5578#p17183&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Rules frequency&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.noodlesoft.com/forums/viewtopic.php?f=4&amp;amp;t=6767&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Add file to iTunes when added to folder&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.noodlesoft.com/forums/viewtopic.php?f=4&amp;amp;t=1618#p6643&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hazel Rules Not working&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note: by default, the output of the shell scripts is not written to the Hazel log. To do so &lt;a class=&#34;link&#34; href=&#34;https://www.noodlesoft.com/forums/viewtopic.php?f=4&amp;amp;t=296&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;run Hazel in Debug Mode&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;So although Hazel could do the job, it doesn&amp;rsquo;t seem stable enough.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Best Practices for Large Web Transfers</title>
+        <link>http://localhost:1313/post/video/2017/best-practices-for-large-web-transfers/</link>
+        <pubDate>Tue, 14 Mar 2017 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/video/2017/best-practices-for-large-web-transfers/</guid>
+        <description>&lt;h2 id=&#34;the-challenge&#34;&gt;The Challenge
+&lt;/h2&gt;&lt;p&gt;Sometimes, when collaborating on projects virtually, file storage becomes a problem. Professional studios can probably run highly performant SFTP servers or bucket storage systems, but when you&amp;rsquo;re working with other freelancers on tight budgets—who may not be as tech savvy—a 30 GB file starts becoming a big problem.&lt;/p&gt;
+&lt;h2 id=&#34;free-simple-file-sends&#34;&gt;Free, Simple File Sends
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://filemail.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Filemail.com&lt;/a&gt; is a really convenient web service that allows for sends of up to 50 GB at a time in their free tier. Receipients can either download files in the web browser or can torrent them for convenient pause/resumes.&lt;/p&gt;
+&lt;p&gt;Filemail is typically the service I&amp;rsquo;ve asked others to send me raw video files through.&lt;/p&gt;
+&lt;p&gt;And I always ask the files be zipped up &lt;em&gt;first&lt;/em&gt;&amp;hellip; why?&lt;/p&gt;
+&lt;h2 id=&#34;repairing-http-header-corruption&#34;&gt;Repairing HTTP Header Corruption
+&lt;/h2&gt;&lt;p&gt;One time, a person sent raw MTS (MPEG Transport Stream) video files from an AVCHD camera.  I did ask them to zip it up first, but for whatever reason that was overlooked. &amp;ldquo;How bad could it be?&amp;rdquo; I thought. I&amp;rsquo;d already downloaded about 40 GB of footage!&lt;/p&gt;
+&lt;p&gt;I fired up &lt;a class=&#34;link&#34; href=&#34;https://www.divergentmedia.com/editready&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Edit Ready&lt;/a&gt; to rewrap the MPEG-2 Transport Stream into a MOV container for editing. However, the conversion would keep failing after a certain point&amp;hellip;&lt;/p&gt;
+&lt;p&gt;I reached out the main man of Divergent Media, Colin McFadden, and he replied back super promptly with the following:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;At that point in the file where it fails, there&amp;rsquo;s a hunk of HTTP header, which definitely shouldn&amp;rsquo;t be in an MTS file.  Seems like something went really wrong in however these were transferred.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Sure enough, there was some &lt;code&gt;Content Disposition&lt;/code&gt; HTTP headers slapped in between!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/best-practices-for-large-web-transfers/mts-header-1.png&#34;
+	width=&#34;1773&#34;
+	height=&#34;1059&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;167&#34;
+		data-flex-basis=&#34;401px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Deleting these with a hex editor and rewrapping the new file did the trick beautifully!&lt;/p&gt;
+&lt;p&gt;Interestingly (and this could very well be my own error) not all the headers were the same length: 444 bytes, 428 bytes, 456 bytes, and 453 bytes. Screenshots of the other three are below.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/best-practices-for-large-web-transfers/mts-header-2.png&#34;
+	width=&#34;1773&#34;
+	height=&#34;1059&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;167&#34;
+		data-flex-basis=&#34;401px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/best-practices-for-large-web-transfers/mts-header-3.png&#34;
+	width=&#34;1773&#34;
+	height=&#34;1058&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;167&#34;
+		data-flex-basis=&#34;402px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/best-practices-for-large-web-transfers/mts-header-4.png&#34;
+	width=&#34;1773&#34;
+	height=&#34;1058&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;167&#34;
+		data-flex-basis=&#34;402px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;always-zip&#34;&gt;Always Zip
+&lt;/h2&gt;&lt;p&gt;Take home lesson? Always ask files to be zipped before sending through web upload services. Compression isn&amp;rsquo;t important really—storage-only zips or tars would do just fine.&lt;/p&gt;
+&lt;p&gt;And to salvage footage, don&amp;rsquo;t be afraid to open a hex editor!&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

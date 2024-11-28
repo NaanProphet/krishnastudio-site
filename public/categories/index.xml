@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Categories on Krishna Bhamidipati</title>
+        <link>http://localhost:1313/categories/</link>
+        <description>Recent content in Categories on Krishna Bhamidipati</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Fri, 15 Sep 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Audio</title>
+        <link>http://localhost:1313/categories/audio/</link>
+        <pubDate>Fri, 15 Sep 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/categories/audio/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Tech</title>
+        <link>http://localhost:1313/categories/tech/</link>
+        <pubDate>Sat, 01 Jul 2023 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/categories/tech/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Video</title>
+        <link>http://localhost:1313/categories/video/</link>
+        <pubDate>Tue, 19 Jul 2022 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/categories/video/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

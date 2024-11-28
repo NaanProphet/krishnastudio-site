@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="A Beginner's Guide to Preparing Wirecast Footage for Multicam Editing">
+<title>Conforming Livestream Video for NLEs</title>
+
+<link rel='canonical' href='http://localhost:1313/post/video/2019/conforming-livestream-footage/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Conforming Livestream Video for NLEs">
+<meta property='og:description' content="A Beginner's Guide to Preparing Wirecast Footage for Multicam Editing">
+<meta property='og:url' content='http://localhost:1313/post/video/2019/conforming-livestream-footage/'>
+<meta property='og:site_name' content='Krishna Bhamidipati'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='livestream' /><meta property='article:published_time' content='2019-07-05T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2019-07-05T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Conforming Livestream Video for NLEs">
+<meta name="twitter:description" content="A Beginner's Guide to Preparing Wirecast Footage for Multicam Editing">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu13739649187745961479.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">👀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Krishna Bhamidipati</a></h1>
+            <h2 class="site-description">Keep Asking How</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/gear/' >
+                
+                
+                
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-laptop"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 19l18 0" /><path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" /></svg>
+                
+                <span>Gear</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-lego"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9.5 11l.01 0" /><path d="M14.5 11l.01 0" /><path d="M9.5 15a3.5 3.5 0 0 0 5 0" /><path d="M7 5h1v-2h8v2h1a3 3 0 0 1 3 3v9a3 3 0 0 1 -3 3v1h-10v-1a3 3 0 0 1 -3 -3v-9a3 3 0 0 1 3 -3" /></svg>
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#realtime-proxy-editing-via-wirecast">Realtime Proxy Editing via Wirecast</a></li>
+    <li><a href="#conforming-variable-frame-rate-footage">Conforming Variable Frame Rate Footage</a></li>
+    <li><a href="#30p-vs-2997p">30p vs 29.97p</a></li>
+    <li><a href="#double-check-your-work">Double Check Your Work</a></li>
+    <li><a href="#haste-makes-waste">Haste Makes Waste</a></li>
+    <li><a href="#dont-use-editready-for-this">Don&rsquo;t Use EditReady for This</a></li>
+    <li><a href="#references">References</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/video/" >
+                Video
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/video/2019/conforming-livestream-footage/">Conforming Livestream Video for NLEs</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            A Beginner&#39;s Guide to Preparing Wirecast Footage for Multicam Editing
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jul 05, 2019</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="realtime-proxy-editing-via-wirecast">Realtime Proxy Editing via Wirecast
+</h2><p>I&rsquo;ve recently been experimenting with realtime editing of live events. That way I can speed up turnaround times for multicam edits, especially for 2+ hour events like typical Indian classical dances and concerts.</p>
+<p>The on location setup goes as follows:</p>
+<ul>
+<li>Two cameras, each recording to SD cards</li>
+<li>Feed the HDMI output of both cameras into Wirecast on a MacBook Pro</li>
+<li>Assign Wirecast keyboard shortcuts to both cameras</li>
+<li>Record to Disk at 480p ProRes 422 to an external USB 3.0 hard drive</li>
+<li>Cut between two cameras using a wireless MIDI controller and Keyboard Maestro (pretty sweet)</li>
+</ul>
+<p>Then at home, the workflow goes like:</p>
+<ul>
+<li>Use DaVinci Resolve to detect the cuts and output an EDL (edit document list) with the timestamps<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup></li>
+<li>Multicam sync the SD card footage along with the livestream MP4</li>
+<li>Use the EDL to cut between the HD/4K footage, using the livestream angle for reference</li>
+</ul>
+<h2 id="conforming-variable-frame-rate-footage">Conforming Variable Frame Rate Footage
+</h2><p>I was already anticipating conforming the livestream footage before pulling it into the timeline, since Wirecast uses variable frame rates.<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+<blockquote>
+<p>What Wirecast does is adjust frame duration so timing remains constant.</p>
+</blockquote>
+<p>So the first step is to conform the variable frame rate footage into fixed frame rate footage using Compressor. The ProRes to ProRes conversion is virtually lossless.</p>
+<h2 id="30p-vs-2997p">30p vs 29.97p
+</h2><p>Wirecast&rsquo;s default ProRes settings actually record to 30p. The Sony AX100s however record to 29.97p, our good ol&rsquo; drop frame rate. This means for the same exact duration, the Wirecast file has less frames, which throws off frame precise edit lists.</p>
+<p>The easiest way to solve this would have been to change Wirecast&rsquo;s ProRes preset to actually record at 29.97 fps. However, now the footage I have also needs to <em>change</em> framerates from 30p to 29.97p.</p>
+<p>The solution? Use Compressor again for a second ProRes to ProRes render, this time from fixed 30p file to fixed 29.97p.</p>
+<h2 id="double-check-your-work">Double Check Your Work
+</h2><p>Pro tip: check the 30p to 29.97p conforming worked correctly by ensuring:</p>
+<ul>
+<li>The duration of the clips are the same (otherwise there will be audio sync issues). In my case both were 51 min and 53 sec (using regular QuickTime Player X to verify).</li>
+<li>The number of frames is <em>different</em> between the two files. The original 30p Wirecast file had 93387 frames and the conformed 29.97p version had less, as expected, 93294.<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup></li>
+</ul>
+<h2 id="haste-makes-waste">Haste Makes Waste
+</h2><p>Couldn&rsquo;t we just use Compressor once and conform the 30p variable fps footage to 29.97 fixed fps footage? The &ldquo;two hop&rdquo; process inevitably recompresses the video twice&hellip;although, again it&rsquo;s ProRes and virtually lossless. (Oh and it&rsquo;s just reference angle, too.)</p>
+<p>Unfortunately, combining the two conforming steps doesn&rsquo;t seem to work. The famous <code>Failed: 3x crash service down</code> error pops up within a few seconds. In fact my previous self <a class="link" href="https://twitter.com/tripodninja/status/1115701921111859200"  target="_blank" rel="noopener"
+    >tweeted about this error</a> back in 2018, anticipating it would take me nearly a year to typing a proper writeup.</p>
+<h2 id="dont-use-editready-for-this">Don&rsquo;t Use EditReady for This
+</h2><p>EditReady has a framerate adjustment feature, but is not meant for the above use case. As the <a class="link" href="https://www.divergentmedia.com/support/documentation/editready#framerate-adjustment"  target="_blank" rel="noopener"
+    >manual</a> states, the feature intentionally only &ldquo;adjusts the playback rate of your media.&rdquo; That is, EditReady makes all the frames spaced out evenly, even if some were held longer than others. The feature is basically meant for slow motion, etc.<sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup></p>
+<p>In fact, if EditReady were used to adjust from 30p to 29.97p, it would stretch the video longer. The 29.97p file would have the same number of frames as the original 30p but the frames would now play back 0.1% slower.  Indeed when I tried that, the file stretched to to 51 min and 56 sec.</p>
+<p>Interestingly, when both the 30p and 29.97p EditReady exports were pulled into FCP X they claim the original duration of 51 min and 53 sec in the browser.</p>
+<p><img src="/post/video/2019/conforming-livestream-footage/conforming-wirecast-1.png"
+	width="967"
+	height="248"
+	
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="389"
+		data-flex-basis="935px"
+	
+></p>
+<p>However, when added to a 29.97p multicam sequence with the other actual 29.97 footage, the incorrectly stretched 29.97 file shows up as 51 min and 56 sec!</p>
+<p><img src="/post/video/2019/conforming-livestream-footage/conforming-wirecast-2.png"
+	width="1168"
+	height="638"
+	
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="183"
+		data-flex-basis="439px"
+	
+></p>
+<p>So ya, save yourself the headache and conform with Compressor the first time.</p>
+<h2 id="references">References
+</h2><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Worthy mentioning this <a class="link" href="https://twitter.com/tripodninja/status/1115708706300354561"  target="_blank" rel="noopener"
+    >tweet</a> about checking the <strong>timeline frame rate</strong> in DaVinci Project Settings first before starting scene detection. It can&rsquo;t be changed afterwards.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p><img src="/post/video/2019/conforming-livestream-footage/conforming-wirecast-3.png"
+	width="225"
+	height="173"
+	
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="130"
+		data-flex-basis="312px"
+	
+> <!-- raw HTML omitted --> On a side note, DaVinci doesn&rsquo;t use semicolons for indicating 29.97 drop frame timecode. Fascinating and confusing both at the same time.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>Forum post by Craig at Telestream. <em>Frame rate instability and dropped frames when recording to disk</em> (scroll all the way to the end) <a class="link" href="http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;threadid=5468"  target="_blank" rel="noopener"
+    >http://forum.telestream.net/forum/messageview.aspx?catid=45&threadid=5468</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>The frame count can be calculated from the command line using <code>ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of default=nokey=1:noprint_wrappers=1 [VIDEO.MP4]</code> <a class="link" href="https://www.digitalrebellion.com/cineplay/"  target="_blank" rel="noopener"
+    >CinePlay</a> and other GUIs can display the frame count as well. Special thanks to: <a class="link" href="https://stackoverflow.com/questions/2017843/fetch-frame-count-with-ffmpeg"  target="_blank" rel="noopener"
+    >https://stackoverflow.com/questions/2017843/fetch-frame-count-with-ffmpeg</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5">
+<p>Compressor instead should actually redraw/retime the footage. See this support thread with Colin from Divergent Media for more info <a class="link" href="https://divergentmedia.zendesk.com/hc/en-us/community/posts/360033207774-Conforming-variable-frame-rate-footage-best-practice"  target="_blank" rel="noopener"
+    >https://divergentmedia.zendesk.com/hc/en-us/community/posts/360033207774-Conforming-variable-frame-rate-footage-best-practice</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/livestream/">Livestream</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/video/2018/rerouting-an-apogee-one-with-loopback/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Using an Apogee ONE for Livestream Audio</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/video/2018/livestreaming-lessons-re-learned/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Livestream Lessons Learned, Again</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/video/2016/live-streaming-lessons/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Livestreaming Lessons Learned</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 Krishna Bhamidipati
+    </section>
+    
+    <section class="powerby">
+        
+            Krishna Bhamidipati <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="I change you. Why you no persist?">
+<title>Adjusting Date and Time on Mac Photos Exports</title>
+
+<link rel='canonical' href='http://localhost:1313/post/video/2019/mac-photos-timestamps/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Adjusting Date and Time on Mac Photos Exports">
+<meta property='og:description' content="I change you. Why you no persist?">
+<meta property='og:url' content='http://localhost:1313/post/video/2019/mac-photos-timestamps/'>
+<meta property='og:site_name' content='Krishna Bhamidipati'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='metadata' /><meta property='article:published_time' content='2019-06-30T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2019-06-30T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="Adjusting Date and Time on Mac Photos Exports">
+<meta name="twitter:description" content="I change you. Why you no persist?">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu13739649187745961479.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">👀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Krishna Bhamidipati</a></h1>
+            <h2 class="site-description">Keep Asking How</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/gear/' >
+                
+                
+                
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-device-laptop"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 19l18 0" /><path d="M5 6m0 1a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v8a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1z" /></svg>
+                
+                <span>Gear</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/' >
+                
+                
+                
+                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-lego"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9.5 11l.01 0" /><path d="M14.5 11l.01 0" /><path d="M9.5 15a3.5 3.5 0 0 0 5 0" /><path d="M7 5h1v-2h8v2h1a3 3 0 0 1 3 3v9a3 3 0 0 1 -3 3v1h-10v-1a3 3 0 0 1 -3 -3v-9a3 3 0 0 1 3 -3" /></svg>
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#mac-photos-export-fail">Mac Photos Export Fail</a></li>
+    <li><a href="#exiftool-detective-work">Exiftool Detective Work</a></li>
+    <li><a href="#repair-commands">Repair Commands</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#footnotes">Footnotes</a></li>
+  </ul>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/video/" >
+                Video
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/video/2019/mac-photos-timestamps/">Adjusting Date and Time on Mac Photos Exports</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            I change you. Why you no persist?
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 30, 2019</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="mac-photos-export-fail">Mac Photos Export Fail
+</h2><p>Maybe I&rsquo;m too used to <a class="link" href="https://www.atlassian.com/git/tutorials/rewriting-history"  target="_blank" rel="noopener"
+    >rewriting history in Git</a>, but sometimes I modify the create date of my pictures and videos. Metadata.</p>
+<p>In any case, by doing this when an album is sorted chronologically, everything appears in order. I like that idea of everything organized neatly by time a lot, because that way an album&rsquo;s story flows well.</p>
+<p><img src="/post/video/2019/mac-photos-timestamps/mac-photos-1.png"
+	width="607"
+	height="567"
+	
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="107"
+		data-flex-basis="256px"
+	
+></p>
+<p>The trouble is, when these pictures and videos are exported from Photos, re-importing them doesn&rsquo;t necessarily pickup the change. This is true even when roundtripping with another Mac Photos album, let alone something like Google Photos or Flickr! How bizzare is that?</p>
+<p>Here&rsquo;s a picture of the pre-export album.</p>
+<p><img src="/post/video/2019/mac-photos-timestamps/mac-photos-2.png"
+	width="1218"
+	height="754"
+	
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="161"
+		data-flex-basis="387px"
+	
+></p>
+<p>Here&rsquo;s a snap of the re-imported album, also sorted by Oldest First. Everything in red is not in the right place. The pictures are in their original pre-modification locations, and all videos have been shifted to current timestamp—year 2019!</p>
+<p><img src="/post/video/2019/mac-photos-timestamps/mac-photos-3.png"
+	width="1215"
+	height="758"
+	
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="160"
+		data-flex-basis="384px"
+	
+></p>
+<p>For the record, I&rsquo;m using Mac Photos version 3.0 and here are the settings used during export.</p>
+<p><img src="/post/video/2019/mac-photos-timestamps/mac-photos-4.png"
+	width="599"
+	height="318"
+	
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="188"
+		data-flex-basis="452px"
+	
+>
+<img src="/post/video/2019/mac-photos-timestamps/mac-photos-5.png"
+	width="541"
+	height="336"
+	
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="161"
+		data-flex-basis="386px"
+	
+></p>
+<p>So what&rsquo;s going on?</p>
+<h2 id="exiftool-detective-work">Exiftool Detective Work
+</h2><p>Using <code>exiftool</code> it appears the photos did have their adjusted timestamp written but not to all fields. Here&rsquo;s the printout from the first misordered photo.</p>
+<pre tabindex="0"><code>$ exiftool IMG_3422.jpg | grep 201
+File Modification Date/Time     : 2019:06:30 07:09:07-04:00
+File Access Date/Time           : 2019:06:30 07:30:07-04:00
+File Inode Change Date/Time     : 2019:06:30 07:11:15-04:00
+Modify Date                     : 2017:07:01 11:35:00
+Date/Time Original              : 2017:07:01 11:13:49
+Create Date                     : 2017:07:01 11:13:49
+Date Created                    : 2017:07:01
+Digital Creation Date           : 2017:07:01
+Date/Time Created               : 2017:07:01 11:13:49
+Digital Creation Date/Time      : 2017:07:01 11:13:49
+Create Date                     : 2017:07:01 11:13:49.785
+Date/Time Original              : 2017:07:01 11:13:49.785
+</code></pre><p>The tag <code>Modify Date</code> has our changes.</p>
+<p>As for the videos, everything gets changed to the current timestamp except <code>Content Create Date</code>.</p>
+<pre tabindex="0"><code>$ exiftool IMG_3453.m4v | grep 201
+File Modification Date/Time     : 2019:06:30 07:10:49-04:00
+File Access Date/Time           : 2019:06:30 07:35:20-04:00
+File Inode Change Date/Time     : 2019:06:30 07:11:15-04:00
+Create Date                     : 2019:06:30 11:10:47
+Modify Date                     : 2019:06:30 11:10:48
+Track Create Date               : 2019:06:30 11:10:47
+Track Modify Date               : 2019:06:30 11:10:48
+Media Create Date               : 2019:06:30 11:10:47
+Media Modify Date               : 2019:06:30 11:10:48
+Content Create Date             : 2017:07:01 13:16:35-04:00
+</code></pre><p>Maybe <code>Content Create Date</code> is it? Nope. Even if the year is changed on the same file and re-exported, the <code>Content Create Date</code> doesn&rsquo;t change! (Also it looks like the tag isn&rsquo;t present on videos not shot from an iPhone.)</p>
+<pre tabindex="0"><code>$ exiftool IMG_3453\ \(1\).m4v | grep 201
+File Modification Date/Time     : 2019:06:30 07:37:00-04:00
+File Access Date/Time           : 2019:06:30 07:37:00-04:00
+File Inode Change Date/Time     : 2019:06:30 07:37:00-04:00
+Create Date                     : 2019:06:30 11:36:59
+Modify Date                     : 2019:06:30 11:37:00
+Track Create Date               : 2019:06:30 11:36:59
+Track Modify Date               : 2019:06:30 11:37:00
+Media Create Date               : 2019:06:30 11:36:59
+Media Modify Date               : 2019:06:30 11:37:00
+Content Create Date             : 2017:07:01 13:16:35-04:00
+</code></pre><h2 id="repair-commands">Repair Commands
+</h2><p>The remedy? Use <code>Modify Date</code> tag to rewrite the <code>Date/Time Original</code> for photos, first. <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<pre tabindex="0"><code>$ exiftool &#34;-exif:DateTimeOriginal&lt;Modifydate&#34; &lt;pictures&gt;
+</code></pre><p>For videos, unfortunately the script must be manual since the timestamp was lost during export. Note that video timestamps must be GMT<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, so I&rsquo;m adjusting four hours for EDT.</p>
+<pre tabindex="0"><code># for videos all times must be GMT zero
+$ exiftool -AllDates=&#39;2017:07:01 15:37:30&#39; &lt;video1&gt; \
+	&amp; exiftool -AllDates=&#39;2017:07:01 16:08:28&#39; &lt;video2&gt; \
+	&amp; exiftool -AllDates=&#39;2017:07:01 16:43:29&#39; &lt;video3&gt; \
+	...
+</code></pre><p>There was one picture that was strangely troublesome even after this, probably an internal Photos library problem. For that guy I adjusted the time again in the new Photos album, exported it, ran the <code>exiftool</code> command again, and pulled it into the new album to fix it.</p>
+<h2 id="conclusion">Conclusion
+</h2><p>In general when rewriting timestamps of an album, I try my best to not modify video timestamps. Instead, move the pictures around and then run the bulk command for photos since videos are a manual process.</p>
+<p>P.S. Oh by the way, if you&rsquo;re curious what that Sound Isolation Booth was&hellip; check out the published album here on <a class="link" href="https://www.flickr.com/photos/143865512@N03/albums/72157709327467226"  target="_blank" rel="noopener"
+    >Flickr</a>.</p>
+<p><img src="/post/video/2019/mac-photos-timestamps/mac-photos-6.png"
+	width="1104"
+	height="639"
+	
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="172"
+		data-flex-basis="414px"
+	
+></p>
+<h2 id="footnotes">Footnotes
+</h2><div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Exiftool syntax modified from <a class="link" href="http://u88.n24.queensu.ca/exiftool/forum/index.php/topic,8349.msg42878.html#msg42878"  target="_blank" rel="noopener"
+    >http://u88.n24.queensu.ca/exiftool/forum/index.php/topic,8349.msg42878.html#msg42878</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Forum post on <em>Changing Time Zone for Video</em> <a class="link" href="http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=8081.0"  target="_blank" rel="noopener"
+    >http://u88.n24.queensu.ca/exiftool/forum/index.php?topic=8081.0</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/metadata/">Metadata</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/video/2018/quest-for-media-management/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">The Quest for Media Management</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/video/2016/fcpx-unaffected-by-xmp/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">FCP X 10.2.2 Unaffected by XMP Metadata Changes</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2016 - 
+        
+        2024 Krishna Bhamidipati
+    </section>
+    
+    <section class="powerby">
+        
+            Krishna Bhamidipati <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

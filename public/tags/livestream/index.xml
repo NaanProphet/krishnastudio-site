@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Livestream on Krishna Bhamidipati</title>
+        <link>http://localhost:1313/tags/livestream/</link>
+        <description>Recent content in Livestream on Krishna Bhamidipati</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Fri, 05 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/livestream/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Conforming Livestream Video for NLEs</title>
+        <link>http://localhost:1313/post/video/2019/conforming-livestream-footage/</link>
+        <pubDate>Fri, 05 Jul 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/video/2019/conforming-livestream-footage/</guid>
+        <description>&lt;h2 id=&#34;realtime-proxy-editing-via-wirecast&#34;&gt;Realtime Proxy Editing via Wirecast
+&lt;/h2&gt;&lt;p&gt;I&amp;rsquo;ve recently been experimenting with realtime editing of live events. That way I can speed up turnaround times for multicam edits, especially for 2+ hour events like typical Indian classical dances and concerts.&lt;/p&gt;
+&lt;p&gt;The on location setup goes as follows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Two cameras, each recording to SD cards&lt;/li&gt;
+&lt;li&gt;Feed the HDMI output of both cameras into Wirecast on a MacBook Pro&lt;/li&gt;
+&lt;li&gt;Assign Wirecast keyboard shortcuts to both cameras&lt;/li&gt;
+&lt;li&gt;Record to Disk at 480p ProRes 422 to an external USB 3.0 hard drive&lt;/li&gt;
+&lt;li&gt;Cut between two cameras using a wireless MIDI controller and Keyboard Maestro (pretty sweet)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Then at home, the workflow goes like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use DaVinci Resolve to detect the cuts and output an EDL (edit document list) with the timestamps&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;li&gt;Multicam sync the SD card footage along with the livestream MP4&lt;/li&gt;
+&lt;li&gt;Use the EDL to cut between the HD/4K footage, using the livestream angle for reference&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;conforming-variable-frame-rate-footage&#34;&gt;Conforming Variable Frame Rate Footage
+&lt;/h2&gt;&lt;p&gt;I was already anticipating conforming the livestream footage before pulling it into the timeline, since Wirecast uses variable frame rates.&lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;What Wirecast does is adjust frame duration so timing remains constant.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So the first step is to conform the variable frame rate footage into fixed frame rate footage using Compressor. The ProRes to ProRes conversion is virtually lossless.&lt;/p&gt;
+&lt;h2 id=&#34;30p-vs-2997p&#34;&gt;30p vs 29.97p
+&lt;/h2&gt;&lt;p&gt;Wirecast&amp;rsquo;s default ProRes settings actually record to 30p. The Sony AX100s however record to 29.97p, our good ol&amp;rsquo; drop frame rate. This means for the same exact duration, the Wirecast file has less frames, which throws off frame precise edit lists.&lt;/p&gt;
+&lt;p&gt;The easiest way to solve this would have been to change Wirecast&amp;rsquo;s ProRes preset to actually record at 29.97 fps. However, now the footage I have also needs to &lt;em&gt;change&lt;/em&gt; framerates from 30p to 29.97p.&lt;/p&gt;
+&lt;p&gt;The solution? Use Compressor again for a second ProRes to ProRes render, this time from fixed 30p file to fixed 29.97p.&lt;/p&gt;
+&lt;h2 id=&#34;double-check-your-work&#34;&gt;Double Check Your Work
+&lt;/h2&gt;&lt;p&gt;Pro tip: check the 30p to 29.97p conforming worked correctly by ensuring:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The duration of the clips are the same (otherwise there will be audio sync issues). In my case both were 51 min and 53 sec (using regular QuickTime Player X to verify).&lt;/li&gt;
+&lt;li&gt;The number of frames is &lt;em&gt;different&lt;/em&gt; between the two files. The original 30p Wirecast file had 93387 frames and the conformed 29.97p version had less, as expected, 93294.&lt;sup id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;haste-makes-waste&#34;&gt;Haste Makes Waste
+&lt;/h2&gt;&lt;p&gt;Couldn&amp;rsquo;t we just use Compressor once and conform the 30p variable fps footage to 29.97 fixed fps footage? The &amp;ldquo;two hop&amp;rdquo; process inevitably recompresses the video twice&amp;hellip;although, again it&amp;rsquo;s ProRes and virtually lossless. (Oh and it&amp;rsquo;s just reference angle, too.)&lt;/p&gt;
+&lt;p&gt;Unfortunately, combining the two conforming steps doesn&amp;rsquo;t seem to work. The famous &lt;code&gt;Failed: 3x crash service down&lt;/code&gt; error pops up within a few seconds. In fact my previous self &lt;a class=&#34;link&#34; href=&#34;https://twitter.com/tripodninja/status/1115701921111859200&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;tweeted about this error&lt;/a&gt; back in 2018, anticipating it would take me nearly a year to typing a proper writeup.&lt;/p&gt;
+&lt;h2 id=&#34;dont-use-editready-for-this&#34;&gt;Don&amp;rsquo;t Use EditReady for This
+&lt;/h2&gt;&lt;p&gt;EditReady has a framerate adjustment feature, but is not meant for the above use case. As the &lt;a class=&#34;link&#34; href=&#34;https://www.divergentmedia.com/support/documentation/editready#framerate-adjustment&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;manual&lt;/a&gt; states, the feature intentionally only &amp;ldquo;adjusts the playback rate of your media.&amp;rdquo; That is, EditReady makes all the frames spaced out evenly, even if some were held longer than others. The feature is basically meant for slow motion, etc.&lt;sup id=&#34;fnref:5&#34;&gt;&lt;a href=&#34;#fn:5&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;In fact, if EditReady were used to adjust from 30p to 29.97p, it would stretch the video longer. The 29.97p file would have the same number of frames as the original 30p but the frames would now play back 0.1% slower.  Indeed when I tried that, the file stretched to to 51 min and 56 sec.&lt;/p&gt;
+&lt;p&gt;Interestingly, when both the 30p and 29.97p EditReady exports were pulled into FCP X they claim the original duration of 51 min and 53 sec in the browser.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2019/conforming-livestream-footage/conforming-wirecast-1.png&#34;
+	width=&#34;967&#34;
+	height=&#34;248&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;389&#34;
+		data-flex-basis=&#34;935px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;However, when added to a 29.97p multicam sequence with the other actual 29.97 footage, the incorrectly stretched 29.97 file shows up as 51 min and 56 sec!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2019/conforming-livestream-footage/conforming-wirecast-2.png&#34;
+	width=&#34;1168&#34;
+	height=&#34;638&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;183&#34;
+		data-flex-basis=&#34;439px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;So ya, save yourself the headache and conform with Compressor the first time.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;Worthy mentioning this &lt;a class=&#34;link&#34; href=&#34;https://twitter.com/tripodninja/status/1115708706300354561&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;tweet&lt;/a&gt; about checking the &lt;strong&gt;timeline frame rate&lt;/strong&gt; in DaVinci Project Settings first before starting scene detection. It can&amp;rsquo;t be changed afterwards.&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2019/conforming-livestream-footage/conforming-wirecast-3.png&#34;
+	width=&#34;225&#34;
+	height=&#34;173&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;130&#34;
+		data-flex-basis=&#34;312px&#34;
+	
+&gt; &lt;!-- raw HTML omitted --&gt; On a side note, DaVinci doesn&amp;rsquo;t use semicolons for indicating 29.97 drop frame timecode. Fascinating and confusing both at the same time.&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;Forum post by Craig at Telestream. &lt;em&gt;Frame rate instability and dropped frames when recording to disk&lt;/em&gt; (scroll all the way to the end) &lt;a class=&#34;link&#34; href=&#34;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;amp;threadid=5468&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;threadid=5468&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;
+&lt;p&gt;The frame count can be calculated from the command line using &lt;code&gt;ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of default=nokey=1:noprint_wrappers=1 [VIDEO.MP4]&lt;/code&gt; &lt;a class=&#34;link&#34; href=&#34;https://www.digitalrebellion.com/cineplay/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;CinePlay&lt;/a&gt; and other GUIs can display the frame count as well. Special thanks to: &lt;a class=&#34;link&#34; href=&#34;https://stackoverflow.com/questions/2017843/fetch-frame-count-with-ffmpeg&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://stackoverflow.com/questions/2017843/fetch-frame-count-with-ffmpeg&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:4&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:5&#34;&gt;
+&lt;p&gt;Compressor instead should actually redraw/retime the footage. See this support thread with Colin from Divergent Media for more info &lt;a class=&#34;link&#34; href=&#34;https://divergentmedia.zendesk.com/hc/en-us/community/posts/360033207774-Conforming-variable-frame-rate-footage-best-practice&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://divergentmedia.zendesk.com/hc/en-us/community/posts/360033207774-Conforming-variable-frame-rate-footage-best-practice&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:5&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Using an Apogee ONE for Livestream Audio</title>
+        <link>http://localhost:1313/post/video/2018/rerouting-an-apogee-one-with-loopback/</link>
+        <pubDate>Mon, 17 Sep 2018 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/video/2018/rerouting-an-apogee-one-with-loopback/</guid>
+        <description>&lt;h2 id=&#34;the-scenario&#34;&gt;The Scenario
+&lt;/h2&gt;&lt;p&gt;Earlier this year, I was livestreaming a music concert where there was no access to the soundboard&amp;rsquo;s mic output. It was a low-key, unlisted stream for family and friends, but I still wanted a find a way to improve the audio quality rather than using the camera&amp;rsquo;s built-in mic.&lt;/p&gt;
+&lt;p&gt;I had my Apogee ONE with me, and it has an excellent built-in omni condenser mic. I connected it via USB and it was detected successfully in Wirecast. The latency was negligible, and so the stream was setup to use the camera&amp;rsquo;s video (via the Blackmagic Mini Recorder) and the Apogee&amp;rsquo;s audio.&lt;/p&gt;
+&lt;p&gt;The only trouble was, since the Apogee ONE appears as a stereo input, the omni mic is only on the L channel and the R channel is blank. Viewers of the stream would only hear audio coming out of the left channel.&lt;/p&gt;
+&lt;h2 id=&#34;loopback-and-audio-hijack-pro&#34;&gt;Loopback and Audio Hijack Pro
+&lt;/h2&gt;&lt;p&gt;Using a combination of Rogue Amoeba&amp;rsquo;s &lt;a class=&#34;link&#34; href=&#34;https://rogueamoeba.com/loopback/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Loopback&lt;/a&gt; and &lt;a class=&#34;link&#34; href=&#34;https://rogueamoeba.com/audiohijack/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Audio Hijack Pro&lt;/a&gt; the Apogee ONE&amp;rsquo;s omni mic can be re-routed to a new virtual audio device for Wirecast.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;First, create a new virtual audio interface in Loopback.
+&lt;img src=&#34;http://localhost:1313/post/video/2018/rerouting-an-apogee-one-with-loopback/loopback-apogee-1.png&#34;
+	width=&#34;884&#34;
+	height=&#34;710&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;124&#34;
+		data-flex-basis=&#34;298px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;li&gt;Next, create a new &lt;strong&gt;Session&lt;/strong&gt; in Audio Hijack Pro.&lt;/li&gt;
+&lt;li&gt;Select the Apogee One as the &lt;strong&gt;Input Device&lt;/strong&gt;. Under the &lt;strong&gt;Advanced&lt;/strong&gt; settings, choose &lt;strong&gt;Channel 1&lt;/strong&gt; for &lt;em&gt;both the left and right channels&lt;/em&gt;. This will setup dual channel mono.
+&lt;img src=&#34;http://localhost:1313/post/video/2018/rerouting-an-apogee-one-with-loopback/loopback-apogee-2.png&#34;
+	width=&#34;344&#34;
+	height=&#34;238&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;144&#34;
+		data-flex-basis=&#34;346px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;li&gt;Add a new &lt;strong&gt;Output Device&lt;/strong&gt; directly to the right of the input device. It will automatically connect. Select the virtual audio device under &lt;strong&gt;Audio Device&lt;/strong&gt;.
+&lt;img src=&#34;http://localhost:1313/post/video/2018/rerouting-an-apogee-one-with-loopback/loopback-apogee-3.png&#34;
+	width=&#34;465&#34;
+	height=&#34;206&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;225&#34;
+		data-flex-basis=&#34;541px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;li&gt;Use Wirecast (or similar) to add the virtual audio device onto a new, active layer. It should be receiving audio on both the L and R channels.&lt;/li&gt;
+&lt;li&gt;Mute the original camera audio on the other layer and start streaming.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;what-about-soundflower&#34;&gt;What About Soundflower?
+&lt;/h2&gt;&lt;p&gt;Loopback and Audio Hijack Pro cost $130 bundled, so the first question might be to try &lt;a class=&#34;link&#34; href=&#34;https://github.com/mattingalls/Soundflower&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Soundflower&lt;/a&gt; instead since it&amp;rsquo;s free. Soundflower is powerful and has been around for a long time &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; and it&amp;rsquo;s definitely worth a try.&lt;/p&gt;
+&lt;p&gt;Personally, I have found Soundflower&amp;rsquo;s interface less-intuitive than Audio Hijack&amp;rsquo;s. I was in a pinch to setup the livestream—a live show that was behind schedule—and was so grateful for the UX of Loopback and Audio Hijack to just work, and work perfectly. Worth every dollar.&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;History of Soundflower &lt;a class=&#34;link&#34; href=&#34;https://rogueamoeba.com/freebies/soundflower/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://rogueamoeba.com/freebies/soundflower/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Livestream Lessons Learned, Again</title>
+        <link>http://localhost:1313/post/video/2018/livestreaming-lessons-re-learned/</link>
+        <pubDate>Thu, 28 Jun 2018 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/video/2018/livestreaming-lessons-re-learned/</guid>
+        <description>&lt;h2 id=&#34;always-record-to-an-external-hard-drive&#34;&gt;Always Record to an External Hard Drive
+&lt;/h2&gt;&lt;p&gt;Apparently I forgot &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/post/video/2016/live-streaming-lessons/&#34; &gt;my own advice&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Use fast external disks as the destination.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Even if recording to an uncompressed format like ProRes, always use a different drive than the OS&amp;rsquo; hard drive.&lt;/p&gt;
+&lt;p&gt;Even if it&amp;rsquo;s an SSD.&lt;/p&gt;
+&lt;h2 id=&#34;what-happened&#34;&gt;What Happened?
+&lt;/h2&gt;&lt;p&gt;The result was particularly bad. Large dropped frames, audio/video sync issues, the works. And by works, I mean it&amp;rsquo;s going to be a ton of work to cleanup too.&lt;/p&gt;
+&lt;p&gt;I didn&amp;rsquo;t catch the error until after coming home, because all I was paying attention to was the CPU usage. I wasn&amp;rsquo;t even streaming and merely using Wirecast as a multicam monitor. CPU usage was always around 30%, and so I thought, &amp;ldquo;Oh we&amp;rsquo;re doing really good.&amp;rdquo;&lt;/p&gt;
+&lt;h2 id=&#34;wirecast-record-to-disk-best-practices&#34;&gt;Wirecast Record to Disk Best Practices
+&lt;/h2&gt;&lt;p&gt;Here are the recommendations from Craig over on a post&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; at the Wirecast forums from Nov 2017:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Make sure you have the best possible throughput. Avoid using the system disk.&lt;/li&gt;
+&lt;li&gt;Separate internal SCSI drives are OK.&lt;/li&gt;
+&lt;li&gt;Avoid using USB2 drives.&lt;/li&gt;
+&lt;li&gt;If USB3 it should, ideally, be the only device on the bus. Even separate ports may be on the same bus.&lt;/li&gt;
+&lt;li&gt;Best is to use SSD or RAID0 striped drives. 7200 RPM disks may be OK though.&lt;/li&gt;
+&lt;li&gt;Avoid spinning disks below 7200rpm&lt;/li&gt;
+&lt;li&gt;Keep CPU below 80% and below 70% is even better.&lt;/li&gt;
+&lt;li&gt;Make sure the drive never gets filled beyond 80% capacity. Especially for spinning disks, they can slow as they fill.&lt;/li&gt;
+&lt;li&gt;Make sure you&amp;rsquo;re not confusing variable frame rate with dropped frames. Wirecast records a variable frame rate to avoid dropped frames and keep motion smooth.&lt;/li&gt;
+&lt;li&gt;If you&amp;rsquo;re going to do post editing consider using MJPEG MOV instead of H.264.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Interestingly, another forum post&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; suggests USB3 can be temperamental. One person had dropped frames from a bad cable!&lt;/p&gt;
+&lt;h2 id=&#34;why-it-worked-last-month&#34;&gt;Why It Worked Last Month
+&lt;/h2&gt;&lt;p&gt;Back in May 2018 (during the All-Night concert), I was connected via Thunderbolt to a RAID 0 striped LaCie 4 TB drive. Recording the livestream + HDV camera via Wirecast worked just fine.&lt;/p&gt;
+&lt;p&gt;However this time, the internal Scratch disk was actually on the same physical SSD as the OS. It did have 500 GB free, but free space was irrelevant.&lt;/p&gt;
+&lt;h2 id=&#34;one-strike-and-youre-out-to-make-it-better-next-time&#34;&gt;One Strike and You&amp;rsquo;re Out&amp;hellip; to Make it Better Next Time
+&lt;/h2&gt;&lt;p&gt;Not recording to a dedicated, write disk is a fatal flaw. Let&amp;rsquo;s put on that growth mindset, shall we?&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;Dropped Frames when recording to disc &lt;a class=&#34;link&#34; href=&#34;https://telestreamforum.forumbee.com/r/m2knvp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://telestreamforum.forumbee.com/r/m2knvp&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;ISO Dropping Frames &lt;a class=&#34;link&#34; href=&#34;https://telestreamforum.forumbee.com/t/80tr9x/iso-dropping-frames&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://telestreamforum.forumbee.com/t/80tr9x/iso-dropping-frames&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Livestreaming Lessons Learned</title>
+        <link>http://localhost:1313/post/video/2016/live-streaming-lessons/</link>
+        <pubDate>Sun, 24 Jan 2016 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/video/2016/live-streaming-lessons/</guid>
+        <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;Last May, for Chhandayan&amp;rsquo;s All-Night Concert 2015 in NYC, I cut between two cameras in the livestream for the first time. Little did I know, there was a lot to learn.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s what I&amp;rsquo;d do differently next time.&lt;/p&gt;
+&lt;h2 id=&#34;transfer-sd-card-footage-with-a-separate-laptop&#34;&gt;Transfer SD Card Footage with a Separate Laptop
+&lt;/h2&gt;&lt;p&gt;Red Giant&amp;rsquo;s neat software &lt;a class=&#34;link&#34; href=&#34;http://www.redgiant.com/products/offload/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Offload&lt;/a&gt; made it really simple to transfer footage from the Sony AX100 cam. Since it also compares checksums of these giant video files, I suspect it spiked the CPU and caused some dropped frames—especially since Wirecast was writing to the same disk!&lt;/p&gt;
+&lt;p&gt;Best to use another machine like a MacBook Air to dump SD footage. Any machine with a fast, built-in or USB 3.0 SD card reader really.&lt;/p&gt;
+&lt;h2 id=&#34;always-ingest-hdv-cams-as-uncompressed-hdmi-outputs&#34;&gt;Always Ingest HDV Cams as Uncompressed HDMI Outputs
+&lt;/h2&gt;&lt;p&gt;If the streaming laptop had another Thunderbolt port, this would have been a no-brainer a long time ago: rock two &lt;a class=&#34;link&#34; href=&#34;https://www.blackmagicdesign.com/products/ultrastudiothunderbolt/techspecs/W-DLUS-04&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Blackmagic Mini Recorder&lt;/a&gt;s via Thunderbolt and call it a day. However my &lt;a class=&#34;link&#34; href=&#34;http://www.everymac.com/systems/apple/macbook_pro/specs/macbook-pro-core-i7-2.6-15-mid-2012-unibody-usb3-specs.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;2012 MacBook Pro 9,1&lt;/a&gt; has only one port, and the Mini Recorder is an endpoint with no daisy chaining (why o why).&lt;/p&gt;
+&lt;p&gt;When the livestream source is HDV over FireWire, the camera actually compresses the video before it sends it over &lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; &lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; &lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;; DV video on the other hand, is at a low enough bitrate to be uncompressed. So compressed HDV has to be &lt;em&gt;decompressed&lt;/em&gt; by the receiving side, i.e. Wirecast, which takes a few milliseconds. This makes the HDV FireWire feed lag slightly behind the other HDMI camera and creates an audio-video sync problem—especially when cutting/mixing with another camera live.&lt;/p&gt;
+&lt;p&gt;Forums at Telestream suggest HDV video always lags uncompressed video/audio streams, but some users don&amp;rsquo;t experience significant lag when using HDV as the only source for both audio and video (probably the case for me because of the MBP&amp;rsquo;s high specs)&lt;sup id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;4&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+&lt;p&gt;Here is an example of the AV sync issue. The stationary center cam is HDV via FireWire and the panning closeup cam is uncompressed HDMI via a Blackmagic Mini Recorder. Audio is not switched and is always taken from the closeup camera (fed from the mixer). Note how the center cam&amp;rsquo;s video is approximately 0.5 sec behind the audio—i.e. the time for the data to decompress!!&lt;/p&gt;
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;https://player.vimeo.com/video/150565246&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;vimeo video&#34; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&amp;ldquo;Is it possible to delay the video of one source so that it&amp;rsquo;s in sync with the other?&amp;rdquo; &lt;del&gt;Although Wirecast allows for an audio delay offset, there&amp;rsquo;s no &amp;ldquo;source offset&amp;rdquo; option. One way might be to pipe the video through VLC to timeshift it with the play/pause button&lt;sup id=&#34;fnref:5&#34;&gt;&lt;a href=&#34;#fn:5&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;, but that&amp;rsquo;s not precise enough here to say the least for starters.&lt;/del&gt; [Update] As of &lt;a class=&#34;link&#34; href=&#34;https://telestreamforum.forumbee.com/t/h48sty/wirecast-7-0-released-june-29-2016&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Wirecast 7.0&lt;/a&gt;, sources now have a separate video delay feature. It would probably take some tuning though to get it right, and still might not be worth it since the decompression would still result in higher CPU usage.&lt;/p&gt;
+&lt;p&gt;The solution? Thankfully now&lt;sup id=&#34;fnref:6&#34;&gt;&lt;a href=&#34;#fn:6&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;6&lt;/a&gt;&lt;/sup&gt;, unlike when it was first released in 2011&lt;sup id=&#34;fnref:7&#34;&gt;&lt;a href=&#34;#fn:7&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;7&lt;/a&gt;&lt;/sup&gt;, the &lt;a class=&#34;link&#34; href=&#34;https://www.blackmagicdesign.com/products/intensity&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Blackmagic Intensity Shuttle USB 3.0&lt;/a&gt; is compatible with Macs! Both are recognized by Wirecast which means one camera can use it via HDMI as a streaming input using Desktop Video 10.5.4 (released January 5, 2016). It&amp;rsquo;s also the goto workflow at Harvard University Athletics (in fact, they use two Mini Recorders and one Intensity Shuttle USB on a MBP with success)!&lt;sup id=&#34;fnref:8&#34;&gt;&lt;a href=&#34;#fn:8&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;8&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;h2 id=&#34;wirecasts-record-to-disk--edit-grade-footage&#34;&gt;Wirecast&amp;rsquo;s &lt;em&gt;Record To Disk&lt;/em&gt; ≠ Edit Grade Footage
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Wirecast drops frames and even adjusts the &lt;em&gt;frame rate&lt;/em&gt; on the fly&lt;sup id=&#34;fnref:9&#34;&gt;&lt;a href=&#34;#fn:9&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;9&lt;/a&gt;&lt;/sup&gt; to serve live content.&lt;/strong&gt; In live video, performance takes priority over data integrity. Dropping a few frames here or there won&amp;rsquo;t make a visible difference to the end user. Wirecast does exactly this, typically around 80% CPU usage&lt;sup id=&#34;fnref:10&#34;&gt;&lt;a href=&#34;#fn:10&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;10&lt;/a&gt;&lt;/sup&gt; &lt;sup id=&#34;fnref:11&#34;&gt;&lt;a href=&#34;#fn:11&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;11&lt;/a&gt;&lt;/sup&gt;. However for frame-precise editing and multitrack syncing of any kind, every frame is vital. So using &lt;em&gt;Record to Disk&lt;/em&gt; is not the right tool for raw footage at all.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Wirecast won&amp;rsquo;t save timecode.&lt;/strong&gt; Kinda makes sense, given the dropped frames. This makes it impossible to detect drops via any kind of timecode-break detection program. Thus the saved stream is super tedious to chop and fix if it is to be synced with another track.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;There&amp;rsquo;s no way to save HDV footage &lt;em&gt;as&lt;/em&gt; HDV footage in Wirecast.&lt;/strong&gt; It&amp;rsquo;s no &lt;a class=&#34;link&#34; href=&#34;http://www.divergentmedia.com/scopebox&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;ScopeBox&lt;/a&gt;. As far as I can tell, the incoming stream would have to be &lt;em&gt;recompressed&lt;/em&gt; on the fly to some other format like H.264, which causes more CPU cycles.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Better would be to either:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Save to MiniDV tape and transfer afterwards.&lt;/strong&gt; Cumbersome, but it technically works. Tapes are about $3 each on Amazon and transferring after takes time, but the main setback is sporadic dropouts during captures when every moment counts. (Stay in school folks.)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Save to disk via FireWire and leave the HDMI for streaming.&lt;/strong&gt; ScopeBox has been my tried and tested approach for &amp;gt; 5 years, and it preserves timecode. (&lt;em&gt;Maybe&lt;/em&gt; the streaming laptop could even handle it if it saved to a separate disk&amp;hellip;saving an m2t stream doesn&amp;rsquo;t take much CPU.)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Save to disk via Wirecast using uncompressed formats like ProRes.&lt;/strong&gt; The way this works is by opening a separate, simultaneous project that only has the input from the HDV camera&amp;rsquo;s HDMI output. The file size is kind of overkill, but this approach could definitely work if another laptop is not available. However the inherent risk of dropped frames is still lingering, and timecode is is still not saved.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note: recording to SSD via &lt;a class=&#34;link&#34; href=&#34;https://www.blackmagicdesign.com/products/hyperdeckshuttle&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Blackmagic HyperDeck Shuttle&lt;/a&gt; won&amp;rsquo;t work, because we need the uncompressed HDMI output for the livestream and the camera has only 1 HDMI output.&lt;/p&gt;
+&lt;h2 id=&#34;best-practices-for-record-to-disk&#34;&gt;Best Practices for &lt;em&gt;Record To Disk&lt;/em&gt;
+&lt;/h2&gt;&lt;p&gt;Saving the livestream feed to disk is still helpful. Such footage is &lt;em&gt;not&lt;/em&gt; a substitute for actual footage from the camera but can be used for quick YouTube posts or as a rough outline for post-production work. (For example, cuts can be detected automatically using programs like &lt;a class=&#34;link&#34; href=&#34;https://www.digitalrebellion.com/promedia/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Edit Detector&lt;/a&gt; and applied to post-production timelines, saving hours of multicam editing work.)&lt;/p&gt;
+&lt;p&gt;When doing so the following tricks minimize dropped frames:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Either save in ProRes or in the same format as the livestream.&lt;/strong&gt; As this Wirecast forum post&lt;sup id=&#34;fnref:12&#34;&gt;&lt;a href=&#34;#fn:12&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;12&lt;/a&gt;&lt;/sup&gt; explains, each output format results in an additional real time encoder thus more CPU usage. H.264 can be particularly CPU intensive, especially when the settings specified cannot take advantage of hardware codecs. ProRes however is extremely light on the CPU, since it&amp;rsquo;s uncompressed.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Use fast external disks as the destination.&lt;/strong&gt; As the same post&lt;sup id=&#34;fnref1:12&#34;&gt;&lt;a href=&#34;#fn:12&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;12&lt;/a&gt;&lt;/sup&gt; explains, writing to disk on slow external drives can also result in dropped frames. I find writing to the same internal disk can also cause performance degredation, interfering with the livestream. However USB 3 and Lightning drives have more than enough bandwidth and don&amp;rsquo;t spike CPU usage—even for ProRes. And that&amp;rsquo;s a good thing, because ProRes files can run really big! Here&amp;rsquo;s a rough guide for choosing the right size drive.&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;&lt;strong&gt;Codec&lt;/strong&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;&lt;strong&gt;Resolution&lt;/strong&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;&lt;strong&gt;Size on Disk&lt;/strong&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;ProRes 422&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;1080p&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;1.02 GB/min = 61.2 GB/hr&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;ProRes 422&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;720p&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;0.53 GB/min = 31.8 GB/hr&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;ProRes 422&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;480p&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;0.36 GB/min = 21.6 GB/hr&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Split files often.&lt;/strong&gt; Rather than saving a single five-hour file to disk, start/stop the file recording for each song, set, etc. Doing so limits inevitable dropped frames to a smaller percentage of the duration of the video, making audio drift less noticable and increasing the chance for multicam syncing.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;history&#34;&gt;History
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;[Updated Feb. 4, 2017 with additional Wirecast Record to Disk information.]&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;[Updated May 14, 2018 with renamed titles, edits, and updated Wirecast best practices.]&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;footnotes&#34;&gt;Footnotes
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;amp;threadid=8362&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;threadid=8362&lt;/a&gt; &lt;code&gt;HDV, because it&#39;s a GOP based codec, takes longer to decode than the audio, hence the sync delay.&lt;/code&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;Confirms HDV buffering on output of ~ 1 sec. &lt;a class=&#34;link&#34; href=&#34;https://obsproject.com/forum/threads/ability-to-synchronize-cameras.23166/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://obsproject.com/forum/threads/ability-to-synchronize-cameras.23166/&lt;/a&gt; &lt;code&gt;Now I&#39;m using also HDV cameras - Canon HX-A1 and Sony Z1. They are connected via firewire*, attached using Video source plugin (as it&#39;s m2ts (mpeg2) stream so can&#39;t be used directly at least in old OBS codebase). But this cameras has about 1 second of lag on firewire output, and that&#39;s how it works by design on most hdv cameras.&lt;/code&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;Another thread on explaining HDV video lag. &lt;a class=&#34;link&#34; href=&#34;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;amp;threadid=10289&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;threadid=10289&lt;/a&gt; &lt;code&gt;HDV will lag because of the time it takes to decode the codec. Make sure your camera is in DV mode. Audio will tend to be ahead of the video from HDV camera due to the aforementioned lag.&lt;/code&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;amp;threadid=13312&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;threadid=13312&lt;/a&gt; &lt;code&gt;HDV decode would lag behind HDMI/SDI input decode. Additionally HDV video may decode ahead of HDV audio. As others have mentioned I would not mix the two if sync were critical.&lt;/code&gt;&amp;#160;&lt;a href=&#34;#fnref:4&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:5&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://forum.telestream.net/forum/messageview.aspx?catid=44&amp;amp;threadid=10185&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://forum.telestream.net/forum/messageview.aspx?catid=44&amp;threadid=10185&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:5&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:6&#34;&gt;
+&lt;p&gt;Looks like public beta for the Blackmagic Intensity Shuttle USB 3.0 support started with &lt;a class=&#34;link&#34; href=&#34;https://www.blackmagicdesign.com/support/readme/201836592e384a54a140e0bbfad03a63&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Desktop Video 9.7.3 on June 16, 2013&lt;/a&gt; but was &lt;a class=&#34;link&#34; href=&#34;http://forum.blackmagicdesign.com/viewtopic.php?f=11&amp;amp;t=22926&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;still in beta through May 28, 2014&lt;/a&gt; at least.&amp;#160;&lt;a href=&#34;#fnref:6&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:7&#34;&gt;
+&lt;p&gt;Intensity Shuttle USB 3.0 unsupported on Macs initially &lt;a class=&#34;link&#34; href=&#34;http://forum.blackmagicdesign.com/viewtopic.php?f=3&amp;amp;t=3518&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://forum.blackmagicdesign.com/viewtopic.php?f=3&amp;t=3518&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:7&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:8&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://stretchinternet.com/blog/2013/07/high-definition-three-camera-inputs-one-laptop-3500/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://stretchinternet.com/blog/2013/07/high-definition-three-camera-inputs-one-laptop-3500/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:8&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:9&#34;&gt;
+&lt;p&gt;Wirecast recommends always keeping the CPU under 80% &lt;a class=&#34;link&#34; href=&#34;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;amp;threadid=18511&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;threadid=18511&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:9&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:10&#34;&gt;
+&lt;p&gt;Wirecast frame rate loss suggested around 85-90% CPU &lt;a class=&#34;link&#34; href=&#34;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;amp;threadid=19731&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;threadid=19731&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:10&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:11&#34;&gt;
+&lt;p&gt;This Wirecast post suggests frame rate loss one says 80% CPU &lt;a class=&#34;link&#34; href=&#34;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;amp;threadid=17012&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;threadid=17012&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:11&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:12&#34;&gt;
+&lt;p&gt;Another 80% CPU, also external HD very little impact on disk &lt;a class=&#34;link&#34; href=&#34;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;amp;threadid=16048&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;threadid=16048&lt;/a&gt; &lt;code&gt;Basically streaming and recording are using the same encoder rather than two encoders in that case...CPU above 80% can result in problems. External hard drives have very little impact with overall CPU use. Apple ProRes is a professional post production codec. H.264 is generally not best for post workflow. It can take significant CPU resources to encode (and decode in post).&lt;/code&gt;&amp;#160;&lt;a href=&#34;#fnref:12&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref1:12&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

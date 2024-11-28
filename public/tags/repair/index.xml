@@ -1,0 +1,901 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Repair on Krishna Bhamidipati</title>
+        <link>http://localhost:1313/tags/repair/</link>
+        <description>Recent content in Repair on Krishna Bhamidipati</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Sat, 14 Mar 2020 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/repair/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Conforming FiLMiC Video for NLEs</title>
+        <link>http://localhost:1313/post/video/2020/conforming-filmic-footage/</link>
+        <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/video/2020/conforming-filmic-footage/</guid>
+        <description>&lt;h2 id=&#34;always-conform-iphone-footage-for-nleseven-from-filmic&#34;&gt;Always Conform iPhone Footage for NLEs—even from FiLMiC
+&lt;/h2&gt;&lt;p&gt;I knew that normal iPhone videos are variable frame rate. Learned that the hard way, once when I was given a concert recorded on an iPhone to sync up to mastered audio. #superfail #ididntrecordthis&lt;/p&gt;
+&lt;p&gt;But I wondered if  &lt;a class=&#34;link&#34; href=&#34;https://www.filmicpro.com/filmicpro/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;FiLMiC Pro&lt;/a&gt;  footage was different? Nope, FiLMiC is also VBR.&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;h2 id=&#34;no-drop-frame&#34;&gt;No Drop Frame
+&lt;/h2&gt;&lt;p&gt;Another thing I learned is FilMiC frame rates are non-drop frame. That is &lt;code&gt;24&lt;/code&gt; really means &amp;ldquo;shoot approximately 24 frames per second.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2020/conforming-filmic-footage/conforming-filmic-1.png&#34;
+	width=&#34;320&#34;
+	height=&#34;568&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;56&#34;
+		data-flex-basis=&#34;135px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;It&amp;rsquo;s interesting to note how minimum and maximum frame rates of the footage, as revealed by MediaInfo.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2020/conforming-filmic-footage/conforming-filmic-2.png&#34;
+	width=&#34;598&#34;
+	height=&#34;845&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;70&#34;
+		data-flex-basis=&#34;169px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;one-hop-in-compressor&#34;&gt;&amp;ldquo;One Hop&amp;rdquo; in Compressor
+&lt;/h2&gt;&lt;p&gt;Interestingly, &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/post/video/2019/conforming-livestream-footage/&#34; &gt;unlike Wirecast footage&lt;/a&gt;, I can successfully conform and modify the framerate for FiLMiC files in one pass with Compressor. The conversion is from H.264 (FiLMiC Extreme bitrate) to ProRes 422.&lt;/p&gt;
+&lt;p&gt;To do so:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Drop the default ProRes preset of your choice&lt;/li&gt;
+&lt;li&gt;Set the frame rate from &lt;code&gt;Automatic&lt;/code&gt; (in this case 24) to the required drop frame &lt;code&gt;23.976&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Import the transcoded file into NLE (Final Cut, etc.)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2020/conforming-filmic-footage/conforming-filmic-3.png&#34;
+	width=&#34;1392&#34;
+	height=&#34;1006&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;138&#34;
+		data-flex-basis=&#34;332px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;remember-only-compressor&#34;&gt;Remember, Only Compressor
+&lt;/h2&gt;&lt;p&gt;Recall &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/post/video/2019/conforming-livestream-footage/&#34; &gt;don&amp;rsquo;t use EditReady for this&lt;/a&gt;. EditReady isn&amp;rsquo;t designed for conforming since it intentionally just &amp;ldquo;adjusts the playback rate of your media.&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;Cheers!&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;When you shoot video on iOS (including iPhone, iPad and iPod Touch), framerates don’t work the way they do on conventional camcorders, which use CFR (constant frame rate). That’s because iOS video recording uses VFR (variable frame rate) with only approximate targets, not exact framerates. This is true, whether you shoot on iOS with FiLMiC Pro or MoviePro. &lt;a class=&#34;link&#34; href=&#34;https://www.provideocoalition.com/filmic-pro-framerates-vfr-status-workflow-reaffirmed-at-nab-2019/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.provideocoalition.com/filmic-pro-framerates-vfr-status-workflow-reaffirmed-at-nab-2019/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Resizing Video with After Effects and Instant 4K</title>
+        <link>http://localhost:1313/post/video/2018/resizing-videos-in-after-effects/</link>
+        <pubDate>Tue, 17 Jul 2018 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/video/2018/resizing-videos-in-after-effects/</guid>
+        <description>&lt;h2 id=&#34;upconverting-480p-footage&#34;&gt;Upconverting 480p Footage
+&lt;/h2&gt;&lt;p&gt;This May, I tried something new and recorded a HD Wirecast livestream to disk as ProRes 422 @ 480p to help save on disk space/throughput.&lt;/p&gt;
+&lt;p&gt;All of the other raw, camera footage was in 1080p and I wondered if there was some way to &amp;ldquo;upconvert&amp;rdquo; the low res footage. (I especially needed to do so because some of the raw camera files got corrupted, and the livestream was the only way to salvage that angle.)&lt;/p&gt;
+&lt;h2 id=&#34;instant-4k-plugin-and-after-effects&#34;&gt;Instant 4K Plugin and After Effects
+&lt;/h2&gt;&lt;p&gt;Despite the name, the &lt;strong&gt;Instant 4K&lt;/strong&gt; plugin is more like &amp;ldquo;Up to 4K.&amp;rdquo; The plugin is part of the &lt;a class=&#34;link&#34; href=&#34;https://www.redgiant.com/products/shooter-suite&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Red Giant Shooter Suite&lt;/a&gt; bundle and comes with support for Adobe Premiere and Adobe After Effects. From what I understand, the plugin uses some advanced interpolation algorithms to redraw each frame of the video as it expands it.&lt;/p&gt;
+&lt;p&gt;I used Adobe After Effects CC 2018 and rendered out to ProRes 422.&lt;/p&gt;
+&lt;h2 id=&#34;ab-video-comparison&#34;&gt;A/B Video Comparison
+&lt;/h2&gt;&lt;p&gt;&amp;ldquo;Seeing is believing.&amp;rdquo; Here&amp;rsquo;s a before/after test with the original 480 footage&lt;/p&gt;
+&lt;h3 id=&#34;still-frames&#34;&gt;Still Frames
+&lt;/h3&gt;&lt;p&gt;Both files were opened in QuickTime Player X, and the 480p window was stretched to the same size as the 1080p window.&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; Below is a looping slideshow of the before/after still frames (image cropped to make it easier to see).&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Notice the difference in the clarity (text at top, violin bow) and richness of color (red blouse). This is &lt;em&gt;even with&lt;/em&gt; the inherent compression in the screenshot.&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h3 id=&#34;running-video&#34;&gt;Running Video
+&lt;/h3&gt;&lt;p&gt;If you have a 1920x1080 display, here&amp;rsquo;s a video clip also.&lt;/p&gt;
+&lt;p&gt;Both files were played in QT X at the same time via ⌘+Enter and are toggled back and forth with ⌘+` (filename changes at the top) during playback. The screen capture was exported as ProRes 4444 (from Camtasia 2) and compressed to H.264 by EditReady using default settings (visually lossless). The eight second clip is 24 MB.&lt;/p&gt;
+&lt;p&gt;There&amp;rsquo;s definitely some compression in the H.264 render (for example in the color red), but even then there&amp;rsquo;s a noticable difference in the clarity in the Instant 4K version. The greatest quality loss is likely in the screen capture (rather than Edit Ready), but it&amp;rsquo;s still a useful test. Real-world delivery formats will be compressed, after all!&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: if you&amp;rsquo;re hard to impress, you&amp;rsquo;ll definitely be underwhelmed when viewing this video at smaller screen resolutions. Be sure your display resolution &amp;gt; 1080p and use the HTML viewer to maximize it fullscreen.&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&#34;video-wrapper&#34;&gt;
+    &lt;video controls
+      preload=&#34;none&#34; poster=&#34;./resizing-prores-poster.png&#34;&gt;
+        &lt;source src=&#34;./Instant4KPlugin-Before480After1080-H264.mov&#34; type=&#34;video/mp4&#34;&gt;Your browser does not support the video tag.
+    &lt;/video&gt;
+&lt;/div&gt;
+
+
+
+&lt;p&gt;There&amp;rsquo;s nothing like looking at the original uncompressed footage though, so feel free to &lt;a class=&#34;link&#34; href=&#34;https://f000.backblazeb2.com/file/TripodVideoNinja/Instant4KPlugin-ProRes422-Resizing-Experiments.zip&#34; &gt;download the raw ProRes 422 videos&lt;/a&gt; to do your own comparison (190 MB).&lt;/p&gt;
+&lt;h2 id=&#34;plugin-workflow-and-screenshots&#34;&gt;Plugin Workflow and Screenshots
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Drag and drop the footage into After Effects.&lt;/li&gt;
+&lt;li&gt;Right-click a video file and create a new composition from it.&lt;/li&gt;
+&lt;li&gt;Right-click the composition and select &lt;strong&gt;Composition Settings&lt;/strong&gt;. Change the &lt;strong&gt;Preset&lt;/strong&gt; to the target resolution (e.g. &lt;strong&gt;HDTV 1080 29.97&lt;/strong&gt; with &lt;strong&gt;Square Pixels&lt;/strong&gt;). The source video should now be smaller than the canvas size. &lt;img src=&#34;http://localhost:1313/post/video/2018/resizing-videos-in-after-effects/after-effects-resize-settings-1.png&#34;
+	width=&#34;700&#34;
+	height=&#34;642&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;109&#34;
+		data-flex-basis=&#34;261px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;li&gt;Use the &lt;strong&gt;Effects &amp;amp; Presets&lt;/strong&gt; dropdown to find the **Red Giant Shooter Suite ** section. Drag and drop the &lt;code&gt;Instant 4K&lt;/code&gt; plugin into the composition&amp;rsquo;s viewer to apply. It should automatically resize to the canvas size!&lt;/li&gt;
+&lt;li&gt;Adjust the plugin settings as desired. I personally use &lt;strong&gt;Filter Type Best, Sharpness 6, Quality 10, and Anti-aliasing 3&lt;/strong&gt;, based on Red Giant&amp;rsquo;s Getting Started with Instant 4K video&lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;.&lt;/li&gt;
+&lt;li&gt;Select the composition and choose &lt;strong&gt;Composition &amp;gt; Add to Render Queue&lt;/strong&gt; from the menubar. Use &lt;strong&gt;Render Settings &amp;gt; Best Settings&lt;/strong&gt; using the small drop down. &lt;img src=&#34;http://localhost:1313/post/video/2018/resizing-videos-in-after-effects/after-effects-resize-settings-2.png&#34;
+	width=&#34;225&#34;
+	height=&#34;199&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;113&#34;
+		data-flex-basis=&#34;271px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;li&gt;Create a new &lt;strong&gt;Output Module&lt;/strong&gt; to export to &lt;strong&gt;ProRes 422&lt;/strong&gt;. &lt;img src=&#34;http://localhost:1313/post/video/2018/resizing-videos-in-after-effects/after-effects-resize-settings-3.png&#34;
+	width=&#34;872&#34;
+	height=&#34;588&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;148&#34;
+		data-flex-basis=&#34;355px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;For reference, the 17 second video clip earlier took 3 minutes and 43 seconds to export on the 2011 iMac with 12 GB of RAM. That is, &lt;strong&gt;13x&lt;/strong&gt;!&lt;/p&gt;
+&lt;h2 id=&#34;ram-requirements&#34;&gt;RAM Requirements
+&lt;/h2&gt;&lt;p&gt;Resizing ProRes footage apparently can&amp;rsquo;t be done on all machines. Here&amp;rsquo;s why.&lt;/p&gt;
+&lt;h3 id=&#34;are-you-hongry-for-ram&#34;&gt;Are You Hongry for RAM?
+&lt;/h3&gt;&lt;p&gt;Little did I know how incredibly RAM-intensive resizing footage is. This problem was particularly intensified by the sheer length of the video files: some were nearly 2 hours x 1 GB/min = 120 GB (classical music concert footage).&lt;/p&gt;
+&lt;p&gt;The 2011 MBP actually &lt;em&gt;ran out of RAM&lt;/em&gt;. Like kaput. I tried a few things like increasing After Effect&amp;rsquo;s memory allocation, etc. but it was all essentially the same. Anything larger than 30 minutes would crash. Queuing up multiple renders wouldn&amp;rsquo;t work, because the program would need to be restarted before each one. The laptop was already maxxed out with 8 GB RAM.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2018/resizing-videos-in-after-effects/after-effects-mbp-resize-crash.gif&#34;
+	width=&#34;1680&#34;
+	height=&#34;1050&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;160&#34;
+		data-flex-basis=&#34;384px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;This is when I remembered that nice desktop in the basement.&lt;/p&gt;
+&lt;h3 id=&#34;return-of-the-imac&#34;&gt;Return of the iMac
+&lt;/h3&gt;&lt;p&gt;Unlike the MBP, the iMac has four RAM slots. Both machines had 8 GB total at the start, but the iMac impressively cranked out the footage. It would seem that somehow this older iMac is just more stable, perhaps by virtue of it being a desktop.&lt;/p&gt;
+&lt;p&gt;Eventually the iMac also started freezing up for the larger files. However after upgrading the machine to 12 GB—two 2 GB chips and two 4 GB chips—it was invincible.&lt;/p&gt;
+&lt;h3 id=&#34;observations-on-ram-pressure&#34;&gt;Observations on RAM Pressure
+&lt;/h3&gt;&lt;p&gt;One thing I noticed was even after a render is complete, After Effects typically still holds onto the RAM. Some of it can be purged by manually by selecting &lt;strong&gt;Edit &amp;gt; Purge &amp;gt; All Memory &amp;amp; Disk Cache&amp;hellip;&lt;/strong&gt; but it&amp;rsquo;s my observation that the RAM is only released completely after closing the program. Exiting the program usually takes a while too, sometimes of upwards of 2 minutes as it slowly siphons the RAM back.&lt;/p&gt;
+&lt;p&gt;On the iMac with 12 GB RAM however, I had no trouble queueing up multiple renders.&lt;/p&gt;
+&lt;h2 id=&#34;history&#34;&gt;History
+&lt;/h2&gt;&lt;p&gt;&lt;em&gt;[Updated Sep. 16, 2018 with detailed After Effects walkthrough.]&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;[Updated Sep. 26, 2018 with fast-loading ProRes 422 picture and video samples.]&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&#34;footnotes&#34;&gt;Footnotes
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;The 853x480 file could only be resized to 1920x1079 in QuickTime Player X because of roundoff error. Hence the slight 1 pixel height difference when cycling between the two files.&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;This slideshow is not a GIF. It&amp;rsquo;s rendered with Javascript with two PNG images, in order to minimize compression losses.&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;Red Giant&amp;rsquo;s video guide for the Instant 4K plugin, from where my default settings were taken from. &lt;a class=&#34;link&#34; href=&#34;https://www.redgiant.com/tutorial/getting-started-with-instant-4k/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.redgiant.com/tutorial/getting-started-with-instant-4k/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        <item>
+        <title>Repairing H.264 Interlaced Footage</title>
+        <link>http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/</link>
+        <pubDate>Sat, 04 Feb 2017 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/</guid>
+        <description>&lt;h2 id=&#34;the-rub&#34;&gt;The Rub
+&lt;/h2&gt;&lt;p&gt;We&amp;rsquo;ll start with a quote from Larry Jordan:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;X.264 and H.264 should only be used when creating files for the web. If you plan to edit the resulting file, convert it to ProRes instead. AVCHD files compressed into H.264 for editing will look just awful.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Oops.&lt;/p&gt;
+&lt;h2 id=&#34;the-flawed-setup&#34;&gt;The Flawed Setup
+&lt;/h2&gt;&lt;p&gt;I still use a Sony FX7 for some setups. It has a Firewire out which makes it perfect for livestreaming.&lt;/p&gt;
+&lt;p&gt;For this event, I wanted to (1) use the FX7 for livestreaming and (2) also record the raw HDV video itself for editing afterwards.&lt;/p&gt;
+&lt;p&gt;In order to avoid those awful MiniDV tapes—whose tape changes I feared also might cause the live feed to that meant recording to disk. It wasn&amp;rsquo;t possible to share the video source with both Wirecast and ScopeBox, so I thought, &amp;ldquo;Hey, why not try recording straight to disk in Wirecast instead?&amp;rdquo;&lt;/p&gt;
+&lt;p&gt;While &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/post/video/2016/live-streaming-lessons/&#34; &gt;this post&lt;/a&gt; details many other general livestreaming lessons learned, there are a few major downsides to relying on Wirecast for raw footage which I now realize. Wirecast doesn&amp;rsquo;t know how to &amp;ldquo;automatically&amp;rdquo; record as HDV; instead it manually requires setting the codec format, frame rate, etc. which felt too easy for me to mess up. For example: since HDV is technically a 4:3 1440x1080 image that&amp;rsquo;s then stretched out, I wasn&amp;rsquo;t sure whether I should record to 1920x1080 or 1440x1080.&lt;/p&gt;
+&lt;p&gt;So rather than deal with all that I said instead, &amp;ldquo;Let&amp;rsquo;s just save H.264 in Wirecast to disk!&amp;rdquo; (It was a pretty neat setup actually, using two Wirecast documents open simultaneously, one for the livestream and one just for the camera&amp;rsquo;s archive stream.) Just in case 1080p would create an upscale, I thought going 720p would be better.&lt;/p&gt;
+&lt;p&gt;Thus the Nightmare Before Recording began.&lt;/p&gt;
+&lt;h2 id=&#34;the-rescue-contenders&#34;&gt;The Rescue Contenders
+&lt;/h2&gt;&lt;p&gt;Three approaches to &amp;ldquo;uncomb&amp;rdquo;&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; the baked in interlaced footage were tried:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://handbrake.fr&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Handbrake&lt;/a&gt; (v 0.10.5 x86_64)&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://www.apple.com/final-cut-pro/compressor/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Compressor 4&lt;/a&gt; via forcing the field order to interlaced&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;http://www.phyx.biz/phyxcleaner.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;PHYX Cleaner plugin&lt;/a&gt; as suggested on a Wirecast forum&lt;sup id=&#34;fnref:2&#34;&gt;&lt;a href=&#34;#fn:2&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Of these three, &lt;strong&gt;Compressor was the clear winner&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;the-compressor-trick&#34;&gt;The Compressor Trick
+&lt;/h2&gt;&lt;p&gt;Compressor, it seems, has a handy feature that allows &amp;ldquo;forcing&amp;rdquo; an input file&amp;rsquo;s field order. By carefully clicking on the input file&amp;rsquo;s box, the Inspector window on the right shows a little section called &lt;strong&gt;File Properties&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/compressor-force-field-order.png&#34;
+	width=&#34;1104&#34;
+	height=&#34;915&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;120&#34;
+		data-flex-basis=&#34;289px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Since the file is actually H.264, Compressor reads the metadata and selects Progressive by default. Changing this to &lt;strong&gt;Top First&lt;/strong&gt; forces it to treat it as interlaced (since HDV is top field first).&lt;/p&gt;
+&lt;h2 id=&#34;deinterlace-tests&#34;&gt;Deinterlace Tests
+&lt;/h2&gt;&lt;p&gt;All files, a total of 2.68 GB, are available &lt;a class=&#34;link&#34; href=&#34;https://f000.backblazeb2.com/file/TripodVideoNinja/HDV-Deinterlace-Repair-Experiments.zip&#34; &gt;here&lt;/a&gt; for reference. Compressing them for web would precisely alter what we&amp;rsquo;re trying to observe!&lt;/p&gt;
+&lt;p&gt;Note: please be considerate and only download them sparingly as needed.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1080iHDVSavedAs720pH264Clip1.mov&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;57 second clip, 30 MB.&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Output file&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Size&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Program used&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Result&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Apple Devices HD (Best Quality).m4v&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;49M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Compressor&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;BEST&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Apple ProRes 422 Retiming Better.mov&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;498M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Compressor&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;FAIL&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Apple ProRes 422 Stock.mov&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;498M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Compressor&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;FAIL&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;H.264 for Archival.mov&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;94M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Compressor&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;BEST&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;HandbrakeHighProfileDecombBob.mp4&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;30M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Handbrake&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;FAIL&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;HandbrakeHighProfileDecombBob60fps.mp4&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;30M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Handbrake&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;FAIL&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;HandbrakeHighProfileDecombBobTff.mp4&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;31M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Handbrake&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;FAIL&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;HandbrakeHighProfileDeinterflaceBobTff.mp4&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;37M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Handbrake&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;FAIL&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;HandbrakeHighProfileDeinterlaceBob.mp4&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;36M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Handbrake&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;FAIL&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;HandbrakeHighProfileDeinterlaceBob60fps.mp4&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;36M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Handbrake&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;FAIL&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;PhyxCleanerMasterFileH264.mov&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;49M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;PHYX + FCPX&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;OK&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;PhyxCleanerMasterFileProRes.mov&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;499M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;PHYX + FCPX&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;OK&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Up to 4K Stock.mov&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;69M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Compressor&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;OK&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;x264 Jan Ozer-esque.mov&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;48M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Compressor + x264&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;FAIL&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;x264 Larry Jordan-esque.mov&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;47M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Compressor + x264&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;FAIL&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;From these experiments, it seems &lt;strong&gt;Handbrake&amp;rsquo;s decombing/deinterlacing algorithms can&amp;rsquo;t be forced on progressive video files&lt;/strong&gt;. Even forcing the footage with &lt;code&gt;tff&lt;/code&gt; as top-field-first&lt;sup id=&#34;fnref:3&#34;&gt;&lt;a href=&#34;#fn:3&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;3&lt;/a&gt;&lt;/sup&gt; yielded zero discernible difference. Handbrake&amp;rsquo;s just meant to work on actual interlaced footage.&lt;/p&gt;
+&lt;p&gt;Also interesting to note is Handbrake seems to start video earlier from the GOP, even though the file itself started many frames later. Hence the audio is blank at the beginning of the output render file!&lt;/p&gt;
+&lt;p&gt;PHYX Cleaner&amp;rsquo;s output was better than the original, but it&amp;rsquo;s still rather comby. Both H.264 and ProRes master files appear identical in deinterlacing quality. Perhaps the plugin can be refined further from the stock plugin settings, but even if that were the case there are so many disadvantages:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;it&amp;rsquo;s a paid plugin&lt;/li&gt;
+&lt;li&gt;each clip would require a separate Project in FCPX&lt;/li&gt;
+&lt;li&gt;exporting from FCPX can&amp;rsquo;t be batched easily (like Compressor)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Compressor however is the clear champion! In particular, the only passing Compressor renders were by &lt;strong&gt;forcing the field order &lt;em&gt;and&lt;/em&gt; using Apple&amp;rsquo;s stock H.264 codec&lt;/strong&gt;. Forcing the field order and using an x264 codec&lt;sup id=&#34;fnref:4&#34;&gt;&lt;a href=&#34;#fn:4&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; made no difference—and rather looked like the poor output from Handbrake (likely because Handbrake uses x264 too).&lt;/p&gt;
+&lt;h2 id=&#34;summary-of-repair-solution&#34;&gt;Summary of Repair Solution
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;1080iHDVSavedAs720pH264Clip2.mov&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Final confirmation with a 11 sec, 9 MB segment instead.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Original&lt;/strong&gt; &lt;em&gt;especially note the combing during fast hand movements&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&#34;video-wrapper&#34;&gt;
+    &lt;video controls
+      preload=&#34;none&#34; poster=&#34;./deinterlace-clip2-better-retiming-poster.png&#34;&gt;
+        &lt;source src=&#34;./1080iHDVSavedAs720pH264Clip2.mov&#34; type=&#34;video/mp4&#34;&gt;Your browser does not support the video tag.
+    &lt;/video&gt;
+&lt;/div&gt;
+
+
+
+&lt;p&gt;&lt;!-- raw HTML omitted --&gt;&lt;!-- raw HTML omitted --&gt;&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Output file&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Size&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Program used&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Result&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Up to 4K Stock.mov&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;14M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Compressor&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;BEST&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Up to 4K Better Retiming.mov&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;14M&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Compressor&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;BEST&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;It&amp;rsquo;s hard for me to tell if there&amp;rsquo;s an appreciable difference between the two retiming settings, but for sure the combing is no more!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Repaired (Up to 4K Better Retiming)&lt;/strong&gt; &lt;em&gt;look Ma, no lines!&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&#34;video-wrapper&#34;&gt;
+    &lt;video controls
+      preload=&#34;none&#34; poster=&#34;./deinterlace-clip2-orig-poster.png&#34;&gt;
+        &lt;source src=&#34;./1080iHDVSavedAs720pH264Clip2-Up-to-4K-Better-Retiming.mov&#34; type=&#34;video/mp4&#34;&gt;Your browser does not support the video tag.
+    &lt;/video&gt;
+&lt;/div&gt;
+
+
+
+&lt;p&gt;So at the end of the day, &lt;strong&gt;forcing Compressor&amp;rsquo;s input field order &lt;em&gt;and&lt;/em&gt; exporting using Apple&amp;rsquo;s H.264 codec works like a champ&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Phew!&lt;/p&gt;
+&lt;h2 id=&#34;appendix-custom-encoding-presets-tried&#34;&gt;Appendix: Custom Encoding Presets Tried
+&lt;/h2&gt;&lt;p&gt;Details of all the presets used. All audio settings left as default.&lt;/p&gt;
+&lt;h3 id=&#34;x264-larry-jordan-esque-compressor&#34;&gt;x264 Larry Jordan-esque (Compressor)
+&lt;/h3&gt;&lt;p&gt;Inspired by: &lt;a class=&#34;link&#34; href=&#34;https://larryjordan.com/articles/compressor-x264-improve-video/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://larryjordan.com/articles/compressor-x264-improve-video/&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;QuickTime settings
+&lt;ul&gt;
+&lt;li&gt;Compression Type set to x264 Encoder&lt;/li&gt;
+&lt;li&gt;Key Frames set to Automatic (instead of Every 24 frames)&lt;/li&gt;
+&lt;li&gt;Data Rate set to Automatic (instead of 6400 kbps)&lt;/li&gt;
+&lt;li&gt;Encoding set to Best quality (Multi-pass)&lt;/li&gt;
+&lt;li&gt;Quality moved to High&lt;/li&gt;
+&lt;li&gt;Options &amp;hellip;
+&lt;ul&gt;
+&lt;li&gt;Flags &amp;gt; crf turned on. Everything else left as is&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Retiming quality set to Better (Motion Adaptive)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/jordanx264-01.png&#34;
+	width=&#34;878&#34;
+	height=&#34;690&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;127&#34;
+		data-flex-basis=&#34;305px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/jordanx264-02.png&#34;
+	width=&#34;690&#34;
+	height=&#34;616&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;112&#34;
+		data-flex-basis=&#34;268px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/jordanx264-03.png&#34;
+	width=&#34;690&#34;
+	height=&#34;616&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;112&#34;
+		data-flex-basis=&#34;268px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/jordanx264-04.png&#34;
+	width=&#34;690&#34;
+	height=&#34;616&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;112&#34;
+		data-flex-basis=&#34;268px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/jordanx264-05.png&#34;
+	width=&#34;690&#34;
+	height=&#34;616&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;112&#34;
+		data-flex-basis=&#34;268px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/jordanx264-06.png&#34;
+	width=&#34;455&#34;
+	height=&#34;1034&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;44&#34;
+		data-flex-basis=&#34;105px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/jordanx264-07.png&#34;
+	width=&#34;455&#34;
+	height=&#34;1034&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;44&#34;
+		data-flex-basis=&#34;105px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;x264-jan-ozer-esque-compressor&#34;&gt;x264 Jan Ozer-esque (Compressor)
+&lt;/h3&gt;&lt;p&gt;Inspired by: &lt;a class=&#34;link&#34; href=&#34;http://www.streaminglearningcenter.com/articles/first-look-apple-compressor-41.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://www.streaminglearningcenter.com/articles/first-look-apple-compressor-41.html&lt;/a&gt; and &lt;a class=&#34;link&#34; href=&#34;http://www.streaminglearningcenter.com/articles/encoding-with-the-x264-codec-with-compressor-4.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://www.streaminglearningcenter.com/articles/encoding-with-the-x264-codec-with-compressor-4.html&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;QuickTimeSettings
+&lt;ul&gt;
+&lt;li&gt;Set Compression Type to x264 Encoder&lt;/li&gt;
+&lt;li&gt;Options &amp;hellip; &amp;gt; Load preset &amp;gt; Use Library native preset/tune
+&lt;ul&gt;
+&lt;li&gt;x264 preset left as Medium (default)&lt;/li&gt;
+&lt;li&gt;x264 tune left as None&lt;/li&gt;
+&lt;li&gt;Hit OK&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;H.264 Profile limit left as up to High Profile
+&lt;ul&gt;
+&lt;li&gt;Hit OK&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Changed Key Frames to Automatic&lt;/li&gt;
+&lt;li&gt;Compressor Quality to High&lt;/li&gt;
+&lt;li&gt;Encoding to Best quality (Multi-pass)&lt;/li&gt;
+&lt;li&gt;Data Rate set to Automatic (instead of 6400 kbps)&lt;/li&gt;
+&lt;li&gt;Hit OK&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Retiming quality set to Better (Motion Adaptive)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/ozerx264-01.png&#34;
+	width=&#34;690&#34;
+	height=&#34;616&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;112&#34;
+		data-flex-basis=&#34;268px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/ozerx264-02.png&#34;
+	width=&#34;690&#34;
+	height=&#34;616&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;112&#34;
+		data-flex-basis=&#34;268px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/ozerx264-03.png&#34;
+	width=&#34;690&#34;
+	height=&#34;616&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;112&#34;
+		data-flex-basis=&#34;268px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/ozerx264-04.png&#34;
+	width=&#34;690&#34;
+	height=&#34;616&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;112&#34;
+		data-flex-basis=&#34;268px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/ozerx264-05.png&#34;
+	width=&#34;690&#34;
+	height=&#34;616&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;112&#34;
+		data-flex-basis=&#34;268px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/ozerx264-06.png&#34;
+	width=&#34;878&#34;
+	height=&#34;690&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;127&#34;
+		data-flex-basis=&#34;305px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/ozerx264-07.png&#34;
+	width=&#34;455&#34;
+	height=&#34;1034&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;44&#34;
+		data-flex-basis=&#34;105px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/ozerx264-08.png&#34;
+	width=&#34;455&#34;
+	height=&#34;1034&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;44&#34;
+		data-flex-basis=&#34;105px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;x264-deinterlace-handbrake&#34;&gt;x264 Deinterlace (HandBrake)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Started with High Profile&lt;/li&gt;
+&lt;li&gt;Picture Settings &amp;gt; Filters
+&lt;ul&gt;
+&lt;li&gt;Deinterlace: Bob&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/hbx264-01.png&#34;
+	width=&#34;519&#34;
+	height=&#34;307&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;169&#34;
+		data-flex-basis=&#34;405px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/hbx264-02.png&#34;
+	width=&#34;1269&#34;
+	height=&#34;758&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;167&#34;
+		data-flex-basis=&#34;401px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/hbx264-03.png&#34;
+	width=&#34;686&#34;
+	height=&#34;530&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;129&#34;
+		data-flex-basis=&#34;310px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;x264-decomb-handbrake&#34;&gt;x264 Decomb (HandBrake)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Started with High Profile&lt;/li&gt;
+&lt;li&gt;Picture Settings &amp;gt; Filters
+&lt;ul&gt;
+&lt;li&gt;Decomb: Bob&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/hbx264-04.png&#34;
+	width=&#34;519&#34;
+	height=&#34;307&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;169&#34;
+		data-flex-basis=&#34;405px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/hbx264-05.png&#34;
+	width=&#34;1269&#34;
+	height=&#34;758&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;167&#34;
+		data-flex-basis=&#34;401px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/hbx264-06.png&#34;
+	width=&#34;686&#34;
+	height=&#34;530&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;129&#34;
+		data-flex-basis=&#34;310px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;x264-deinterlace-top-field-first-handbrake&#34;&gt;x264 Deinterlace, Top Field First (HandBrake)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Started with High Profile&lt;/li&gt;
+&lt;li&gt;Picture Settings &amp;gt; Filters
+&lt;ul&gt;
+&lt;li&gt;Deinterlace: Bob&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;:tff&lt;/code&gt; under Additional Options&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/hbx264-07.png&#34;
+	width=&#34;686&#34;
+	height=&#34;530&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;129&#34;
+		data-flex-basis=&#34;310px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;x264-decomb-top-field-first-handbrake&#34;&gt;x264 Decomb, Top Field First (HandBrake)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Started with High Profile&lt;/li&gt;
+&lt;li&gt;Picture Settings &amp;gt; Filters
+&lt;ul&gt;
+&lt;li&gt;Decomb: Bob&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;:tff&lt;/code&gt; under Additional Options&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/hbx264-08.png&#34;
+	width=&#34;686&#34;
+	height=&#34;530&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;129&#34;
+		data-flex-basis=&#34;310px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;apple-prores-422-compressor&#34;&gt;Apple ProRes 422 (Compressor)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Started with stock preset&lt;/li&gt;
+&lt;li&gt;Retiming quality set to Better (Motion Adaptive)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/prores-01.png&#34;
+	width=&#34;1222&#34;
+	height=&#34;1034&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;118&#34;
+		data-flex-basis=&#34;283px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;h264-for-archival-compressor&#34;&gt;H.264 for Archival (Compressor)
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Duplicate stock Up to 4K preset (can be found under either Publish to Vimeo or Publish to YouTube)&lt;/li&gt;
+&lt;li&gt;Rename as H.264 for Archival&lt;/li&gt;
+&lt;li&gt;Change Data rate from Web publishing (19531 kbps) to Computer playback (29296 kbps). Note rates listed in Compressor are for actual 4K footage and will be smaller for 720p footage.&lt;/li&gt;
+&lt;li&gt;Change retiming quality from Fast to Better (Motion Adaptive)&lt;/li&gt;
+&lt;li&gt;Change audio from AAC to Linear PCM 48kHz, Best Quality, 16-bit Little Endian (the Intel Default)&lt;sup id=&#34;fnref:5&#34;&gt;&lt;a href=&#34;#fn:5&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/upto4k-01.png&#34;
+	width=&#34;1267&#34;
+	height=&#34;869&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;145&#34;
+		data-flex-basis=&#34;349px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/upto4k-02.png&#34;
+	width=&#34;878&#34;
+	height=&#34;690&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;127&#34;
+		data-flex-basis=&#34;305px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/upto4k-03.png&#34;
+	width=&#34;1267&#34;
+	height=&#34;869&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;145&#34;
+		data-flex-basis=&#34;349px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/upto4k-04.png&#34;
+	width=&#34;1267&#34;
+	height=&#34;869&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;145&#34;
+		data-flex-basis=&#34;349px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h3 id=&#34;phyx-cleaner&#34;&gt;PHYX Cleaner
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/video/2017/repairing-h264-interlaced-footage/phyx-cleaner-deinterlace-settings.png&#34;
+	width=&#34;2032&#34;
+	height=&#34;1169&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;173&#34;
+		data-flex-basis=&#34;417px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;references&#34;&gt;References
+&lt;/h2&gt;&lt;div class=&#34;footnotes&#34; role=&#34;doc-endnotes&#34;&gt;
+&lt;hr&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn:1&#34;&gt;
+&lt;p&gt;Examples of combing &lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Interlaced_video#Interlacing_problems&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://en.wikipedia.org/wiki/Interlaced_video#Interlacing_problems&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:1&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:2&#34;&gt;
+&lt;p&gt;Recorded Interlaced Source as Progressive file - now what? &lt;a class=&#34;link&#34; href=&#34;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;amp;threadid=23213&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://forum.telestream.net/forum/messageview.aspx?catid=45&amp;threadid=23213&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:2&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:3&#34;&gt;
+&lt;p&gt;Tip to use &lt;code&gt;:tff&lt;/code&gt; in Handbrake &lt;a class=&#34;link&#34; href=&#34;http://stackoverflow.com/questions/9287122/how-do-i-set-the-interlaced-flag-on-an-mkv-file-so-that-vlc-can-automatically-pl&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://stackoverflow.com/questions/9287122/how-do-i-set-the-interlaced-flag-on-an-mkv-file-so-that-vlc-can-automatically-pl&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:3&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:4&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://larryjordan.com/articles/compressor-x264-improve-video/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://larryjordan.com/articles/compressor-x264-improve-video/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:4&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li id=&#34;fn:5&#34;&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://larryjordan.com/articles/it-aint-the-endian-of-the-world/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://larryjordan.com/articles/it-aint-the-endian-of-the-world/&lt;/a&gt;&amp;#160;&lt;a href=&#34;#fnref:5&#34; class=&#34;footnote-backref&#34; role=&#34;doc-backlink&#34;&gt;&amp;#x21a9;&amp;#xfe0e;&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

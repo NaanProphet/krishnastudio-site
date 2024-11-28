@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Plugins on Krishna Bhamidipati</title>
+        <link>http://localhost:1313/tags/plugins/</link>
+        <description>Recent content in Plugins on Krishna Bhamidipati</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Mon, 30 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/plugins/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>How to Install Individual Plugins from a of Waves Bundle</title>
+        <link>http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/</link>
+        <pubDate>Mon, 30 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;Purchased a Waves bundle. Only want to install three plugins.&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;Don&amp;rsquo;t choose Easy Install&lt;/li&gt;
+&lt;li&gt;Select &lt;code&gt;Install Products&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;code&gt;All Waves Products&lt;/code&gt; and choose the plugins you want&lt;/li&gt;
+&lt;li&gt;Navigate to &lt;code&gt;Manage Licenses&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Activate your bundle&amp;rsquo;s license&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;screenshots&#34;&gt;Screenshots
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/waves-plugins-install-1.png&#34;
+	width=&#34;1132&#34;
+	height=&#34;864&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;131&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/waves-plugins-install-2.png&#34;
+	width=&#34;1132&#34;
+	height=&#34;864&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;131&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/waves-plugins-install-3.png&#34;
+	width=&#34;1132&#34;
+	height=&#34;864&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;131&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/install-select-plugins-from-waves-bundle/waves-plugins-install-4.png&#34;
+	width=&#34;1132&#34;
+	height=&#34;864&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;131&#34;
+		data-flex-basis=&#34;314px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Plugin not Visible in Logic Project</title>
+        <link>http://localhost:1313/post/audio/2019/plugin-loaded-but-not-visible/</link>
+        <pubDate>Mon, 30 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/plugin-loaded-but-not-visible/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;I know this project is using a plugin, because it requires it when the project loads (&lt;code&gt;Kontakt 5&lt;/code&gt;). However in the mixer I can&amp;rsquo;t find any Kontakt instruments!&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;The track using the plugin is probably hidden. Toggle &lt;code&gt;All&lt;/code&gt; in the mixer console to see hidden tracks.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/plugin-loaded-but-not-visible/plugin-on-hidden-tracks-1.png&#34;
+	width=&#34;239&#34;
+	height=&#34;228&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;104&#34;
+		data-flex-basis=&#34;251px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Alternatively, unhide the tracks by pressing &lt;code&gt;H&lt;/code&gt; or clicking the &lt;code&gt;H&lt;/code&gt; button in the Main Window.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/plugin-loaded-but-not-visible/plugin-on-hidden-tracks-2.png&#34;
+	width=&#34;210&#34;
+	height=&#34;205&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;102&#34;
+		data-flex-basis=&#34;245px&#34;
+	
+&gt;&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Unable to Find Slate FG-224 and FG-224XL Plugins</title>
+        <link>http://localhost:1313/post/audio/2019/missing-slate-plugins/</link>
+        <pubDate>Mon, 30 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/missing-slate-plugins/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;Installed VerbSuite via a Slate Digital All-Access plan. Two errors show up when Logic scans the plugin in.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/missing-slate-plugins/verb-suite-error-1.png&#34;
+	width=&#34;432&#34;
+	height=&#34;152&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;284&#34;
+		data-flex-basis=&#34;682px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/missing-slate-plugins/verb-suite-error-2.png&#34;
+	width=&#34;430&#34;
+	height=&#34;152&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;282&#34;
+		data-flex-basis=&#34;678px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;I don&amp;rsquo;t have a Gobbler account, so I couldn&amp;rsquo;t follow the guide on Slate&amp;rsquo;s FAQ page &lt;a class=&#34;link&#34; href=&#34;https://slatedigital.zendesk.com/hc/en-us/articles/115005085188-How-To-Access-the-VerbSuite-FG-224-Expansion-Installers&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;How To Access the VerbSuite FG-224 Expansion Installers&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;Contacted Slate support and they provided me with direct links for the VerbSuite Expansion installers in one business day.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Unhelpful Missing Kontakt Instrument Message Explained</title>
+        <link>http://localhost:1313/post/audio/2019/missing-kontakt-instrument-name-explained/</link>
+        <pubDate>Mon, 30 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/missing-kontakt-instrument-name-explained/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;Sometimes Logic is very helpful when a missing Kontakt instrument is missing.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/missing-kontakt-instrument-name-explained/kontakt-library-missing-1.png&#34;
+	width=&#34;532&#34;
+	height=&#34;293&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;181&#34;
+		data-flex-basis=&#34;435px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Other times, it is not!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/missing-kontakt-instrument-name-explained/kontakt-library-missing-2.png&#34;
+	width=&#34;532&#34;
+	height=&#34;265&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;200&#34;
+		data-flex-basis=&#34;481px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;How to determine which instrument is missing?&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;Unfortunately, this seems to be because of third party instruments. You might have some luck with the approach described in &lt;a class=&#34;link&#34; href=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/&#34; &gt;How to Decode Shortened Plugin Names in Logic&lt;/a&gt; but otherwise ask the person whose project you&amp;rsquo;re opening.&lt;/p&gt;
+&lt;p&gt;In this case, it turned out to be instruments from the &lt;strong&gt;Cinematic Studio&lt;/strong&gt; series.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>How to Decode Shortened Plugin Names in Logic</title>
+        <link>http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/</link>
+        <pubDate>Wed, 25 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;Loading a project from a friend. Logic says it can&amp;rsquo;t find a plugin, but the plugin name is abbreviated! How to find out what it is?&lt;/p&gt;
+&lt;p&gt;For example is &lt;code&gt;Supercharge&lt;/code&gt; Supercharger or Supercharger GT? Which version is &lt;code&gt;Guitar Rig &lt;/code&gt; (note the space at the end)?&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/shortened-plugin-names-1.png&#34;
+	width=&#34;912&#34;
+	height=&#34;855&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;106&#34;
+		data-flex-basis=&#34;256px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;Open the bundled &lt;code&gt;ProjectData&lt;/code&gt; file in a text editor and perform a case sensitive search. The file is technically an encrypted SQLite database, so it needs to be interpreted as ASCII. Many of the columns appear to be unencrypted making search possible.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Right click the Logic project&lt;/li&gt;
+&lt;li&gt;Select &lt;code&gt;Show Package Contents&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Go into the &lt;code&gt;Alternatives&lt;/code&gt; folder and find the corresponding version folder (&lt;code&gt;000&lt;/code&gt;, &lt;code&gt;001&lt;/code&gt;, etc.)&lt;/li&gt;
+&lt;li&gt;Copy the &lt;code&gt;ProjectData&lt;/code&gt; file to your Desktop (to be safe)&lt;/li&gt;
+&lt;li&gt;Open &lt;code&gt;ProjectData&lt;/code&gt; from your Desktop in your favorite code editor (Atom, VSCode, etc.)
+&lt;ul&gt;
+&lt;li&gt;TextEdit will work but may be slow&lt;/li&gt;
+&lt;li&gt;I perfer a text editor over a hex editor because of the syntax highlighting&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Note: since this a hack, YMMV. For example &lt;code&gt;iZotope Ozo&lt;/code&gt; turned out to be iZotope Ozone 7 Advanced, and I only determined that through manual trial and error by installing various trial versions.&lt;/p&gt;
+&lt;h2 id=&#34;screenshots&#34;&gt;Screenshots
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/shortened-plugin-names-2.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;989&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;252px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/shortened-plugin-names-3.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;989&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;252px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/shortened-plugin-names-4.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;989&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;252px&#34;
+	
+&gt;
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/decode-logic-shortened-plugin-names/shortened-plugin-names-5.png&#34;
+	width=&#34;1041&#34;
+	height=&#34;989&#34;
+	
+	loading=&#34;lazy&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;105&#34;
+		data-flex-basis=&#34;252px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.logicprohelp.com/forum/viewtopic.php?t=126933&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.logicprohelp.com/forum/viewtopic.php?t=126933&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Cannot Find Battery Libraries Over and Over</title>
+        <link>http://localhost:1313/post/audio/2019/cannot-find-battery-libraries-over-and-over/</link>
+        <pubDate>Tue, 17 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/cannot-find-battery-libraries-over-and-over/</guid>
+        <description>&lt;h2 id=&#34;problem&#34;&gt;Problem
+&lt;/h2&gt;&lt;p&gt;This message keeps coming, even though the Battery 4 plugin and library is installed and I point it to the folder.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/cannot-find-battery-libraries-over-and-over/battery-loading-1.png&#34;
+	width=&#34;802&#34;
+	height=&#34;522&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;battery loading prompt in logic&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;153&#34;
+		data-flex-basis=&#34;368px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;solution&#34;&gt;Solution
+&lt;/h2&gt;&lt;p&gt;Turns out the dialog will appear for each plugin &lt;em&gt;instance&lt;/em&gt; in the project.&lt;/p&gt;
+&lt;p&gt;First make sure the libraries can be loaded.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open the standalone &lt;strong&gt;Battery 4&lt;/strong&gt; app (in &lt;code&gt;/Applications&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;Have it scan your library files (e.g. &lt;code&gt;/Users/Shared/Battery 4 Factory Library&lt;/code&gt;)&lt;/li&gt;
+&lt;li&gt;There&amp;rsquo;s now a bunch of kits visible. Close the application.
+&lt;img src=&#34;http://localhost:1313/post/audio/2019/cannot-find-battery-libraries-over-and-over/battery-loading-2.png&#34;
+	width=&#34;1288&#34;
+	height=&#34;784&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;kits loaded in battery standalone application&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;164&#34;
+		data-flex-basis=&#34;394px&#34;
+	
+&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Then select &lt;code&gt;Apply to other Battery Instances&lt;/code&gt; &lt;strong&gt;first&lt;/strong&gt; and use &lt;code&gt;Point to Folder&lt;/code&gt;. It will automatically apply the same settings.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/cannot-find-battery-libraries-over-and-over/battery-loading-3.gif&#34;
+	width=&#34;1703&#34;
+	height=&#34;861&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;battery recursive settings&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;197&#34;
+		data-flex-basis=&#34;474px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;Once the project is saved, the settings will persist.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>iLok Cloud Basics</title>
+        <link>http://localhost:1313/post/audio/2019/ilok-cloud-basics/</link>
+        <pubDate>Sun, 15 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/ilok-cloud-basics/</guid>
+        <description>&lt;h2 id=&#34;tldr&#34;&gt;TL;DR
+&lt;/h2&gt;&lt;p&gt;When you log into iLok Cloud on one machine, it automatically logs you out of the other machine.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open iLok License Manager and Sign In&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Open Cloud Session&lt;/code&gt; (⌘⇧C)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;about-ilok-cloud&#34;&gt;About iLok Cloud
+&lt;/h2&gt;&lt;p&gt;iLok Cloud is only supported by some plugins. For example Slate&amp;rsquo;s plugins do, but Anteres Auto Tune does not (yet).&lt;/p&gt;
+&lt;p&gt;With a Cloud session the iLok USB dongle is not necessary, but the machine needs to be continously connected to the internet, because it keeps polling every few minutes.&lt;/p&gt;
+&lt;p&gt;You can opt to use the USB dongle instead by selecting &lt;code&gt;Close Cloud Session&lt;/code&gt; and then activating it to a physical iLok device instead.&lt;/p&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://slatedigital.zendesk.com/hc/en-us/articles/360009910054-Activate-and-Use-my-Plugins-with-iLok-Cloud&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://slatedigital.zendesk.com/hc/en-us/articles/360009910054-Activate-and-Use-my-Plugins-with-iLok-Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>Soundtoys Remove Unneeded Formats</title>
+        <link>http://localhost:1313/post/audio/2019/soundtoys-au-only-install/</link>
+        <pubDate>Sun, 15 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/soundtoys-au-only-install/</guid>
+        <description>&lt;p&gt;Soundtoys 5 installs all plugin formats to the following locations. It has no customize option.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;AAX:	/Library/Application Support/Avid/Audio/Plug-Ins/Soundtoys/
+AU:	/Library/Audio/Plug-Ins/Components/
+VST:	/Library/Audio/Plug-Ins/VST/Soundtoys/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Manually delete the AAX and VST versions using Finder after the install if you only need AU.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Which Plugin Format for Logic X</title>
+        <link>http://localhost:1313/post/audio/2019/which-plugin-type-for-logic/</link>
+        <pubDate>Sat, 14 Sep 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/post/audio/2019/which-plugin-type-for-logic/</guid>
+        <description>&lt;h2 id=&#34;tldr&#34;&gt;TL;DR
+&lt;/h2&gt;&lt;p&gt;When installing plugins for LogicPro X, only Audio Unit (AU) is needed.&lt;/p&gt;
+&lt;h2 id=&#34;breakdown&#34;&gt;Breakdown
+&lt;/h2&gt;&lt;p&gt;Slate&amp;rsquo;s installer actually has awesome descriptions of various formats!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/post/audio/2019/which-plugin-type-for-logic/plugin-formats.png&#34;
+	width=&#34;732&#34;
+	height=&#34;550&#34;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;slate_plugin_formats_description&#34;
+	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AAX Pro Tools plugin format, Pro Tools 10 (32 bit) and later (64 bit)
+&lt;ul&gt;
+&lt;li&gt;RTAS is for older Pro Tools&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;AudioUnit is Apple&amp;rsquo;s plugin format, used in Logic, Studio One, Ableton Live and many more.
+&lt;ul&gt;
+&lt;li&gt;This is what Audio Hijack uses as well.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;VST [aka VST2] is Steinberg&amp;rsquo;s plugin format, used in Cubase, Studio One, Ableton Live, Reaper and many more.
+&lt;ul&gt;
+&lt;li&gt;The original GOAT. Can be 32 or 64 bit, depending on the plugin.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;VST3 is Steinberg&amp;rsquo;s new plugin format, used in Cubase, Studio One and Wavelab.
+&lt;ul&gt;
+&lt;li&gt;Supported in Ableton Live 10 onwards.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;links&#34;&gt;Links
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.musicradar.com/tuition/tech/the-quick-guide-to-plugin-formats-and-compatibility-620406&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.musicradar.com/tuition/tech/the-quick-guide-to-plugin-formats-and-compatibility-620406&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
