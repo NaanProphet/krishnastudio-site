@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://krishna.studio/'
 languageCode = 'en-us'
 title = 'Krishna Bhamidipati'
 theme = 'hugo-theme-stack'
