@@ -15,6 +15,11 @@
         {{ partial "helper/icon" "search" }}
     </button>
 </form>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.search-form input').focus();
+    });
+</script>
 
 <div class="search-result">
     <h3 class="search-result--title section-title"></h3>
