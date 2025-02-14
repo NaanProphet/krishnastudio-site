@@ -222,7 +222,7 @@ In order to use Nintendo Cloud Save, the Switch needs to have the latest officia
 
 Also note that if you have two Switch consoles, one vanilla and another with CFW, in order to use Nintendo Save Data Cloud, both have to be on the latest Nintendo version.
 
-Lastly, remember again to use the merge feature in Finder when updating software on the SD card by holding Option while dragging and dropping.
+As mentioned earlier, don't forget: When updating software on the SD card, hold the Option key while dragging files in Finder to merge them.
 
 ## Appendix
 
