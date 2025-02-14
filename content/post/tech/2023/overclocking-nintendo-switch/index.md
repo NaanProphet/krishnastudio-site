@@ -9,7 +9,7 @@ categories: tech
 
 Here is how I toed the line between performance tuning a jailbroken gaming console and using it officially with Nintendo Online.
 
-For context, after realizing how mucher smoother and quicker Overcooked runs on other consoles, I took it as a challenge to find a way to bring that same experience to my Switch—and not get banned.
+After realizing how mucher smoother Overcooked runs on other consoles, I took it as a challenge to bring that same experience to my Switch—and not get banned.
 
 ![](nintendo-switch-60fps-overcooked.jpeg)
 *Docked Nintendo Switch running Overcooked at 720p 60 FPS*
@@ -160,7 +160,7 @@ Step 2.
 3. Drag the `FAT32` slider all the way to the right. Select `Next Step` and then `Start`.
 4. The re-format and restore should be successful! This will rename the SD card to `SWITCH SD` woo!
 5. Next, navigate to `Tools > Backup` and backup both `eMMC BOOT0 & BOOT1` and `eMMC RAW GPP` (15 mins for the 32 GB model). ![](nintendo-switch-backup-1.jpeg) ![](nintendo-switch-backup-2.jpeg)
-6. Eject the SD card while Hekate is running. A popup will say `SD card was removed! Nyx will reload after inserting it.` That is fine. (Otherwise enter USB storage mode `Tools > USB Tools > SD Card` which is about 3x slower.)
+6. Eject the SD card while Hekate is running. The popup `SD card was removed! Nyx will reload after inserting it.` is normal. Alternatively, use USB storage mode (`Tools > USB Tools > SD Card`), which is slower.
 7. Copy the new `backup` folder's contents from the SD card to a safe location (5 mins). Delete the `backup` folder from the SD card after, if desired.
 8. The original `/bootloader/hekate_ipl.ini` should read as follows.
     
@@ -222,7 +222,7 @@ In order to use Nintendo Cloud Save, the Switch needs to have the latest officia
 
 Also note that if you have two Switch consoles, one vanilla and another with CFW, in order to use Nintendo Save Data Cloud, both have to be on the latest Nintendo version.
 
-Lastly, remember again to use the merge feature in Finder when updating software on the SD card by holding Option while dragging and dropping.
+As mentioned earlier, don't forget: When updating software on the SD card, hold the Option key while dragging files in Finder to merge them.
 
 ## Appendix
 
