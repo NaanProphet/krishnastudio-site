@@ -6,17 +6,38 @@ categories: [tech]
 tags: [mac]
 ---
 
-## Why Upgrade
+## The Need
 
-Older iMacs can't be upgraded to MacOS 10.14 Mojave (or higher) because the stock GPU it has doesn't support Metal. The last, officially supported non-Metal MacOS for the 2011 iMac is 10.13 High Sierra.[^12] Time to go unofficial.
+Apple Logic Pro X 10.5[^13] requires MacOS 10.14 Mojave, and at the time I was collaborating on some projects created in Logic 10.5. Older iMacs, like the Mid-2011 iMac I have, can't be upgraded to MacOS Mojave because the stock GPU it has doesn't support Metal. The last, officially supported OS for the 2011 iMac is 10.13 High Sierra.[^12]
 
-Apple Logic Pro X 10.5[^13] requires Mojave, and at the time I was collaborating on some projects created in Logic 10.5. To use them on the iMac, I need to swap the GPU with one that supports Metal and then install Mojave unofficially.[^19]
+Time to go unofficial.
+
+![](<imac-cpu-2.jpg>)
+
+### The Mod
+
+To run Mojave on the unsupported iMac, I need to swap the stock GPU with one that supports Metal and then install Mojave unofficially.[^19]
 
 Since I'm already performing computer surgery, I might as well upgrade the CPU as well. Music production can be particularly CPU intensive, especially when using software instruments or synths.[^14]
 
 ## But Why DIY
 
-The most straightforward route would have been to purchase a new machine that supported Mojave. However the DIY appealed to me for a few reasons:
+The most straightforward route would have been to purchase a new machine that supported Mojave. The [Apple macOS Mojave page](https://support.apple.com/en-us/111930) lists all supported models. Clearly, no current generation Apple Silicon M1/M2/M3 Mac is compatible.
+ 
+ | Model | Begin | End | Can Run Metal |
+ | -- | -- | -- | -- |
+ | Mac Pro | Mid-2010 | Mid-2012 | Sometimes, [needs Metal GPUs](https://support.apple.com/en-us/101330) |
+ | MacBook Air | Mid-2012 | 2020 | Yes |
+ | MacBook | Early 2015 | Mid-2017 | Yes |
+ | MacBook Pro | Mid-2012 | 2019 | Yes |
+ | Mac mini | Late 2012 | Late 2018 | Yes |
+ | iMac | Late 2012 | 2020 | Yes |
+ | Mac Pro | Late 2013 | 2019 | Yes |
+ | iMac Pro | 2017 | 2017 | Yes |
+ 
+ In addition, [EveryMac keeps a curated list of the minimum MacOS supported per model](https://everymac.com/systems/by_capability/minimum-macos-supported.html) which can be helpful to reference.
+ 
+ However the DIY appealed to me for a few reasons:
 
 * Less cost 💰
 * Less e-waste ♻️
@@ -25,7 +46,7 @@ The most straightforward route would have been to purchase a new machine that su
 * Sentimental 🖥️
 * Artistic 👨🏽‍🎨
 
-## iMac Specs
+## iMac 12,2 Specs
 
 Stock machine (full OEM specs listed on [Everymac](https://everymac.com/systems/apple/imac/specs/imac-core-i5-2.7-27-inch-aluminum-mid-2011-thunderbolt-specs.html)):
 
@@ -45,16 +66,14 @@ In addition, some previous upgrades were:
 
 Both the CPU and GPU will be upgraded. The [MacintoshMen upgrade guide](http://macintoshmen.is-great.net/2019/09/08/imac-2009-to-2011-upgrade-guide/) is an excellent starting point for reviewing available CPU and GPU options.
 
+Total parts cost: $128.
+
 * Intel Quad Core i7-2600 CPU ($80 eBay)
 * Nvidia Quadro K610M 1024 MB ($22 eBay)
 * Artic Silver Combo Kit for CPU/GPU dies ($15)
 * K5 PRO Thermal Paste for GPU VRAM ($11)
 
 ### CPU
-
-Here is the original CPU the iMac came with.
-
-* 2.7 GHz Intel Quad Core i5-2500S with Turbo Boost 3.7 GHz ([link](https://www.intel.com/content/www/us/en/products/sku/52211/intel-core-i52500s-processor-6m-cache-up-to-3-70-ghz/specifications.html))
 
 The new CPU I chose was offered in 2011 as an Apple-supported upgrade, making it a plug-in replacement.[^3] It uses the same [Sandy Bridge architecture and the LGA 1155 socket](https://en.wikipedia.org/wiki/Sandy_Bridge#Desktop_platform) as the original.
 
@@ -65,10 +84,6 @@ It's now known (since my initial research in 2019) that [Sandy Bridge Xeon chips
 * 3.6 GHz Intel Xeon Quad Core E3-1290 with Turbo Boost 4.0 GHz ([link](https://ark.intel.com/content/www/us/en/ark/products/55452/intel-xeon-processor-e31290-8m-cache-3-60-ghz.html))
 
 ### GPU
-
-The old GPU is from AMD and does not support Metal.
-
-* AMD Radeon HD 6770M 512 MB
 
 The new GPU is from a used Dell/Alienware laptop.
 
@@ -98,7 +113,7 @@ Some of these steps (like upgrading to High Sierra) could be performed earlier, 
 6. Open the iMac again
 7. Physically install the new GPU that supports Metal
 8. Built-in screen no longer works 😱
-9. Turn on the iMac and flash the new GPU vBIOS using another computer and SSH
+9. Turn on the iMac and flash the new GPU vBIOS via SSH using another computer
 10. Built-in screen works again 🥳 but brightness control and sleep won't work yet 😅
 11. Use OpenCore[^15] to restore brightness control[^17] and sleep functionality
 12. Install Mojave unofficially, since the iMac now supports Metal 🥳
@@ -126,7 +141,7 @@ Some of these steps (like upgrading to High Sierra) could be performed earlier, 
 1. The new GPU will need OpenCore to restore native keyboard brightness control. OpenCore in turn requires the latest MacOS firmware, so first make sure the computer has it.[^11]
 2. Upgrade the iMac boot rom firmware to the latest version by installing High Sierra on an internal disk, including all recent Apple software updates.
 3. Confirm the firmware version is up to date using the Eclectic Light Company's firmware lookup table.[^16]
-4. Open System Preferences and enable High Sierra for remote access, screen sharing and remote login (SSH) just in case after the GPU replacement the display remains black!
+4. Open System Preferences and enable High Sierra for remote access, screen sharing and remote login (SSH) just in case the display remains black after the GPU replacement!
 
 ### III. Preparing the vBIOS
 
@@ -229,8 +244,8 @@ The iMac has been very stable on Mojave. After a few years here is my summary of
 
 * Only one of the two Thunderbolt/MiniDisplay ports work to connect to another monitor. I don't use an additional monitor so this doesn't affect my workflow
 * Brightness is full blast at the very beginning of the boot process (before OpenCore loads) and other places like Recovery Mode and Target Disk Mode
-  * This kind of bothers me (looking at you midnight hour)
-  * I would like to try this hardware mod[^17] to restore native brightness control everywhere someday
+  * This kind of bothers me (looking at you midnight hour) but not enough to really open it up again.
+  * Could be nice to try this hardware mod[^17] to restore native brightness control everywhere someday
 * Target Disk Mode works perfectly, though I don't use it much
 * Target Display Mode works for the most part. [Luna Display](https://astropad.com/product/lunadisplay/ ) is better
   * With OCLP, unsupported combinations[^20] of MacOS are supported! For example a MBP running Catalina can use the iMac running Mojave as a monitor
