@@ -59,6 +59,21 @@ class Search {
     }
 
     /**
+     * Parse a query string into terms.
+     * Quoted substrings become a single term (phrase search).
+     * Unquoted text is split on whitespace.
+     */
+    private static parseQuery(query: string): string[] {
+        const terms: string[] = [];
+        const regex = /"([^"]+)"|(\S+)/g;
+        let m;
+        while ((m = regex.exec(query)) !== null) {
+            terms.push(m[1] ?? m[2]);
+        }
+        return terms;
+    }
+
+    /**
      * Processes search matches
      * @param str original text
      * @param matches array of matches
@@ -133,54 +148,74 @@ class Search {
         const rawData = await this.getData();
         const results: pageData[] = [];
 
-        const regex = new RegExp(keywords.filter((v, index, arr) => {
-            arr[index] = escapeRegExp(v);
-            return v.trim() !== '';
-        }).join('|'), 'gi');
+        const cleanKeywords = keywords.filter(v => v.trim() !== '');
+        if (cleanKeywords.length === 0) return [];
+
+        // Build one regex per term so we can track which terms matched.
+        const termRegexes = cleanKeywords.map(
+            k => new RegExp(escapeRegExp(k), 'gi')
+        );
+
+        const TITLE_WEIGHT = 10;
+        const CONTENT_WEIGHT = 1;
+        const ALL_TERMS_BONUS = 100;
+        const TITLE_HAS_ALL_TERMS_BONUS = 500;
 
         for (const item of rawData) {
-            const titleMatches: match[] = [],
-                contentMatches: match[] = [];
+            const titleMatches: match[] = [];
+            const contentMatches: match[] = [];
 
-            let result = {
+            const titleTermsHit = new Set<number>();
+            const contentTermsHit = new Set<number>();
+
+            termRegexes.forEach((re, idx) => {
+                re.lastIndex = 0;
+                for (const m of Array.from(item.title.matchAll(re))) {
+                    titleMatches.push({ start: m.index, end: m.index + m[0].length });
+                    titleTermsHit.add(idx);
+                }
+                re.lastIndex = 0;
+                for (const m of Array.from(item.content.matchAll(re))) {
+                    contentMatches.push({ start: m.index, end: m.index + m[0].length });
+                    contentTermsHit.add(idx);
+                }
+            });
+
+            const totalMatches = titleMatches.length + contentMatches.length;
+            if (totalMatches === 0) continue;
+
+            const allTermsHit = new Set([...titleTermsHit, ...contentTermsHit]);
+
+            let score =
+                titleMatches.length * TITLE_WEIGHT +
+                contentMatches.length * CONTENT_WEIGHT;
+
+            if (allTermsHit.size === cleanKeywords.length) {
+                score += ALL_TERMS_BONUS;
+            }
+            if (titleTermsHit.size === cleanKeywords.length) {
+                score += TITLE_HAS_ALL_TERMS_BONUS;
+            }
+
+            const result: pageData = {
                 ...item,
                 preview: '',
-                matchCount: 0
-            }
+                matchCount: score,
+            };
 
-            const contentMatchAll = item.content.matchAll(regex);
-            for (const match of Array.from(contentMatchAll)) {
-                contentMatches.push({
-                    start: match.index,
-                    end: match.index + match[0].length
-                });
+            if (titleMatches.length > 0) {
+                result.title = Search.processMatches(result.title, titleMatches, false);
             }
-
-            const titleMatchAll = item.title.matchAll(regex);
-            for (const match of Array.from(titleMatchAll)) {
-                titleMatches.push({
-                    start: match.index,
-                    end: match.index + match[0].length
-                });
-            }
-
-            if (titleMatches.length > 0) result.title = Search.processMatches(result.title, titleMatches, false);
             if (contentMatches.length > 0) {
                 result.preview = Search.processMatches(result.content, contentMatches);
-            }
-            else {
-                /// If there are no matches in the content, use the first 140 characters as preview
+            } else {
                 result.preview = replaceHTMLEnt(result.content.substring(0, 140));
             }
 
-            result.matchCount = titleMatches.length + contentMatches.length;
-            if (result.matchCount > 0) results.push(result);
+            results.push(result);
         }
 
-        /// Result with more matches appears first
-        return results.sort((a, b) => {
-            return b.matchCount - a.matchCount;
-        });
+        return results.sort((a, b) => b.matchCount - a.matchCount);
     }
 
     private async doSearch(keywords: string[]) {
@@ -234,7 +269,7 @@ class Search {
             if (lastSearch === keywords) return;
             lastSearch = keywords;
 
-            this.doSearch(keywords.split(' '));
+            this.doSearch(Search.parseQuery(keywords));
         }
 
         this.input.addEventListener('input', eventHandler);
@@ -258,7 +293,7 @@ class Search {
         this.input.value = keywords;
 
         if (keywords) {
-            this.doSearch(keywords.split(' '));
+            this.doSearch(Search.parseQuery(keywords));
         }
         else {
             this.clear()
