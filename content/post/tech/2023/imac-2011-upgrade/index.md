@@ -18,7 +18,7 @@ Time to go unofficial.
 
 To run Mojave on the unsupported iMac, I need to swap the stock GPU with one that supports Metal and then install Mojave unofficially.[^19]
 
-Since I'm already performing computer surgery, I might as well upgrade the CPU as well. Music production can be particularly CPU intensive, especially when using software instruments or synths.[^14]
+Since I'm already performing computer surgery, I might as well upgrade the CPU. Music production can be particularly CPU intensive, especially when using software instruments or synths.[^14]
 
 ## But Why DIY
 
@@ -64,7 +64,7 @@ In addition, some previous upgrades were:
 
 ## New Parts
 
-Both the CPU and GPU will be upgraded. The [MacintoshMen upgrade guide](http://macintoshmen.is-great.net/2019/09/08/imac-2009-to-2011-upgrade-guide/) is an excellent starting point for reviewing available CPU and GPU options.
+Both the CPU and GPU will be upgraded. The [MacintoshMen upgrade guide](http://macintoshmen.is-great.net/2019/09/08/imac-2009-to-2011-upgrade-guide/) is an excellent starting point for reviewing CPU and GPU options.
 
 Total parts cost: $128.
 
@@ -138,14 +138,14 @@ Some of these steps (like upgrading to High Sierra) could be performed earlier, 
 
 ### II. High Sierra
 
-1. The new GPU will need OpenCore to restore native keyboard brightness control. OpenCore in turn requires the latest MacOS firmware, so first make sure the computer has it.[^11]
-2. Upgrade the iMac boot rom firmware to the latest version by installing High Sierra on an internal disk, including all recent Apple software updates.
-3. Confirm the firmware version is up to date using the Eclectic Light Company's firmware lookup table.[^16]
-4. Open System Preferences and enable High Sierra for remote access, screen sharing and remote login (SSH) just in case the display remains black after the GPU replacement!
+1. The new GPU will need OpenCore to restore native keyboard brightness control. OpenCore requires the latest MacOS firmware, so make sure the computer has it.[^11]
+2. Upgrade the iMac boot rom firmware by installing High Sierra on an internal disk, including all recent Apple software updates.
+3. Confirm the firmware is up to date using the Eclectic Light Company's firmware lookup table.[^16]
+4. Open System Preferences and enable High Sierra for remote access, screen sharing and remote login (SSH) in case the display stays black after GPU replacement!
 
 ### III. Preparing the vBIOS
 
-vBIOS stands for video BIOS. Most of the aftermarket GPUs come from Dell/Alienware laptops, so they need to be re-flashed. Without this, the iMac boots to a nice, black screen.
+vBIOS stands for video BIOS. Most aftermarket GPUs come from Dell/Alienware laptops, so they need to be re-flashed. Without this, the iMac boots to a nice, black screen.
 
 There are a few options for flashing the new vBIOS, but the easiest, non-Windows way is via SSH and a USB flash drive.[^4]
 
@@ -174,7 +174,7 @@ A nice summary of the process is here <https://forums.macrumors.com/threads/2011
 
 ### V. GPU vBIOS Flash
 
-Instructions for this section are stitched together partly from the OP[^4] but also from the new GMRL flash GitHub page.[^18]
+Instructions for this section are stitched together from the OP[^4] and the new GMRL flash GitHub page.[^18]
 
 1. The iMac should still be half open. Disconnect any SATA hard drive cables on the iMac. This makes it easier to load from the USB!
 2. Connect the iMac ethernet port to your router—no wireless connections!!
@@ -224,13 +224,13 @@ Note: to change the boot picker options, rebuild changing the `Show OpenCore Boo
 
 **"Upgrading" from Catalina Loader to OCLP**
 
-The original instructions from a few years ago required a USB boot drive called Catalina Loader. This drive would always be plugged into the iMac. However, it's really easy to cutover to OpenCore Legacy Patcher now: simply build, install, and remove the old USB! This is what I did in 2023.
+The original instructions required a USB boot drive called Catalina Loader. This drive would always be plugged into the iMac. However, it's easy to cutover to OpenCore Legacy Patcher now: build, install, and remove the old USB! This is what I did in 2023.
 
-It turned out sleep was broken afterwards, however, that was because I had to custom-install sleep extensions (`intelsandybridgegraphics.zip` md5 `c8acb3e1e462e189d5f5383308bdc772`) a few years ago. OCLP doesn't like those, so I just deleted them.
+It turned out sleep was broken afterwards because I had to custom-install sleep extensions (`intelsandybridgegraphics.zip` md5 `c8acb3e1e462e189d5f5383308bdc772`) a few years ago. OCLP doesn't like those, so I just deleted them.
 
 ### VII. Upgrading to Mojave
 
-Previous techniques required patching the MacOS installer using dosdude (what I did in 2020). However with OCLP, no customization is needed to the MacOS installer anymore!
+Previous techniques required patching the MacOS installer using dosdude (what I did in 2020). However with OCLP, no customization is needed to the MacOS installer!
 
 1. Open `OpenCore-Patcher.app` again
 2. Select `Create macOS Installer`
@@ -240,16 +240,14 @@ Previous techniques required patching the MacOS installer using dosdude (what I 
 
 ## Tradeoffs
 
-The iMac has been very stable on Mojave. After a few years here is my summary of the quality of life.
+The iMac has been stable on Mojave. After a few years here is my summary of the quality of life.
 
 * Only one of the two Thunderbolt/MiniDisplay ports work to connect to another monitor. I don't use an additional monitor so this doesn't affect my workflow
-* Brightness is full blast at the very beginning of the boot process (before OpenCore loads) and other places like Recovery Mode and Target Disk Mode
-  * This kind of bothers me (looking at you midnight hour) but not enough to really open it up again.
   * Could be nice to try this hardware mod[^17] to restore native brightness control everywhere someday
 * Target Disk Mode works perfectly, though I don't use it much
 * Target Display Mode works for the most part. [Luna Display](https://astropad.com/product/lunadisplay/ ) is better
   * With OCLP, unsupported combinations[^20] of MacOS are supported! For example a MBP running Catalina can use the iMac running Mojave as a monitor
-  * Exiting Target Display Mode is buggy. Have to unplug the cable to exit, and then the iMac screen goes black even though it's still running.[^21] Have to use keyboard shortcuts to put the iMac to sleep and wake it back up to get the display on again.
+  * Exiting Target Display Mode is buggy. Have to unplug the cable, and then the iMac screen goes black even though it's still running.[^21] Have to use keyboard shortcuts to put the iMac to sleep and wake it back up to get the display on again.
   * Instead, I find the Luna Display hardware dongle much more effective. It can use the same Thunderbolt cable (for low lag) and even allows you to use your iMac's keyboard/trackpad to control the other computer!
 
 ## Footnotes
