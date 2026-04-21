@@ -38,16 +38,16 @@ Indeed. RX first runs Declip using 32-bit floating point arithmetic, regardless 
 ![Declip Result without Post-limiter](3-declip_no_post_limiter/3b.png)
 ![Declip Result without Post-limiter Waveform Statistics](3-declip_no_post_limiter/3c.png)
 
--2 dB to +4.76 dB...that's almost +7 dB of clipping!
+-2 dB to +11.5 dB...that's almost +13.5 dB of clipping!
 
 This made me wonder: should I have reduced gain first before running Declip?
 
 > The post-limiter is doing the job better than any manual gain reduction could. Declip reconstructs the true shape in 32-bit float with full headroom, then the post-limiter transparently catches the overs. If you'd reduced gain by 5 dB first, Declip would reconstruct to roughly 0 dBFS, and you wouldn't need the post-limiter — but you'd also be guessing at how much to reduce by. The post-limiter lets Declip do its math unconstrained and handles the headroom automatically.
 
-It also occurred to me that pre-reducing gain before Declip could make silent the softer parts! This was a music performance with high dynamic range, and preserving all of that musicality is important. With the post- limiter, true peak was 0.12 dB.
+It also occurred to me that pre-reducing gain before Declip could make silent the softer parts! This was a music performance with high dynamic range, and preserving all of that musicality is important. With the post- limiter, true peak was 0.17 dB.
 
 All this reveals something quite interesting about the nature of clipping and distortion.
 
-> Clipping isn't about level. It's about shape. A recording can be clipped at −2 dBFS and sound terrible (wide flat-topped analog saturation). The same recording can be reconstructed to 0 dBFS with 0.12 dB of true-peak overshoot and sound perfectly clean (a sliver shaved off a natural peak). The difference isn't the level — it's how much of the peak's shape is destroyed. Declip fixes clipping not by making the file quieter, but by restoring the shape.
+> Clipping isn't about level. It's about shape. A recording can be clipped at −2 dBFS and sound terrible (wide flat-topped analog saturation). The same recording can be reconstructed to 0 dBFS with 0.17 dB of true-peak overshoot and sound perfectly clean (a sliver shaved off a natural peak). The difference isn't the level — it's how much of the peak's shape is destroyed. Declip fixes clipping not by making the file quieter, but by restoring the shape.
 
 Reflecting on all this, it could be cool to create some kind of realtime audio monitor to detect "unclipped" plateaus to catch this kind of stuff during the show itself. Might be possible in python. Something for a future post!
