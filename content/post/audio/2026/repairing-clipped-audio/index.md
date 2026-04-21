@@ -7,16 +7,20 @@ tags: [livestream]
 
 Many years ago I did live sound for a concert and recorded the stereo mix. When I came home I realized the audio sounded distorted even though I kept the levels under 0 dB!
 
-Thankfully, I was able to repair it using iZotope RX Advanced's Declip tool. I had a fun conversation with Claude Opus 4.6 to understand what happened.
-
 Even though the digital waveform was under 0dB (-1.98 dB sample peak level, -2.35 dB max RMS level), something in the audio chain made the recording saturate. Can't remember now exactly but I was using an old Yamaha analog mixer and probably a portable audio recorder (Zoom H1, H2, etc.) via RCA stereo out.
 
 ![Intial State](1-initial_state/1a.png)
 ![Initial State Waveform Statistics](1-initial_state/1b.png)
 
+Thankfully, I was able to repair it using iZotope RX Advanced's Declip tool. I had a fun conversation with Claude Opus 4.6 to understand what happened.
+
 > It sounds distorted because harmonics from the upstream analog clipping are baked into the sample values. The flatness is the signature.
 
 RX's Declip tool analyzes where the plateaus occur and then redraws the waveform.
+
+![Declip Settings with Post-limiter](2-declip_with_post_limiter/2a.png)
+![Declip Result with Post-limiter](2-declip_with_post_limiter/2b.png)
+![Declip Result with Post-limiter Waveform Statistics](2-declip_with_post_limiter/2c.png)
 
 Notably, the declip thresholds were asymmetric (-4.9, -5.2). This suggests analog saturation, likely from the recorder plugged into the RCA outputs.
 
@@ -25,10 +29,6 @@ Notably, the declip thresholds were asymmetric (-4.9, -5.2). This suggests analo
 > Analog saturation, on the other hand, almost always has some asymmetry. A 0.3 dB asymmetry is exactly what you'd expect from a consumer-grade unbalanced input stage hitting its limits.
 
 After running Declip, the levels pegged at 0 dB...but didn't sound distorted!?
-
-![Declip Settings with Post-limiter](2-declip_with_post_limiter/2a.png)
-![Declip Result with Post-limiter](2-declip_with_post_limiter/2b.png)
-![Declip Result with Post-limiter Waveform Statistics](2-declip_with_post_limiter/2c.png)
 
 > Declip was working in 32-bit float (the rxdoc XML confirms this), and there's no ceiling in 32-bit float. Declip wasn't clamped at 0.
 
