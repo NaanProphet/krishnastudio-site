@@ -8,7 +8,7 @@ tags: [mac]
 
 ## The Need
 
-Apple Logic Pro X 10.5[^13] requires MacOS 10.14 Mojave, and at the time I was collaborating on some projects created in Logic 10.5. Older iMacs, like the Mid-2011 iMac I have, can't be upgraded to MacOS Mojave because the stock GPU it has doesn't support Metal. The last, officially supported OS for the 2011 iMac is 10.13 High Sierra.[^12]
+Apple Logic Pro X 10.5[^13] requires macOS 10.14 Mojave, and at the time I was collaborating on some projects created in Logic 10.5. Older iMacs, like the Mid-2011 iMac I have, can't be upgraded to macOS Mojave because the stock GPU it has doesn't support Metal. The last, officially supported OS for the 2011 iMac is 10.13 High Sierra.[^12]
 
 Time to go unofficial.
 
@@ -16,7 +16,7 @@ Time to go unofficial.
 
 ### The Mod
 
-To run Mojave on the unsupported iMac, I need to swap the stock GPU with one that supports Metal and then install Mojave unofficially.[^19]
+To run Mojave on the unsupported iMac, I need to swap the stock GPU with one that supports Metal and then install Mojave unofficially.
 
 Since I'm already performing computer surgery, I might as well upgrade the CPU. Music production can be particularly CPU intensive, especially when using software instruments or synths.[^14]
 
@@ -35,9 +35,9 @@ The most straightforward route would have been to purchase a new machine that su
  | Mac Pro | Late 2013 | 2019 | Yes |
  | iMac Pro | 2017 | 2017 | Yes |
  
- In addition, [EveryMac keeps a curated list of the minimum MacOS supported per model](https://everymac.com/systems/by_capability/minimum-macos-supported.html) which can be helpful to reference.
+ In addition, [EveryMac keeps a curated list of the minimum macOS supported per model](https://everymac.com/systems/by_capability/minimum-macos-supported.html) which can be helpful to reference.
  
- However the DIY appealed to me for a few reasons:
+ However, the DIY appealed to me for a few reasons:
 
 * Less cost 💰
 * Less e-waste ♻️
@@ -45,6 +45,8 @@ The most straightforward route would have been to purchase a new machine that su
 * Good trailblazing by the community 🤓
 * Sentimental 🖥️
 * Artistic 👨🏽‍🎨
+
+It's worth noting that there are efforts[^19] to run later versions of macOS on non-Metal GPUs, but it's largely uncharted and ongoing.
 
 ## iMac 12,2 Specs
 
@@ -70,16 +72,16 @@ Total parts cost: $128.
 
 * Intel Quad Core i7-2600 CPU ($80 eBay)
 * Nvidia Quadro K610M 1024 MB ($22 eBay)
-* Artic Silver Combo Kit for CPU/GPU dies ($15)
+* Arctic Silver Combo Kit for CPU/GPU dies ($15)
 * K5 PRO Thermal Paste for GPU VRAM ($11)
 
 ### CPU
 
-The new CPU I chose was offered in 2011 as an Apple-supported upgrade, making it a plug-in replacement.[^3] It uses the same [Sandy Bridge architecture and the LGA 1155 socket](https://en.wikipedia.org/wiki/Sandy_Bridge#Desktop_platform) as the original.
+The new CPU I chose was offered in 2011 as an Apple-supported upgrade, making it a plug-in replacement. It uses the same [Sandy Bridge architecture and the LGA 1155 socket](https://en.wikipedia.org/wiki/Sandy_Bridge#Desktop_platform) as the original.[^3][^23]
 
 *  3.4 GHz Intel Quad Core i7 (i7-2600) with Turbo Boost 3.8 GHz ([link](https://www.intel.com/content/www/us/en/products/sku/52213/intel-core-i72600-processor-8m-cache-up-to-3-80-ghz/specifications.html))
 
-It's now known (since my initial research in 2019) that [Sandy Bridge Xeon chips](https://en.wikipedia.org/wiki/Intel_Sandy_Bridge-based_Xeon_microprocessors#Sandy_Bridge_Xeon) also work, so another option could have been the Xeon 1290.
+It's now known (since my initial research in 2019) that [Sandy Bridge Xeon chips](https://en.wikipedia.org/wiki/Intel_Sandy_Bridge-based_Xeon_microprocessors#Sandy_Bridge_Xeon) also work, so another option could have been the Xeon 1290. However these break sleep/wake with no known software fix.[^22]
 
 * 3.6 GHz Intel Xeon Quad Core E3-1290 with Turbo Boost 4.0 GHz ([link](https://ark.intel.com/content/www/us/en/ark/products/55452/intel-xeon-processor-e31290-8m-cache-3-60-ghz.html))
 
@@ -118,6 +120,14 @@ Some of these steps (like upgrading to High Sierra) could be performed earlier, 
 11. Use OpenCore[^15] to restore brightness control[^17] and sleep functionality
 12. Install Mojave unofficially, since the iMac now supports Metal 🥳
 
+## Terms[^24]
+
+* **Catalina Loader** — USB boot patcher tool used before OCLP existed. Despite the name, it was used to boot various macOS versions (including Mojave) on unsupported hardware, not just Catalina.
+* **OCLP (OpenCore Legacy Patcher)** — Modern replacement for Catalina Loader and similar tools. Installs OpenCore to the EFI partition instead of requiring a USB boot drive.
+* **dosdude patcher** — Tool for patching macOS installers so they'll install on unsupported hardware. Used alongside Catalina Loader in the old approach; not needed with OCLP for supported OS versions.
+* **Metal** — Apple's graphics API, required by Mojave and later. The stock 2011 iMac GPU doesn't support it, which is the whole reason for this upgrade.
+* **vBIOS** — Video BIOS, the firmware on the GPU itself. Aftermarket GPUs pulled from PC laptops need their vBIOS reflashed for Mac compatibility.
+
 ## Steps
 
 ### I. CPU Install
@@ -125,7 +135,7 @@ Some of these steps (like upgrading to High Sierra) could be performed earlier, 
 1. Follow steps 1-32 of the iFixit guide [Installing iMac Intel 27" EMC 2429 Dual Drive Kit (HDD or SSD)](https://www.ifixit.com/Guide/Installing+iMac+Intel+27-Inch+EMC+2429+Dual+Drive+Kit+(HDD+or+SSD)/7575)
 2. Follow steps 43-end of the iFixit guide [iMac Intel 21.5" EMC 2428 CPU Replacement](https://www.ifixit.com/Guide/iMac+Intel+21.5-Inch+EMC+2428+CPU+Replacement/5951) (it's the same for the 27")
 3. Release the CPU and seat the new one.
-4. Clean and apply thermal paste to the CPU, consulting the [Artic Silver guide](http://www.arcticsilver.com/intel_application_method.html) for reference. The i7-2600 is 2nd generation and therefore needs a **single vertical line**.
+4. Clean and apply thermal paste to the CPU, consulting the [Arctic Silver guide](http://www.arcticsilver.com/intel_application_method.html) for reference. The i7-2600 is 2nd generation and therefore needs a **single vertical line**.
 
 *Pictures*
 
@@ -138,7 +148,7 @@ Some of these steps (like upgrading to High Sierra) could be performed earlier, 
 
 ### II. High Sierra
 
-1. The new GPU will need OpenCore to restore native keyboard brightness control. OpenCore requires the latest MacOS firmware, so make sure the computer has it.[^11]
+1. The new GPU will need OpenCore to restore native keyboard brightness control. OpenCore requires the latest macOS firmware, so make sure the computer has it.[^11]
 2. Upgrade the iMac boot rom firmware by installing High Sierra on an internal disk, including all recent Apple software updates.
 3. Confirm the firmware is up to date using the Eclectic Light Company's firmware lookup table.[^16]
 4. Open System Preferences and enable High Sierra for remote access, screen sharing and remote login (SSH) in case the display stays black after GPU replacement!
@@ -163,7 +173,7 @@ Note: I did this back in June 2020, and since then there is an updated USB image
 A nice summary of the process is here <https://forums.macrumors.com/threads/2011-imac-graphics-card-upgrade.1596614/page-596?post=29967927#post-29967927>.
 
 1. Follow the CPU removal guide to get to the GPU.
-2. Apply the GPU thermal paste. The K610M has one die and four VRAM chips. Use the same thermal paste for the die as for the CPU (Artic Silver), but use the goopier thermal paste for the four VRAM chips (K5 PRO).
+2. Apply the GPU thermal paste. The K610M has one die and four VRAM chips. Use the same thermal paste for the die as for the CPU (Arctic Silver), but use the goopier thermal paste for the four VRAM chips (K5 PRO).
 3. GPU is same dimensions as the original so pop it back in.
 4. DO NOT fully put the computer back together yet (see next step).
 
@@ -182,11 +192,11 @@ Instructions for this section are stitched together from the OP[^4] and the new 
 4. Lookup the DHCP IP of the iMac by checking your router, etc.
 5. Find another computer/Mac and SSH into iMac. `ssh root@YOURIP` and password `flash`
 6. Find/change into the working directory `cd /lib/live/mount/medium/flash`
-6. (Optional) Backup the old vBIOS `./nvflash --save Backups/OldNVBios.rom`
-7. Remove the guard rails `./nvflash --protectoff`
-8. Write the new ROM to the vBIOS `./nvflash -6 NVIDIA/NewNVBIOS.rom`
-9. (Optional) Verify it worked `./nvflash -6 NVIDIA/NewNVBIOS.rom`
-10. Reboot and enjoy the monitor again!
+7. (Optional) Backup the old vBIOS `./nvflash --save Backups/OldNVBios.rom`
+8. Remove the guard rails `./nvflash --protectoff`
+9. Write the new ROM to the vBIOS `./nvflash -6 NVIDIA/NewNVBIOS.rom`
+10. (Optional) Verify it worked `./nvflash --verify NVIDIA/NewNVBIOS.rom`
+11. Reboot and enjoy the monitor again!
 
 ![](<imac-vbios-Screen Shot 2020-12-21 at 3.58.45 AM.png>)
 
@@ -216,27 +226,29 @@ Catalina Loader (CL) was another solution based on OpenCore to be installed on U
 3. Click `Settings` and navigate to `Advanced` > `Graphics Override`. Select `Nvidia Kepler` to indicate the custom GPU installation. (This step may not be necessary, but I did it just to be safe.) ![](imac-oclp-2.png)
 4. Click `Return` to return to the main menu, and then select `Build and Install OpenCore`. This will write files to a temp folder in `/var` 
 ![](imac-oclp-3.png)
-5. Select `Install to disk` to persist changes. Select the appropriate disk with MacOS. ![](imac-oclp-4.png) ![](imac-oclp-5.png)
+5. Select `Install to disk` to persist changes. Select the appropriate disk with macOS. ![](imac-oclp-4.png) ![](imac-oclp-5.png)
 6. Select the single EFI partition, already present ![](imac-oclp-6.png) ![](imac-oclp-7.png)
 7. Reboot to take effect! Note the instruction to hold down the option key. ![](imac-oclp-8.png)
 
-Note: to change the boot picker options, rebuild changing the `Show OpenCore Boot Picker` setting. ![](imac-oclp-9.png")
+Note: to change the boot picker options, rebuild changing the `Show OpenCore Boot Picker` setting. ![](imac-oclp-9.png)
 
 **"Upgrading" from Catalina Loader to OCLP**
 
-The original instructions required a USB boot drive called Catalina Loader. This drive would always be plugged into the iMac. However, it's easy to cutover to OpenCore Legacy Patcher now: build, install, and remove the old USB! This is what I did in 2023.
+The original instructions required using a USB boot tool called Catalina Loader. This drive would always be plugged into the iMac to bootstrap startup. However, it's easy to cutover to OpenCore Legacy Patcher now: build, install (to the internal EFI partition), and remove the old USB! This is what I did in 2023.
+
+While OCLP maintains they only support macOS Big Sur and beyond, the MacRumors community actively suggests using it for Mojave on metal-modded iMacs.
 
 It turned out sleep was broken afterwards because I had to custom-install sleep extensions (`intelsandybridgegraphics.zip` md5 `c8acb3e1e462e189d5f5383308bdc772`) a few years ago. OCLP doesn't like those, so I just deleted them.
 
 ### VII. Upgrading to Mojave
 
-Previous techniques required patching the MacOS installer using dosdude (what I did in 2020). However with OCLP, no customization is needed to the MacOS installer!
+In 2020, I used dosdude to patch the Mojave installer and stairstepped from High Sierra. However, with OCLP this is much simpler! OCLP uses the stock installer and spoofs the Mac's identity at boot which is enough to get things going once the GPU supports Metal.
 
 1. Open `OpenCore-Patcher.app` again
 2. Select `Create macOS Installer`
-3. Boot from the new Flash drive and install MacOS
+3. Boot from the new Flash drive and install macOS
 4. Reopen `OpenCore-Patcher.app` and check for any available `Post-Install Root Patch`es
-4. Final state! ![](<imac-Screen Shot 2020-06-11 at 10.02.13 AM.png>)
+5. Final state! ![](<imac-Screen Shot 2020-06-11 at 10.02.13 AM.png>)
 
 ## Tradeoffs
 
@@ -245,8 +257,8 @@ The iMac has been stable on Mojave. After a few years here is my summary of the 
 * Only one of the two Thunderbolt/MiniDisplay ports work to connect to another monitor. I don't use an additional monitor so this doesn't affect my workflow
   * Could be nice to try this hardware mod[^17] to restore native brightness control everywhere someday
 * Target Disk Mode works perfectly, though I don't use it much
-* Target Display Mode works for the most part. [Luna Display](https://astropad.com/product/lunadisplay/ ) is better
-  * With OCLP, unsupported combinations[^20] of MacOS are supported! For example a MBP running Catalina can use the iMac running Mojave as a monitor
+* Target Display Mode works for the most part. [Luna Display](https://astropad.com/product/lunadisplay/) is better
+  * With OCLP, unsupported combinations[^20] of macOS are supported! For example a MBP running Catalina can use the iMac running Mojave as a monitor
   * Exiting Target Display Mode is buggy. Have to unplug the cable, and then the iMac screen goes black even though it's still running.[^21] Have to use keyboard shortcuts to put the iMac to sleep and wake it back up to get the display on again.
   * Instead, I find the Luna Display hardware dongle much more effective. It can use the same Thunderbolt cable (for low lag) and even allows you to use your iMac's keyboard/trackpad to control the other computer!
 
@@ -254,8 +266,7 @@ The iMac has been stable on Mojave. After a few years here is my summary of the 
 
 [^1]: <https://forums.macrumors.com/threads/cpu-upgrade-imac-mid-2011.2230813/?post=28362520#post-28362520>
 [^2]: <https://forums.macrumors.com/threads/2011-imac-graphics-card-upgrade.1596614> <br />Note: a lot has changed in the sticky post since June 2020, but the instructions I followed are still present here in the WikiPost History <https://forums.macrumors.com/edit-history/3885949/view>
-[^3]: All DIY attempts to 3.4 GHz / 3.9 GHz i7-3770 Ivy Bridge CPUs have failed. <https://forums.macrumors.com/threads/2011-imac-cpu-upgrade-possibilities.1225483/>
-[^4]: Geekbench has some 2011 iMacs with i7-3930K and i7-3960X CPUs, but these are Hackintoshes that use different sockets (LGA 2011 vs LGA 1155). <https://forums.macrumors.com/threads/imac-27-early-2011-insta-6-core-cpu.1352021/>
+[^3]: Why not reach for Ivy Bridge CPU with even more performance? Because all DIY attempts to use 3.4 GHz / 3.9 GHz i7-3770 Ivy Bridge CPUs have failed. <https://forums.macrumors.com/threads/2011-imac-cpu-upgrade-possibilities.1225483/>
 [^4]: 2020 vBIOS flashing guide <https://forums.macrumors.com/threads/2011-imac-graphics-card-upgrade.1596614/page-175?post=28184981#post-28184981>
 [^5]: 2021 vBIOS flashing guide <https://forums.macrumors.com/threads/2011-imac-graphics-card-upgrade.1596614/page-545?post=29723850#post-29723850>
 [^6]: I do have a 2 pipe GPU heatsink, but we're sticking with the MXM-A form factor! *"If you have a 2 pipe heatsink that came with the lower end GPUs on these iMacs and want to use an MXM-B Card, you'll have to buy a 3 pipe heatsink to cool cards properly. Using a (battery powered) Dremel with tungsten carbide grinding cutters work fast and give you smooth result. Do not try other cutters!"* <https://forums.macrumors.com/threads/2011-imac-graphics-card-upgrade.1596614>
@@ -263,14 +274,17 @@ The iMac has been stable on Mojave. After a few years here is my summary of the 
 [^8]: *"Step 9. Now relocate the ODD temperature sensor and glue it on the sink (not needed with K610M and M4000). Finally install the GPU and sink back in your iMac!"* <https://forums.macrumors.com/threads/2011-imac-graphics-card-upgrade.1596614/page-596?post=29967927#post-29967927>
 [^9]: Apparently, I should have checked and used either a 0.5mm or 1mm copper shim between the GPU and the heat sink. I can't recall doing this, and as far as I can tell GPU temps are fine for my use. <https://forums.macrumors.com/threads/2011-imac-graphics-card-upgrade.1596614/page-320?post=28696585#post-28696585>
 [^10]: The current version of the WikiPost[^2] does not list a BIOS for the K610M, but it was definitely needed!
-[^11]: Another reason to upgrade the iMac firmware, is because in May 2011 Apple unlocked 6Gb/s (SATA III) with the two external Thunderbolt ports!!! <https://eshop.macsales.com/blog/10002-2011-imacs-no-sata-6gbs-yes-to-multiple-drives> <https://eshop.macsales.com/blog/10050-firmware-update-enables-6gbs-in-2011-imacs/>
+[^11]: Another reason to upgrade the iMac firmware is because in May 2011 Apple unlocked 6 Gbps (SATA III) on the two external Thunderbolt ports!!! <https://eshop.macsales.com/blog/10002-2011-imacs-no-sata-6gbs-yes-to-multiple-drives> <https://eshop.macsales.com/blog/10050-firmware-update-enables-6gbs-in-2011-imacs/>
 [^12]: OWC always maintains the best Mac compatibility matrix <https://eshop.macsales.com/guides/Mac_OS_X_Compatibility>
-[^13]: *"Logic Pro X 10.5 is supported only on macOS 10.14.6 or later."* <https://www.logicprohelp.com/forums/topic/130435-lpx-105-mac-compatibility/> And Logic Pro X 10.6 requires Mac OS 10.15. <https://www.logicprohelp.com/forums/topic/137704-os-high-sierra-10136-and-logic-pro-x-105/>
+[^13]: *"Logic Pro X 10.5 is supported only on macOS 10.14.6 or later."* <https://www.logicprohelp.com/forums/topic/130435-lpx-105-mac-compatibility/> And Logic Pro X 10.6 requires macOS 10.15. <https://www.logicprohelp.com/forums/topic/137704-os-high-sierra-10136-and-logic-pro-x-105/>
 [^14]: *"Software synths and plugin effects use up CPU. These don't use much hard disk speed, but they require ridiculous amounts of calculations per second."* <https://www.logicprohelp.com/forums/topic/79918-will-an-ssd-cure-the-system-overload-issue/?do=findComment&comment=452195>
 [^15]: When I originally performed this upgrade in 2020, I used a USB boot drive called "Catalina Loader" to patch the iMac before booting into the OS. Since then, OpenCore Legacy Patcher (OCLP) is the new, fully-featured and incredibly simpler way to patch the boot EFI partition requiring no additional USB drives. <https://dortania.github.io/OpenCore-Legacy-Patcher/> 
 [^16]: For the `12,2` iMac, the last firmware version is `87.0.0.0.0`. <https://eclecticlight.co/2018/10/31/which-efi-firmware-should-your-mac-be-using-version-3/> There is also a tool called SilentKnight that they offer which can check the firmware and a few other things. <https://eclecticlight.co/lockrattler-systhist/>
 [^17]: Mac Rumors member Lottosmp has actually found a hardware route to restore native brightness control, without requiring OpenCore. This would restore it everywhere, including Recovery Mode, etc. <https://forums.macrumors.com/threads/2011-imac-graphics-card-upgrade.1596614/page-261?post=28471675#post-28471675> <https://github.com/thingsapart/imac-esp32-pwm-brightness> <https://medium.com/@fixingthings/imac-2009-2010-2011-gpu-upgrade-fixing-led-lcd-pwm-brightness-with-an-esp32-bc32da61a0e7>
 [^18]: <https://github.com/Ausdauersportler/GRML-FLASH#nvidia-graphcis-card-flashing>
-[^19]: OpenCore Legacy Patcher (OCLP) has come a long way to support non-Metal cards in later version of MacOS, but as of June 2023 it is still WIP. Also it doesn't mention Mojave support necessarily. <https://github.com/dortania/OpenCore-Legacy-Patcher/issues/108>
+[^19]: OpenCore Legacy Patcher (OCLP) has come a long way to support non-Metal cards, but it's still WIP (June 2023). <https://github.com/dortania/OpenCore-Legacy-Patcher/issues/108>
 [^20]: Apple only supports Target Display Mode for older machines <https://support.apple.com/en-us/HT204592>
 [^21]: I haven't tried upgrading the K610m's vBIOS yet to see if fixes the Target Display Mode unplugging problem.
+[^22]: To workaround the sleep issue, one person just turns off their computer every day 😅 <https://forums.macrumors.com/threads/xeon-e3-1270-in-imac-2011s.2227376/?post=28692384#post-28692384>
+[^23]: Geekbench has some 2011 iMacs with i7-3930K and i7-3960X CPUs, but these are Hackintoshes that use different sockets (LGA 2011 vs LGA 1155). <https://forums.macrumors.com/threads/imac-27-early-2011-insta-6-core-cpu.1352021/>
+[^24]: Descriptions provided by Claude Opus 4.7
